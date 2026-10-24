@@ -1,0 +1,50 @@
+/* Dovetail Signoff hub: only what suite.css (Signoff EE's stylesheet) doesn't already cover. */
+
+a.brand { color: inherit; text-decoration: none; }
+.side-link.active small { color: rgba(255, 255, 255, 0.75); }
+.side-link.active .tool-mark { background: rgba(255, 255, 255, 0.2); }
+.side-nav { flex: 1; overflow-y: auto; padding-top: 4px; }
+.side-nav .side-link { margin-bottom: 2px; }
+.side-org { flex: 1; min-width: 0; padding: 0 8px; font-size: 11.5px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.toolbar-title { display: block; }
+
+/* Intro */
+.intro { padding: 22px 24px; margin-bottom: 8px; }
+.intro p { margin: 0; color: var(--text-2); font-size: 14.5px; line-height: 1.55; max-width: 68ch; }
+.intro p + p { margin-top: 10px; }
+.intro-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.intro-head h2 { font: 600 16px var(--display); letter-spacing: -0.01em; margin: 0; }
+.chip.placeholder { background: var(--warn-soft); color: var(--warn); font-weight: 500; }
+
+/* Tool cards */
+.tools { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+a.tool-card { color: inherit; text-decoration: none; padding: 22px; gap: 16px; }
+.tool-card .cl-card-title { font-size: 18px; letter-spacing: -0.012em; }
+.tool-card .cl-card-desc { -webkit-line-clamp: unset; display: block; font-size: 13.5px; color: var(--text-2); margin-top: 4px; }
+.tool-icon { width: 44px; height: 44px; border-radius: 11px; background: #004952; display: grid; place-items: center; flex: none; }
+.tool-icon svg { width: 24px; height: 24px; }
+.tool-card .chips { margin-top: auto; }
+.tool-card .cl-card-foot { justify-content: space-between; align-items: center; border-top: 1px solid var(--hair); padding-top: 14px; color: var(--text-3); }
+.tool-open { color: var(--accent); font-weight: 500; font-size: 13px; display: inline-flex; align-items: center; gap: 4px; }
+.tool-open svg { width: 13px; height: 13px; transition: transform 0.2s var(--ease); }
+.tool-card:hover .tool-open svg { transform: translateX(3px); }
+.tool-card.secondary { padding: 18px 20px; flex-direction: row; align-items: center; gap: 14px; }
+.tool-card.secondary .tool-icon { width: 36px; height: 36px; border-radius: 9px; }
+.tool-card.secondary .tool-icon svg { width: 19px; height: 19px; }
+.tool-card.secondary .cl-card-title { font-size: 15px; }
+.tool-card.secondary .cl-card-desc { font-size: 12.5px; color: var(--text-3); margin-top: 2px; }
+.tool-card.secondary > div:not(.tool-icon) { flex: 1; min-width: 0; }
+
+.page-foot { margin-top: 48px; font-size: 12px; color: var(--text-3); }
+
+/* suite.css assumes a one-line (33px) demo banner; it wraps on phones, so let the app take what's left. */
+body.has-banner { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+body.has-banner .app { height: auto; flex: 1; min-height: 0; }
+
+.scrim { display: none; }
+@media (max-width: 860px) {
+  .app.nav-open .scrim { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.3); }
+  .toolbar-title { opacity: 1; }
+  .intro { padding: 18px; }
+  .tools { grid-template-columns: 1fr; }
+}

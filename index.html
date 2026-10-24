@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Dovetail Signoff</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23004952'/%3E%3Cpath d='M10 9h5v6.2l-5 .8zM10 17l5 .8V23h-5z' fill='%23fff'/%3E%3Cpath d='M16 9l7 2.5v9L16 23v-5.2l4-.8v-2l-4-.8z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/suite.css">
+<link rel="stylesheet" href="assets/hub.css">
+<script src="assets/hub.js"></script>
+</head>
+<body>
+<div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Nothing here is real project data.</div>
+<div class="app" id="app">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html" title="Dovetail Signoff home">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 16 18"><path d="M0 0h6v7.6L0 8.4zM0 9.6l6 .8V18H0z" fill="#fff"/><path d="M7 0l9 3v12l-9 3v-7.4l5-.9V8.3l-5-.9z" fill="#fff"/></svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">Signoff</div>
+        <div class="brand-sub">Dovetail Design Review</div>
+      </div>
+    </a>
+    <nav class="side-nav" aria-label="Signoff tools">
+      <a class="side-link active" href="index.html" aria-current="page">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 8.6L10 3l7 5.6V16a1 1 0 0 1-1 1h-3.5v-5h-5v5H4a1 1 0 0 1-1-1z"/></svg>
+        Home
+      </a>
+      <div class="side-head"><span class="side-label">Reviews</span></div>
+      <a class="side-link" href="../ee_design_review/index.html" data-tool="ee">
+        <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><rect x="4.5" y="4.5" width="9" height="9" rx="1.5"/><path d="M7 1.5v3M11 1.5v3M7 13.5v3M11 13.5v3M1.5 7h3M1.5 11h3M13.5 7h3M13.5 11h3"/></svg></span>
+        <span>Signoff EE<small>Electrical design review</small></span>
+      </a>
+      <a class="side-link" href="../me_design_review/index.html" data-tool="me">
+        <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/></svg></span>
+        <span>Signoff ME<small>Mechanical design review</small></span>
+      </a>
+      <!-- Internal-only: Fabcheck is hidden in demo mode (data-internal). -->
+      <div data-internal>
+        <div class="side-head"><span class="side-label">Dovetail tools</span></div>
+        <a class="side-link" href="../pcb_dfm/index.html">
+          <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8"><rect x="1.5" y="1.5" width="15" height="15" rx="2.5"/><circle cx="6" cy="6" r="1.4" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="#fff" stroke="none"/></svg></span>
+          <span>Fabcheck<small>Fab package DFM</small></span>
+        </a>
+      </div>
+    </nav>
+    <div class="side-foot">
+      <span class="side-org">Dovetail Product Design</span>
+      <button class="icon-btn" id="theme-btn" title="Dark mode" aria-label="Toggle dark mode"></button>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main class="main" id="main">
+    <header class="toolbar" id="toolbar">
+      <button class="icon-btn menu-toggle" id="nav-btn" aria-label="Menu" aria-controls="sidebar" aria-expanded="false">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+      </button>
+      <div class="toolbar-title">Dovetail Signoff</div>
+    </header>
+
+    <div class="page">
+      <div class="page-head">
+        <div class="page-head-text">
+          <div class="eyebrow">Dovetail Product Design</div>
+          <h1 class="page-title">Dovetail Signoff</h1>
+          <div class="page-sub">Design review checklists for electrical and mechanical work, in one place.</div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER: general info about Signoff. Replace this card's text (and remove the
+           "Placeholder" chip) before showing the page to customers. -->
+      <section class="card intro" aria-labelledby="intro-title">
+        <div class="intro-head">
+          <h2 id="intro-title">About Signoff</h2>
+          <span class="chip placeholder">Placeholder</span>
+        </div>
+        <p>General information about Dovetail Signoff goes here: what it is, how a review runs, and who takes part.</p>
+        <p>Second paragraph placeholder, for example how reviews are shared with contractors and customers, and where to get help.</p>
+      </section>
+
+      <h2 class="section-title">Reviews</h2>
+      <div class="grid tools">
+        <a class="card cl-card tool-card" href="../ee_design_review/index.html" data-tool="ee">
+          <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><rect x="4.5" y="4.5" width="9" height="9" rx="1.5"/><path d="M7 1.5v3M11 1.5v3M7 13.5v3M11 13.5v3M1.5 7h3M1.5 11h3M13.5 7h3M13.5 11h3"/></svg></div>
+          <div>
+            <div class="cl-card-title">Signoff EE</div>
+            <div class="cl-card-desc">Electrical design reviews: schematic, layout, assembly, fab and bring-up.</div>
+          </div>
+          <div class="chips"><span class="chip">Schematic</span><span class="chip">Layout</span><span class="chip">Assembly</span><span class="chip">Fab</span><span class="chip">Bring-up</span></div>
+          <!-- Check count is hand-copied from Signoff EE's templates; update it when they change. -->
+          <div class="cl-card-foot"><span><b>931</b> checks</span><span class="tool-open">Open<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span></div>
+        </a>
+        <a class="card cl-card tool-card" href="../me_design_review/index.html" data-tool="me">
+          <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/></svg></div>
+          <div>
+            <div class="cl-card-title">Signoff ME</div>
+            <div class="cl-card-desc">Mechanical design reviews.</div>
+          </div>
+          <div class="chips"><span class="chip">Mechanical design</span><span class="chip accent">New</span></div>
+          <div class="cl-card-foot"><span>Mechanical checklists</span><span class="tool-open">Open<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- Internal-only: hidden in demo mode (data-internal). -->
+      <div data-internal>
+        <h2 class="section-title">Related tools</h2>
+        <div class="grid tools">
+          <a class="card cl-card tool-card secondary" href="../pcb_dfm/index.html">
+            <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6"><rect x="1.5" y="1.5" width="15" height="15" rx="2.5"/><circle cx="6" cy="6" r="1.4" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="#fff" stroke="none"/><path d="M7.2 6H10a2 2 0 0 1 2 2v2.8" stroke-linecap="round"/></svg></div>
+            <div>
+              <div class="cl-card-title">Fabcheck</div>
+              <div class="cl-card-desc">Fab package DFM checker</div>
+            </div>
+            <span class="tool-open"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="page-foot">Dovetail Product Design</div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
