@@ -1,5 +1,7 @@
 /* Vendored from ee_design_review/assets/styles.css (Signoff EE) so the Dovetail Signoff hub shares its tokens and components.
    Do not edit here: re-copy with tools/sync_suite_css.py when Signoff EE's stylesheet changes. */
+/* Shared Signoff engine (EE and ME). Edit it in ee_design_review only; me_design_review
+   vendors it unchanged with tools/sync_engine.py. Tool specifics go in assets/config.js. */
 /* Signoff — design review tool. Light/dark tokens, then layout, then components. */
 
 :root {
@@ -149,9 +151,10 @@ body.has-banner .app { height: calc(100dvh - 33px); }
 .proj:hover { background: var(--hair); }
 .proj.active { background: var(--accent); color: #fff; }
 .proj.active .proj-sub { color: rgba(255, 255, 255, 0.75); }
-.proj-body { flex: 1; min-width: 0; }
-.proj-name { font-weight: 500; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.proj-sub { font-size: 12px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.proj-body { flex: 1; min-width: 0; overflow: hidden; }
+/* Block-level, or the ellipsis never applies and long names run past the row to the panel edge. */
+.proj-name { display: block; font-weight: 500; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.proj-sub { display: block; font-size: 12px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .proj-dirty { width: 7px; height: 7px; border-radius: 50%; background: var(--warn); flex: none; }
 .proj.active .proj-dirty { background: #fff; }
 .side-empty { color: var(--text-3); font-size: 13px; padding: 12px 10px; }
@@ -548,7 +551,32 @@ kbd { font: 500 11px var(--mono); padding: 1px 5px; border-radius: 4px; backgrou
 a.side-link { text-decoration: none; }
 .side-link .tool-mark { width: 20px; height: 20px; border-radius: 6px; background: #004952; display: grid; place-items: center; flex: none; }
 .side-link .tool-mark svg { width: 12px; height: 12px; }
+.side-link .tool-mark-text { color: #fff; font: 700 9px/1 var(--display); letter-spacing: 0.02em; }
 .side-link small { display: block; font-size: 11px; color: var(--text-3); font-weight: 400; }
 .invite-card { display: flex; flex-direction: column; gap: 4px; margin: 4px 0 10px; padding: 11px 12px; border-radius: 11px; background: var(--accent-soft); font-size: 12.5px; }
 .invite-card span { color: var(--text-2); }
 .invite-card .btn { align-self: flex-start; margin-top: 4px; padding: 5px 14px; }
+
+/* ── Fabcheck runs on an issue (docs/fabcheck-link.md) ── */
+.fab-card { border-radius: 12px; background: var(--accent-soft); padding: 12px 13px; margin-bottom: 16px; font-size: 13px; }
+.fab-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.fab-head .btn { padding: 5px 13px; font-size: 12.5px; }
+.fab-meta { color: var(--text-2); font-size: 12.5px; line-height: 1.5; }
+.fab-meta .muted { color: var(--text-3); font-family: var(--mono); font-size: 11.5px; }
+.fab-locs { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; max-height: 220px; overflow: auto; }
+.fab-loc { text-align: left; border: none; background: transparent; border-radius: 7px; padding: 4px 7px; font: 12px var(--mono); color: var(--accent-ink); }
+button.fab-loc:hover { background: var(--bg-elev); }
+span.fab-loc { color: var(--text-2); }
+.fab-detail { margin-top: 8px; font-size: 12.5px; color: var(--text-2); }
+.fab-detail summary { cursor: pointer; color: var(--text-3); }
+.fab-detail div { white-space: pre-wrap; margin-top: 6px; }
+
+/* ── Collapsible sidebar ── */
+.brand-text { flex: 1; min-width: 0; }
+.side-collapse { margin-right: -6px; }
+@media (min-width: 861px) {
+  .app { transition: grid-template-columns 0.25s var(--ease); }
+  .app.side-collapsed { grid-template-columns: 0 1fr; }
+  .app.side-collapsed .sidebar { visibility: hidden; overflow: hidden; border-right: none; min-width: 0; }
+  .app.side-collapsed .menu-toggle { display: inline-grid; }
+}

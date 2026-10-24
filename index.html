@@ -14,33 +14,38 @@
 <div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Nothing here is real project data.</div>
 <div class="app" id="app">
   <aside class="sidebar" id="sidebar">
-    <a class="brand" href="index.html" title="Dovetail Signoff home">
-      <div class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 16 18"><path d="M0 0h6v7.6L0 8.4zM0 9.6l6 .8V18H0z" fill="#fff"/><path d="M7 0l9 3v12l-9 3v-7.4l5-.9V8.3l-5-.9z" fill="#fff"/></svg>
-      </div>
-      <div class="brand-text">
-        <div class="brand-name">Signoff</div>
-        <div class="brand-sub">Dovetail Design Review</div>
-      </div>
-    </a>
+    <div class="brand">
+      <a class="brand-home" href="index.html" title="Dovetail Signoff home">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 16 18"><path d="M0 0h6v7.6L0 8.4zM0 9.6l6 .8V18H0z" fill="#fff"/><path d="M7 0l9 3v12l-9 3v-7.4l5-.9V8.3l-5-.9z" fill="#fff"/></svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-name">Signoff</div>
+          <div class="brand-sub">Dovetail review tools</div>
+        </div>
+      </a>
+      <button class="icon-btn side-collapse" id="side-collapse" title="Hide sidebar ( [ )" aria-label="Hide sidebar">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="2.5" y="3.5" width="15" height="13" rx="2.5"/><path d="M7.5 3.5v13"/><path d="M13.5 8l-2 2 2 2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
     <nav class="side-nav" aria-label="Signoff tools">
-      <a class="side-link active" href="index.html" aria-current="page">
+      <a class="side-link active" href="index.html" aria-current="page" title="Dovetail Signoff home">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 8.6L10 3l7 5.6V16a1 1 0 0 1-1 1h-3.5v-5h-5v5H4a1 1 0 0 1-1-1z"/></svg>
         Home
       </a>
       <div class="side-head"><span class="side-label">Reviews</span></div>
-      <a class="side-link" href="../ee_design_review/index.html" data-tool="ee">
+      <a class="side-link" href="../ee_design_review/index.html" data-tool="ee" title="Signoff EE: electrical design review">
         <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><rect x="4.5" y="4.5" width="9" height="9" rx="1.5"/><path d="M7 1.5v3M11 1.5v3M7 13.5v3M11 13.5v3M1.5 7h3M1.5 11h3M13.5 7h3M13.5 11h3"/></svg></span>
         <span>Signoff EE<small>Electrical design review</small></span>
       </a>
-      <a class="side-link" href="../me_design_review/index.html" data-tool="me">
+      <a class="side-link" href="../me_design_review/index.html" data-tool="me" title="Signoff ME: mechanical design review">
         <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/></svg></span>
         <span>Signoff ME<small>Mechanical design review</small></span>
       </a>
       <!-- Internal-only: Fabcheck is hidden in demo mode (data-internal). -->
       <div data-internal>
         <div class="side-head"><span class="side-label">Dovetail tools</span></div>
-        <a class="side-link" href="../pcb_dfm/index.html">
+        <a class="side-link" href="../pcb_dfm/index.html" title="Fabcheck: fab package DFM checker">
           <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8"><rect x="1.5" y="1.5" width="15" height="15" rx="2.5"/><circle cx="6" cy="6" r="1.4" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="#fff" stroke="none"/></svg></span>
           <span>Fabcheck<small>Fab package DFM</small></span>
         </a>
@@ -55,7 +60,7 @@
 
   <main class="main" id="main">
     <header class="toolbar" id="toolbar">
-      <button class="icon-btn menu-toggle" id="nav-btn" aria-label="Menu" aria-controls="sidebar" aria-expanded="false">
+      <button class="icon-btn menu-toggle" id="nav-btn" title="Show sidebar ( [ )" aria-label="Show sidebar" aria-controls="sidebar" aria-expanded="false">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
       </button>
       <div class="toolbar-title">Dovetail Signoff</div>

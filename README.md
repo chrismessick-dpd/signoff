@@ -53,6 +53,7 @@ Then open http://localhost:8790/signoff/index.html.
   - The hub reads that object.
   - The sidebar toggle writes back only `theme`.
   - A theme change in a tool open in another tab carries over.
+- The sidebar collapses the same way as in Signoff EE: use the button next to the brand or the `[` key, and the toolbar menu button brings it back. On wide windows the hub remembers the collapsed state in localStorage under `signoff.hub.ui`. On narrow windows the sidebar slides over the page instead.
 
 ## To fill in
 

@@ -1,6 +1,9 @@
 /* Dovetail Signoff hub: only what suite.css (Signoff EE's stylesheet) doesn't already cover. */
 
-a.brand { color: inherit; text-decoration: none; }
+.brand-home { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; color: inherit; text-decoration: none; }
+.brand-name, .brand-sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.side-link > span:last-child { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.side-link small { overflow: hidden; text-overflow: ellipsis; }
 .side-link.active small { color: rgba(255, 255, 255, 0.75); }
 .side-link.active .tool-mark { background: rgba(255, 255, 255, 0.2); }
 .side-nav { flex: 1; overflow-y: auto; padding-top: 4px; }

@@ -43,6 +43,15 @@
   // Follow a theme change made in a tool open in another tab.
   window.addEventListener('storage', function (e) { if (e.key === SETTINGS_KEY) applyTheme(currentTheme()); });
 
+  // The hub's own UI state, kept apart from the tools' `ui` objects.
+  var UI_KEY = 'signoff.hub.ui';
+  function readUi() {
+    try { var v = JSON.parse(localStorage.getItem(UI_KEY)); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
+  }
+  function writeUi(ui) {
+    try { localStorage.setItem(UI_KEY, JSON.stringify(ui)); } catch (e) { /* private window: just won't persist */ }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var app = document.getElementById('app');
     var main = document.getElementById('main');
@@ -61,18 +70,33 @@
       app.classList.toggle('nav-open', open);
       navBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
+    // Same behavior as toggleSidebar() in Signoff EE: the sidebar slides over the page on
+    // narrow windows; on wide ones it collapses away and stays that way until opened again.
+    var narrow = window.matchMedia ? window.matchMedia('(max-width: 860px)') : { matches: false };
+    function toggleSidebar() {
+      if (narrow.matches) { setNav(!app.classList.contains('nav-open')); return; }
+      var ui = readUi();
+      ui.sideCollapsed = !ui.sideCollapsed;
+      app.classList.toggle('side-collapsed', ui.sideCollapsed);
+      writeUi(ui);
+    }
+    if (readUi().sideCollapsed && !narrow.matches) app.classList.add('side-collapsed');
+
     document.addEventListener('click', function (e) {
       if (e.target.closest('#theme-btn')) {
         var next = isDark(currentTheme()) ? 'light' : 'dark';
         writeTheme(next);
         applyTheme(next);
-      } else if (e.target.closest('#nav-btn')) {
-        setNav(!app.classList.contains('nav-open'));
+      } else if (e.target.closest('#nav-btn') || e.target.closest('#side-collapse')) {
+        toggleSidebar();
       } else if (e.target.closest('#scrim') || e.target.closest('.sidebar a')) {
         setNav(false);
       }
     });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setNav(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setNav(false);
+      else if (e.key === '[' && !e.ctrlKey && !e.metaKey && !e.altKey && !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) { e.preventDefault(); toggleSidebar(); }
+    });
 
     main.addEventListener('scroll', function () { document.getElementById('toolbar').classList.toggle('scrolled', main.scrollTop > 60); }, { passive: true });
   });
