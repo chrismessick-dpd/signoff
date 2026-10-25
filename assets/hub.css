@@ -11,17 +11,48 @@
 .side-org { flex: 1; min-width: 0; padding: 0 8px; font-size: 11.5px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .toolbar-title { display: block; }
 
-/* Intro */
-.intro { padding: 22px 24px; margin-bottom: 8px; }
-.intro p { margin: 0; color: var(--text-2); font-size: 14.5px; line-height: 1.55; max-width: 68ch; }
-.intro p + p { margin-top: 10px; }
-.intro-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.intro-head h2 { font: 600 16px var(--display); letter-spacing: -0.01em; margin: 0; }
 .chip.placeholder { background: var(--warn-soft); color: var(--warn); font-weight: 500; }
+
+/* About: the Dovetail Signoff summary sheet, in one card */
+.about-sheet { padding: 0; overflow: hidden; }
+.about-sheet h3, .about-sheet h4 { font-family: var(--display); margin: 0; text-wrap: balance; }
+.about-sheet p { margin: 0; color: var(--text-2); font-size: 14.5px; line-height: 1.55; }
+.about-hero, .about-part { padding: 28px 32px; }
+.about-part { border-top: 1px solid var(--hair); }
+.about-hero { display: grid; gap: 14px; }
+.about-hero h3 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+.about-hero .lede { font-size: 16px; max-width: 64ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 20px; color: var(--text-3); font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.facts b { color: var(--text); font-weight: 600; }
+.about-part > h3 { font-size: 20px; letter-spacing: -0.015em; margin-bottom: 8px; }
+.about-part > p { max-width: 66ch; margin-bottom: 18px; }
+.about-eyebrow { font: 600 11.5px/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.steps { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 16px; counter-reset: step; }
+.steps li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 14px; counter-increment: step; }
+.steps li::before { content: counter(step); font: 600 13px/30px var(--mono); text-align: center; width: 30px; height: 30px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-ink); }
+.steps h4 { font-size: 15px; margin-bottom: 2px; }
+.marks { display: inline-flex; gap: 5px; vertical-align: 1px; }
+.pill { font: 600 11px/1 var(--sans); padding: 3px 8px; border-radius: 999px; }
+.pill.pass { color: var(--pass); background: var(--pass-soft); }
+.pill.issue { color: var(--issue); background: var(--issue-soft); }
+.pill.na { color: var(--na); background: var(--na-soft); }
+.shared { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; margin-top: 26px; padding-top: 24px; border-top: 1px solid var(--hair); }
+.shared h4 { font-size: 14.5px; margin-bottom: 3px; }
+.table-wrap { overflow-x: auto; border-radius: var(--radius-sm); box-shadow: 0 0 0 1px var(--hair); }
+.about-sheet table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.about-sheet th { text-align: left; font: 600 11px/1 var(--sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); padding: 12px 14px; border-bottom: 1px solid var(--hair); background: var(--bg-sunk); }
+.about-sheet td { padding: 10px 14px; border-bottom: 1px solid var(--hair); vertical-align: top; color: var(--text-2); }
+.about-sheet tr:last-child td { border-bottom: none; }
+.about-sheet td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; width: 1%; }
+.privacy { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 18px; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--accent-soft); font-size: 14px; }
+.privacy svg { width: 19px; height: 19px; flex: none; margin-top: 1px; color: var(--accent-ink); }
+.about-sheet .note { margin-top: 16px; max-width: 66ch; }
+.about-sheet .note b { color: var(--text); }
+.about-closing { background: var(--bg-sunk); }
 
 /* Tool cards */
 .tools { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-/* Signoff EE and ME share the full width evenly, matching the About card above. */
+/* Signoff EE and ME share the full width evenly. */
 .tools.primary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 a.tool-card { color: inherit; text-decoration: none; padding: 22px; gap: 16px; }
 .tool-card .cl-card-title { font-size: 18px; letter-spacing: -0.012em; }
@@ -50,6 +81,8 @@ body.has-banner .app { height: auto; flex: 1; min-height: 0; }
 @media (max-width: 860px) {
   .app.nav-open .scrim { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.3); }
   .toolbar-title { opacity: 1; }
-  .intro { padding: 18px; }
   .tools, .tools.primary { grid-template-columns: 1fr; }
+  .about-hero, .about-part { padding: 22px 18px; }
+  .shared { grid-template-columns: minmax(0, 1fr); }
+  .about-sheet td:first-child { white-space: normal; }
 }

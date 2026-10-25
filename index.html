@@ -74,13 +74,6 @@
         </div>
       </div>
 
-      <section class="card intro" aria-labelledby="intro-title">
-        <div class="intro-head">
-          <h2 id="intro-title">About Signoff</h2>
-        </div>
-        <p>Signoff is a suite of design review tools Dovetail engineers use on every project. Each review becomes a structured, traceable record: what was checked, what was found, who resolved it, and whether the design meets its requirements.</p>
-      </section>
-
       <h2 class="section-title">Reviews</h2>
       <div class="grid tools primary">
         <a class="card cl-card tool-card" href="../ee_design_review/index.html" data-tool="ee">
@@ -118,6 +111,97 @@
           </a>
         </div>
       </div>
+
+      <!-- The Dovetail Signoff summary sheet. Check counts are hand-copied, like the cards above. -->
+      <section class="about" aria-labelledby="about-title">
+        <h2 class="section-title" id="about-title">About Signoff</h2>
+        <div class="card about-sheet">
+          <div class="about-hero">
+            <h3>Dovetail Signoff</h3>
+            <p class="lede">The design review tools Dovetail engineers use on every project. Each review becomes a structured, traceable record: what was checked, what was found, who resolved it, and whether the design meets its requirements.</p>
+            <div class="facts"><span><b>931</b> electrical checks</span><span><b>845</b> mechanical checks</span><span><b>28</b> fabrication DFM rules</span></div>
+          </div>
+
+          <div class="about-part">
+            <h3>How a review works</h3>
+            <ol class="steps">
+              <li><div><h4>Describe the design</h4><p>Pick the checklists and describe the product: battery-powered, mains, RF, high-speed, injection molded, sealed, handheld… Checks for features the design doesn't have are set aside, so the review fits the product instead of a generic list.</p></div></li>
+              <li><div><h4>Review every check</h4><p>Each check carries guidance on what to look for. Reviewers mark it <span class="marks"><span class="pill pass">Pass</span><span class="pill issue">Issue</span><span class="pill na">N/A</span></span> and note what they found.</p></div></li>
+              <li><div><h4>Track issues to closure</h4><p>Every issue has a severity, an owner, a reference to the design, a discussion, and an outcome: open, fixed or waived. Nothing is left in someone's inbox.</p></div></li>
+              <li><div><h4>Trace requirements</h4><p>List what the product must do, how each requirement will be verified (inspection, analysis, demonstration or test), and which checks show it's met. A requirement whose checks have open issues is flagged.</p></div></li>
+              <li><div><h4>Sign off</h4><p>The review report collects the summary, every finding and the requirements compliance matrix, with sign-off lines for reviewer and approver.</p></div></li>
+            </ol>
+            <div class="shared">
+              <div><h4>Built for real collaboration</h4><p>Several engineers can review the same design at once. Their work merges record by record, so no one overwrites anyone.</p></div>
+              <div><h4>Access you control</h4><p>Reviews are kept in private, access-controlled storage. Each person sees only the projects they've been given.</p></div>
+              <div><h4>One family of tools</h4><p>The tools share one design, with light and dark mode, and link to each other, so moving from an electrical review to a fab check is one click.</p></div>
+              <div><h4>Grounded checklists</h4><p>Checklists are written by Dovetail engineers. Fabrication limits are drawn from IPC standards and published board-house capabilities, with sources recorded.</p></div>
+            </div>
+          </div>
+
+          <div class="about-part">
+            <div class="about-eyebrow">Electrical</div>
+            <h3>Signoff EE</h3>
+            <p>Electrical design review for a single board, with 931 checks in six checklists from first schematic to first boards on the bench.</p>
+            <div class="table-wrap"><table>
+              <thead><tr><th>Checklist</th><th>Covers</th></tr></thead>
+              <tbody>
+                <tr><td>Schematic</td><td>Power, grounding, decoupling, component ratings, protection, clocks and reset, MCU/FPGA, battery, motor and mains circuits</td></tr>
+                <tr><td>Interfaces</td><td>29 interfaces including USB, Ethernet, CAN, I2C, SPI, DDR, PCIe, RF, sensors and audio</td></tr>
+                <tr><td>PCB Layout</td><td>Stackup, placement, routing, high-speed and RF, creepage, thermal, EMC, manufacturability, test access</td></tr>
+                <tr><td>Assembly &amp; BOM</td><td>BOM quality, footprints, stencil, soldering, inspection</td></tr>
+                <tr><td>Fab &amp; Release</td><td>Fab package, drawing, drill, solder mask, panelization, release control</td></tr>
+                <tr><td>Bring-up</td><td>Power-on, rails, clocks, interfaces, thermal, EMC pre-checks</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+
+          <div class="about-part">
+            <div class="about-eyebrow">Mechanical</div>
+            <h3>Signoff ME</h3>
+            <p>Mechanical design review for a part or product, with 845 checks in nine checklists covering the whole path from concept to production validation.</p>
+            <div class="table-wrap"><table>
+              <thead><tr><th>Checklist</th><th>Covers</th></tr></thead>
+              <tbody>
+                <tr><td>Concept</td><td>Requirements and use cases, envelope, loads, regulatory scope, cost targets, risks</td></tr>
+                <tr><td>Part DFM</td><td>Injection molding, machining, sheet metal, casting and additive, by process</td></tr>
+                <tr><td>Tolerancing</td><td>GD&amp;T, datums, fits and tolerance stack-ups</td></tr>
+                <tr><td>Assembly</td><td>Design for assembly, fastening, assembly sequence, serviceability</td></tr>
+                <tr><td>Materials</td><td>Selection, grades, finishes, compatibility</td></tr>
+                <tr><td>Analysis</td><td>FEA and hand calculations: load cases, modeling, results, thermal</td></tr>
+                <tr><td>Enclosure</td><td>Sealing and IP rating, environment, drop, thermal management</td></tr>
+                <tr><td>Drawings</td><td>Title block, views, dimensioning, notes, release</td></tr>
+                <tr><td>Validation</td><td>Prototype builds, test plans, design and production validation (DVT/PVT)</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+
+          <div class="about-part">
+            <div class="about-eyebrow">Fabrication</div>
+            <h3>Fabcheck</h3>
+            <p>Fabcheck checks a PCB fabrication and assembly package the way a board house and an assembler would, before you send it. It reads the Gerbers, drill files, pick-and-place, BOM, IPC-356 netlist and ODB++, then shows what's wrong and exactly where on the board.</p>
+            <div class="privacy">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="12" height="8.5" rx="2"/><path d="M6.8 9V6.5a3.2 3.2 0 016.4 0V9" stroke-linecap="round"/></svg>
+              <span><b>Files never leave the computer.</b> Every package is processed inside the browser; nothing is uploaded.</span>
+            </div>
+            <div class="table-wrap"><table>
+              <thead><tr><th>Area</th><th>Examples</th></tr></thead>
+              <tbody>
+                <tr><td>Package</td><td>Missing or extra layers, units, board outline, drill report, layer count against the stackup</td></tr>
+                <tr><td>Assembly</td><td>Pick-and-place against BOM against copper: designators, do-not-place parts, quantities, parts on pads, rotation, pin 1</td></tr>
+                <tr><td>BOM</td><td>Missing part numbers, duplicate designators, values or footprints that disagree, manufacturer and part-type mismatches</td></tr>
+                <tr><td>Fabrication DFM</td><td>Trace width and spacing, annular ring, drill size and aspect ratio, hole spacing, copper to edge, slivers, solder mask dams, silkscreen on pads, via-in-pad, BGA pads, outline corners, copper balance</td></tr>
+              </tbody>
+            </table></div>
+            <p class="note"><b>Rules for your board house.</b> Start from typical limits (Prototype, Standard or Advanced HDI-lite, each with documented sources), or set the limits to a specific fab's published capabilities. Change a limit and the board is re-checked straight away; click any finding and the board view zooms to it. Two revisions of a package can also be compared side by side.</p>
+          </div>
+
+          <div class="about-part about-closing">
+            <h3>See it on your design</h3>
+            <p>Ask your Dovetail contact for a walkthrough. We can run a review of your board or product with you and share the report.</p>
+          </div>
+        </div>
+      </section>
 
       <div class="page-foot">Dovetail Product Design</div>
     </div>
