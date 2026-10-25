@@ -44,7 +44,8 @@ Then open http://localhost:8790/signoff/index.html.
 
 `index.html?demo` (or `#demo`) is the customer-facing version:
 - A demo banner shows at the top.
-- The EE and ME links point to each tool's `index.html?demo`.
+- Every tool link points to that tool's `index.html?demo`. The demos are one made-up product, a
+  Smart Thermostat, across Signoff EE, ME and PL.
 - Anything marked `data-internal` is hidden (nothing is today; Fabcheck is public).
 
 ## Shared look and theme

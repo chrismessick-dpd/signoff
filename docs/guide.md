@@ -15,6 +15,7 @@ design meets its requirements.
 | --- | --- |
 | **Signoff EE** | Electrical reviews: schematic, interfaces, layout, assembly, fabrication, bring-up (930 checks) |
 | **Signoff ME** | Mechanical reviews: concept, part DFM, tolerancing, assembly, materials, analysis, enclosure, drawings, validation (845 checks) |
+| **Signoff PL** | Project lead: the whole product as assemblies and Parts, each linked to its EE or ME review, with progress and open issues rolled up (FTEs) |
 | **Fabcheck** | Checking a PCB fab package before release; files never leave the browser |
 
 What they share:
@@ -28,8 +29,10 @@ What they share:
 - **One look.** The tools share one design, with light and dark mode, and switch between each other
   from the sidebar.
 
-**Try it:** the hub's demo (`?demo`) links to sample reviews in Signoff EE and Signoff ME. They
-run entirely in your browser.
+**Try it:** every tool has a demo (`?demo`) that runs entirely in your browser. The demos tell one
+story: a made-up Smart Thermostat, with its two boards in Signoff EE, its enclosure and wall bracket
+in Signoff ME, and the whole product in Signoff PL, whose issue links open the exact check in the
+other tools.
 
 ---
 
@@ -76,12 +79,13 @@ Things to know about hosting:
   - Each tool's version stamp tells open copies that a newer tool is available.
 - **Reviews stay private.** The data repos and every `review-…` repo remain private. The pages
   only read and write them through GitHub's API with each person's own token.
-- **One origin.** All four sites share `chrismessick-dpd.github.io`, so they share one browser
+- **One origin.** All five sites share `chrismessick-dpd.github.io`, so they share one browser
   storage: the sign-in token, your name and light/dark carry across. Any other Pages site
   published from this account would share that storage too, so don't publish untrusted pages
   from it.
 - **Contractors** can be sent the Signoff EE or ME link instead of a zip. Like everyone, they get
-  the sidebar links to the hub, the other Signoff tool and Fabcheck.
+  the sidebar links to the hub, the other Signoff tool and Fabcheck. The Signoff PL link is for FTEs
+  only and is hidden from them.
 - **Public means public.** The repos' code, checklists, docs (including the FTE sections) and
   commit history, with author name and email, are visible to anyone. Never commit client data,
   tokens or fab packages to them.
@@ -95,7 +99,7 @@ GitHub grants access per repository, so access follows repos:
 
 | Person | Gets |
 | --- | --- |
-| FTE | Every suite repo: tool, data, hub, Fabcheck, and every shared project repo. Add them in **both** Signoff EE's and Signoff ME's People pages. |
+| FTE | Every suite repo: tool and data repos (EE, ME, PL), hub, Fabcheck, and every shared project repo. Add them in **both** Signoff EE's and Signoff ME's People pages; that also invites them to Signoff PL's repos (`repos.suite`). |
 | Contractor | Only the `review-…` repo of each project they're added to. They never see the data repos or other projects. |
 
 Adding a contractor to a project moves the project into its own repo and sends the GitHub
@@ -127,16 +131,23 @@ account name is a setting, so the move is cheap.
 ### Changing the tools
 
 - **The engine** (model, sync, UI, styles) is edited only in `ee_design_review`:
-  - `python tools/sync_engine.py` copies it into Signoff ME;
-  - `python tools/sync_suite_css.py` (hub) and `python tools/sync_vendor.py` (Fabcheck) pick up
-    style and engine changes.
+  - `python tools/sync_engine.py` copies all of it into Signoff ME;
+  - `python tools/sync_vendor.py` copies `model.js`, `github.js` and the stylesheet into Fabcheck
+    and into Signoff PL;
+  - `python tools/sync_suite_css.py` copies the stylesheet into the hub.
+- **Project summaries.** Signoff EE and ME write a `summary` block into every project file at sync;
+  Signoff PL reads only that. Its format is in Signoff EE's README (*The project summary*).
+- **The demo suite** is one made-up product (see *Try it* above). Demo projects have fixed ids and
+  their own findings in each tool's `assets/config.js`. If you change an EE or ME demo, bump
+  `VERSION` in the engine's `demo.js` and regenerate Signoff PL's snapshot
+  (`signoff_pl/tools/demo_designs.html`); PL's tests fail while it is stale.
 - **Each tool:** run its build or stamp script, then its tests (`tests/test.html` over http), then
   commit.
 - Review data commits straight to `main`. Tool and checklist changes should go through pull requests.
 
 ### Hub specifics
 
-- `index.html` links to the tools by relative path, so the four folders must stay siblings.
+- `index.html` links to the tools by relative path, so the five folders must stay siblings.
 - In demo mode the hub links to each tool's demo.
 
 ### More detail
@@ -145,4 +156,4 @@ account name is a setting, so the move is cheap.
   troubleshooting.
 - Signoff ME: `me_design_review/docs/guide.md`.
 - Fabcheck: `pcb_dfm/docs/guide.md`.
-- Signoff PL: `signoff_pl/README.md`.
+- Signoff PL: `signoff_pl/docs/guide.md`, and `signoff_pl/docs/roadmap.md` for what comes next.
