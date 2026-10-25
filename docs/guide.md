@@ -13,7 +13,7 @@ design meets its requirements.
 
 | Tool | For |
 | --- | --- |
-| **Signoff EE** | Electrical reviews: schematic, interfaces, layout, assembly, fabrication, bring-up (931 checks) |
+| **Signoff EE** | Electrical reviews: schematic, interfaces, layout, assembly, fabrication, bring-up (930 checks) |
 | **Signoff ME** | Mechanical reviews: concept, part DFM, tolerancing, assembly, materials, analysis, enclosure, drawings, validation (845 checks) |
 | **Fabcheck** | Checking a PCB fab package before release; files never leave the browser |
 

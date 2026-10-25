@@ -63,4 +63,4 @@ Then open http://localhost:8790/signoff/index.html.
 
 ## Keeping it current
 
-- The check counts (EE 931, ME 845) are copied by hand from each tool's templates. Update them when the templates change.
+- The check counts (EE 930, ME 845) are copied by hand from each tool's templates. Update them when the templates change.
