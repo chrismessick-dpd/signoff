@@ -104,7 +104,6 @@ account name is a setting, so the move is cheap.
 ### Hub specifics
 
 - `index.html` links to the tools by relative path, so the four folders must stay siblings.
-- The **About** card is placeholder copy: look for `PLACEHOLDER` in `index.html`.
 - In demo mode the hub links to each tool's demo and hides internal tools (Fabcheck).
 
 ### More detail

@@ -57,7 +57,6 @@ Then open http://localhost:8790/signoff/index.html.
   - A theme change in a tool open in another tab carries over.
 - The sidebar collapses the same way as in Signoff EE: use the button next to the brand or the `[` key, and the toolbar menu button brings it back. On wide windows the hub remembers the collapsed state in localStorage under `signoff.hub.ui`. On narrow windows the sidebar slides over the page instead.
 
-## To fill in
+## Keeping it current
 
-- The **About Signoff** card is placeholder copy. Look for the `PLACEHOLDER` comment in `index.html`, then replace the text and remove the "Placeholder" chip.
-- The EE check count (931) is copied by hand from Signoff EE's templates. Update it when they change.
+- The check counts (EE 931, ME 845) are copied by hand from each tool's templates. Update them when the templates change.

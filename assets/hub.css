@@ -21,6 +21,8 @@
 
 /* Tool cards */
 .tools { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+/* Signoff EE and ME share the full width evenly, matching the About card above. */
+.tools.primary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 a.tool-card { color: inherit; text-decoration: none; padding: 22px; gap: 16px; }
 .tool-card .cl-card-title { font-size: 18px; letter-spacing: -0.012em; }
 .tool-card .cl-card-desc { -webkit-line-clamp: unset; display: block; font-size: 13.5px; color: var(--text-2); margin-top: 4px; }
@@ -49,5 +51,5 @@ body.has-banner .app { height: auto; flex: 1; min-height: 0; }
   .app.nav-open .scrim { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.3); }
   .toolbar-title { opacity: 1; }
   .intro { padding: 18px; }
-  .tools { grid-template-columns: 1fr; }
+  .tools, .tools.primary { grid-template-columns: 1fr; }
 }
