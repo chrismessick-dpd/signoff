@@ -8,6 +8,7 @@ The landing page for Dovetail's design review tools. It is one static page (`ind
 |---|---|---|
 | **Signoff EE** | `../ee_design_review/index.html` | Electrical reviews: schematic, layout, assembly, fab and bring-up |
 | **Signoff ME** | `../me_design_review/index.html` | Mechanical design reviews |
+| **Signoff PL** | `../signoff_pl/index.html` | Project lead: the whole product as assemblies and Parts linked to EE/ME reviews (FTEs) |
 | **Fabcheck** (related tool) | `../pcb_dfm/index.html` | Fab package DFM checker |
 
 No build step, no network calls, no third-party scripts. It works opened straight from disk (`file://`) or hosted.
@@ -25,6 +26,7 @@ tools/
   signoff/            ← this hub
   ee_design_review/   ← Signoff EE
   me_design_review/   ← Signoff ME
+  signoff_pl/         ← Signoff PL
   pcb_dfm/            ← Fabcheck
 ```
 

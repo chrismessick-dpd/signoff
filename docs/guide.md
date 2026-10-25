@@ -38,11 +38,12 @@ run entirely in your browser.
 ### The suite
 
 ```
-C:\Dovetail\tools\              each folder is its own private GitHub repo (chrismessick-dpd)
+C:\Dovetail\tools\              each folder is its own GitHub repo (chrismessick-dpd)
   signoff\            hub: this landing page
   ee_design_review\   Signoff EE + the shared engine          data: ee_design_review_data
   me_design_review\   Signoff ME (engine copied from EE)      data: me_design_review_data
   pcb_dfm\            Fabcheck
+  signoff_pl\         Signoff PL, project lead (FTEs)         data: signoff_pl_data
 ```
 
 - Everything is **static HTML/JS**: no server and no build server. Open the `index.html` files from
@@ -58,7 +59,7 @@ C:\Dovetail\tools\              each folder is its own private GitHub repo (chri
 
 ### Hosted on GitHub Pages
 
-The four tool repos are public and served by GitHub Pages from `main`:
+The five tool repos are public and served by GitHub Pages from `main`:
 
 | | |
 | --- | --- |
@@ -66,6 +67,7 @@ The four tool repos are public and served by GitHub Pages from `main`:
 | Signoff EE | https://chrismessick-dpd.github.io/ee_design_review/ |
 | Signoff ME | https://chrismessick-dpd.github.io/me_design_review/ |
 | Fabcheck | https://chrismessick-dpd.github.io/pcb_dfm/ |
+| Signoff PL | https://chrismessick-dpd.github.io/signoff_pl/ |
 
 Things to know about hosting:
 
@@ -143,3 +145,4 @@ account name is a setting, so the move is cheap.
   troubleshooting.
 - Signoff ME: `me_design_review/docs/guide.md`.
 - Fabcheck: `pcb_dfm/docs/guide.md`.
+- Signoff PL: `signoff_pl/README.md`.
