@@ -12,6 +12,10 @@ The landing page for Dovetail's design review tools. It is one static page (`ind
 
 No build step, no network calls, no third-party scripts. It works opened straight from disk (`file://`) or hosted.
 
+## Live site
+
+https://chrismessick-dpd.github.io/signoff/ (GitHub Pages, from `main`). See `docs/guide.md` for how the hosted suite works.
+
 ## Folder layout it assumes
 
 The links are relative, so the hub and the tools must be sibling folders:

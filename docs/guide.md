@@ -56,6 +56,37 @@ C:\Dovetail\tools\              each folder is its own private GitHub repo (chri
 - **Sign-in is a GitHub token kept in the browser.** It is sent only to `api.github.com` and shared by
   all the tools on the same origin, along with your name and light/dark mode.
 
+### Hosted on GitHub Pages
+
+The four tool repos are public and served by GitHub Pages from `main`:
+
+| | |
+| --- | --- |
+| Hub | https://chrismessick-dpd.github.io/signoff/ |
+| Signoff EE | https://chrismessick-dpd.github.io/ee_design_review/ |
+| Signoff ME | https://chrismessick-dpd.github.io/me_design_review/ |
+| Fabcheck | https://chrismessick-dpd.github.io/pcb_dfm/ |
+
+Things to know about hosting:
+
+- **Updates go live within a minute or two** of a push to `main`, with no build step.
+  - `.nojekyll` makes Pages serve the files as they are.
+  - Each tool's version stamp tells open copies that a newer tool is available.
+- **Reviews stay private.** The data repos and every `review-…` repo remain private. The pages
+  only read and write them through GitHub's API with each person's own token.
+- **One origin.** All four sites share `chrismessick-dpd.github.io`, so they share one browser
+  storage: the sign-in token, your name and light/dark carry across. Any other Pages site
+  published from this account would share that storage too, so don't publish untrusted pages
+  from it.
+- **Contractors** can be sent the Signoff EE or ME link instead of a zip. The hosted page hides
+  internal tools from anyone who can't open the data repo.
+- **Public means public.** The repos' code, checklists, docs (including the FTE sections) and
+  commit history, with author name and email, are visible to anyone. Never commit client data,
+  tokens or fab packages to them.
+- When the repos move to the company organization, the URLs change to that organization's
+  `github.io` address. People will need to paste their token once on the new site, because
+  browser storage doesn't carry across sites.
+
 ### People and access
 
 GitHub grants access per repository, so access follows repos:
