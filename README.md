@@ -1,5 +1,7 @@
 # Dovetail Signoff
 
+**User guide:** [docs/guide.md](docs/guide.md), with a customer-shareable overview and the suite-wide architecture for FTEs.
+
 The landing page for Dovetail's design review tools. It is one static page (`index.html`) that links to:
 
 | Card | Link | What it is |
