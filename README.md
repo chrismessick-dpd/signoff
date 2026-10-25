@@ -8,7 +8,7 @@ The landing page for Dovetail's design review tools. It is one static page (`ind
 |---|---|---|
 | **Signoff EE** | `../ee_design_review/index.html` | Electrical reviews: schematic, layout, assembly, fab and bring-up |
 | **Signoff ME** | `../me_design_review/index.html` | Mechanical design reviews |
-| **Fabcheck** (related tool, internal) | `../pcb_dfm/index.html` | Fab package DFM checker |
+| **Fabcheck** (related tool) | `../pcb_dfm/index.html` | Fab package DFM checker |
 
 No build step, no network calls, no third-party scripts. It works opened straight from disk (`file://`) or hosted.
 
@@ -43,7 +43,7 @@ Then open http://localhost:8790/signoff/index.html.
 `index.html?demo` (or `#demo`) is the customer-facing version:
 - A demo banner shows at the top.
 - The EE and ME links point to each tool's `index.html?demo`.
-- Everything marked `data-internal` is hidden. Right now that is Fabcheck.
+- Anything marked `data-internal` is hidden (nothing is today; Fabcheck is public).
 
 ## Shared look and theme
 

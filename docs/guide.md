@@ -78,8 +78,8 @@ Things to know about hosting:
   storage: the sign-in token, your name and light/dark carry across. Any other Pages site
   published from this account would share that storage too, so don't publish untrusted pages
   from it.
-- **Contractors** can be sent the Signoff EE or ME link instead of a zip. The hosted page hides
-  internal tools from anyone who can't open the data repo.
+- **Contractors** can be sent the Signoff EE or ME link instead of a zip. Like everyone, they get
+  the sidebar links to the hub, the other Signoff tool and Fabcheck.
 - **Public means public.** The repos' code, checklists, docs (including the FTE sections) and
   commit history, with author name and email, are visible to anyone. Never commit client data,
   tokens or fab packages to them.
@@ -135,7 +135,7 @@ account name is a setting, so the move is cheap.
 ### Hub specifics
 
 - `index.html` links to the tools by relative path, so the four folders must stay siblings.
-- In demo mode the hub links to each tool's demo and hides internal tools (Fabcheck).
+- In demo mode the hub links to each tool's demo.
 
 ### More detail
 
