@@ -16,6 +16,8 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   Keep it current when a tool is added or the engine flow changes.
 - **`assets/suite.css`** is copied from `ee_design_review/assets/styles.css` by
   `python tools/sync_suite_css.py`. Never edit it here.
+- **People & access link** (FTEs only) opens Signoff EE's `?page=people`. `hub.js` copies the
+  engine's `model.tokenTag`; keep it identical.
 - **Demo mode.** `?demo` appends `?demo` to every `[data-tool]` link. Each tool card and sidebar
   link needs `data-tool`.
 - **Hand-copied numbers.** The check counts on the cards and in the About sheet (EE 930, ME 845,

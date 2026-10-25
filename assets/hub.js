@@ -43,6 +43,25 @@
   // Follow a theme change made in a tool open in another tab.
   window.addEventListener('storage', function (e) { if (e.key === SETTINGS_KEY) applyTheme(currentTheme()); });
 
+  // Whether this browser's token is an FTE's, as Signoff EE last found at sync: EE records the
+  // token's fingerprint (`tokenTag`, the engine's model.tokenTag) and whether that token could
+  // open its data repo (`dataAccess`). The hub makes no request of its own.
+  function tokenTag(token) {
+    var h = 0x811c9dc5;
+    token = String(token || '');
+    for (var i = 0; i < token.length; i++) { h ^= token.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return ('0000000' + h.toString(16)).slice(-8);
+  }
+  function isFte() {
+    if (DEMO) return false;
+    var token = '', access = '';
+    try {
+      token = sessionStorage.getItem('signoff.token') || localStorage.getItem('signoff.token') || '';
+      access = JSON.parse(localStorage.getItem('signoff.v1.dataAccess') || '""');
+    } catch (e) { return false; }
+    return !!token && readSettings().tokenTag === tokenTag(token) && access === 'ok';
+  }
+
   // The hub's own UI state, kept apart from the tools' `ui` objects.
   var UI_KEY = 'signoff.hub.ui';
   function readUi() {
@@ -57,6 +76,10 @@
     var main = document.getElementById('main');
     var navBtn = document.getElementById('nav-btn');
     applyTheme(currentTheme());
+    // People & access lives in Signoff EE, whose list decides who's an FTE; the link is for FTEs.
+    function showPeople() { document.getElementById('people-link').hidden = !isFte(); }
+    showPeople();
+    window.addEventListener('storage', showPeople);
 
     if (DEMO) {
       document.querySelectorAll('[data-tool]').forEach(function (a) { a.setAttribute('href', a.getAttribute('href') + '?demo'); });

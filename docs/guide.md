@@ -102,6 +102,9 @@ GitHub grants access per repository, so access follows repos:
 | FTE | Every suite repo: tool and data repos (EE, ME, PL), hub, Fabcheck, and every shared project repo. Add them in **both** Signoff EE's and Signoff ME's People pages; that also invites them to Signoff PL's repos (`repos.suite`). |
 | Contractor | Only the `review-…` repo of each project they're added to. They never see the data repos or other projects. |
 
+Every tool's sidebar has a **People & access** link for FTEs. In Signoff EE and ME it's their
+own page; Signoff PL, Fabcheck and the hub open Signoff EE's.
+
 Adding a contractor to a project moves the project into its own repo and sends the GitHub
 invitations. Removing them revokes access, and their copy disappears at their next sync.
 
