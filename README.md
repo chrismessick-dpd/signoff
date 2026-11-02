@@ -10,6 +10,7 @@ The landing page for Dovetail's design review tools. It is one static page (`ind
 | **Signoff ME** | `../me_design_review/index.html` | Mechanical design reviews |
 | **Signoff PL** | `../signoff_pl/index.html` | Project lead: the whole product as assemblies and Parts linked to EE/ME reviews (FTEs) |
 | **Fabcheck** (related tool) | `../pcb_dfm/index.html` | Fab package DFM checker |
+| **Partcheck** (related tool, prototype) | `../partcheck/index.html` | Mechanical package check: STEP, drawings, flat patterns, 3D previews |
 
 No build step, no network calls, no third-party scripts. It works opened straight from disk (`file://`) or hosted.
 
@@ -28,6 +29,7 @@ tools/
   me_design_review/   ← Signoff ME
   signoff_pl/         ← Signoff PL
   pcb_dfm/            ← Fabcheck
+  partcheck/          ← Partcheck (prototype)
 ```
 
 If a tool's folder is missing, its card still shows, but its link leads nowhere. To link back to the hub from a tool, use `../signoff/index.html`, or `../signoff/index.html?demo` in demo mode.

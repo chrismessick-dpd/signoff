@@ -2,7 +2,7 @@
 
 This repo is the landing page for the suite: one static page, `index.html`, plus `assets/hub.js`
 and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee_design_review`,
-`me_design_review`, `signoff_pl` and `pcb_dfm`. When the suite folder is checked out, read
+`me_design_review`, `signoff_pl`, `pcb_dfm` and `partcheck` (a prototype). When the suite folder is checked out, read
 `../CLAUDE.md` first. This repo is public.
 
 - **`docs/guide.md` is the suite-wide guide.** It covers:

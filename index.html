@@ -56,6 +56,10 @@
           <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8"><rect x="1.5" y="1.5" width="15" height="15" rx="2.5"/><circle cx="6" cy="6" r="1.4" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="#fff" stroke="none"/></svg></span>
           <span>Fabcheck<small>Fab package DFM</small></span>
         </a>
+        <a class="side-link" href="../partcheck/index.html" data-tool="partcheck" title="Partcheck: mechanical package check (prototype)">
+          <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/><path d="M12.5 13.5l1.6 1.6 2.9-3" stroke-linecap="round"/></svg></span>
+          <span>Partcheck<small>Mechanical package check</small></span>
+        </a>
       </div>
     </nav>
     <a class="side-link" id="people-link" href="../ee_design_review/index.html?page=people" title="People and access, kept in Signoff EE" hidden>
@@ -130,6 +134,14 @@
             <div>
               <div class="cl-card-title">Fabcheck</div>
               <div class="cl-card-desc">Fab package DFM checker</div>
+            </div>
+            <span class="tool-open"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span>
+          </a>
+          <a class="card cl-card tool-card secondary" href="../partcheck/index.html" data-tool="partcheck">
+            <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/><path d="M12.5 13.5l1.6 1.6 2.9-3" stroke-linecap="round"/></svg></div>
+            <div>
+              <div class="cl-card-title">Partcheck <span class="chip">Prototype</span></div>
+              <div class="cl-card-desc">Mechanical package check: STEP, drawings and flat patterns, with 3D previews</div>
             </div>
             <span class="tool-open"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span>
           </a>
@@ -224,6 +236,29 @@
               </tbody>
             </table></div>
             <p class="note"><b>Rules for your board house.</b> Start from typical limits (Prototype, Standard or Advanced HDI-lite, each with documented sources), or set the limits to a specific fab's published capabilities. Change a limit and the board is re-checked straight away; click any finding and the board view zooms to it. Two revisions of a package can also be compared side by side.</p>
+          </div>
+
+          <div class="about-part">
+            <div class="about-tool-head">
+              <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/><path d="M12.5 13.5l1.6 1.6 2.9-3" stroke-linecap="round"/></svg></div>
+              <div><div class="about-eyebrow">Mechanical fabrication · prototype</div><h3>Partcheck</h3></div>
+            </div>
+            <p>Partcheck opens the package that goes to a molder, machine shop or sheet-metal shop (STEP models, drawing PDFs, DXF flat patterns and a BOM) and checks that the files agree before it's sent. Every part is shown in 3D with its mass and size.</p>
+            <div class="privacy">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="12" height="8.5" rx="2"/><path d="M6.8 9V6.5a3.2 3.2 0 016.4 0V9" stroke-linecap="round"/></svg>
+              <span><b>Files never leave the computer.</b> Packages are read inside the browser; nothing is uploaded.</span>
+            </div>
+            <div class="table-wrap"><table>
+              <thead><tr><th>Area</th><th>Examples</th></tr></thead>
+              <tbody>
+                <tr><td>Package</td><td>A model and a drawing for every part, a flat pattern for sheet metal, BOM lines with files</td></tr>
+                <tr><td>Consistency</td><td>Revisions and part numbers across file names, STEP, title block, revision table, DXF and BOM; material on the drawing against the BOM; mass on the drawing against the model</td></tr>
+                <tr><td>Drawings</td><td>Material, finish, tolerance block, GD&amp;T standard, units, sign-offs</td></tr>
+                <tr><td>Model</td><td>One closed solid, stray surface bodies, units, through-holes, mass from the material</td></tr>
+                <tr><td>Views</td><td>Draft for a pull direction and wall thickness, as color maps for an engineer to read</td></tr>
+              </tbody>
+            </table></div>
+            <p class="note"><b>Also a converter.</b> Turn a STEP into STL, OBJ, GLB (for PowerPoint) or images, without CAD.</p>
           </div>
 
           <div class="about-part about-closing">

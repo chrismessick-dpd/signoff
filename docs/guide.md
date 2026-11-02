@@ -17,6 +17,7 @@ design meets its requirements.
 | **Signoff ME** | Mechanical reviews: concept, part DFM, tolerancing, assembly, materials, analysis, enclosure, drawings, validation (845 checks) |
 | **Signoff PL** | Project lead: the whole product as assemblies and Parts, each linked to its EE or ME review, with progress and open issues rolled up (FTEs) |
 | **Fabcheck** | Checking a PCB fab package before release; files never leave the browser |
+| **Partcheck** (prototype) | Checking a mechanical fab package (STEP, drawings, DXF, BOM) before it goes to a vendor, with 3D previews; files never leave the browser |
 
 What they share:
 
@@ -46,6 +47,7 @@ C:\Dovetail\tools\              each folder is its own GitHub repo (chrismessick
   ee_design_review\   Signoff EE + the shared engine          data: ee_design_review_data
   me_design_review\   Signoff ME (engine copied from EE)      data: me_design_review_data
   pcb_dfm\            Fabcheck
+  partcheck\          Partcheck, mechanical package check (prototype)
   signoff_pl\         Signoff PL, project lead (FTEs)         data: signoff_pl_data
 ```
 
@@ -62,7 +64,7 @@ C:\Dovetail\tools\              each folder is its own GitHub repo (chrismessick
 
 ### Hosted on GitHub Pages
 
-The five tool repos are public and served by GitHub Pages from `main`:
+The tool repos are public and served by GitHub Pages from `main`:
 
 | | |
 | --- | --- |
@@ -71,6 +73,7 @@ The five tool repos are public and served by GitHub Pages from `main`:
 | Signoff ME | https://chrismessick-dpd.github.io/me_design_review/ |
 | Fabcheck | https://chrismessick-dpd.github.io/pcb_dfm/ |
 | Signoff PL | https://chrismessick-dpd.github.io/signoff_pl/ |
+| Partcheck (prototype) | https://chrismessick-dpd.github.io/partcheck/ |
 
 Things to know about hosting:
 
