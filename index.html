@@ -9,9 +9,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Dovetail Signoff</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23004952'/%3E%3Cpath d='M10 9h5v6.2l-5 .8zM10 17l5 .8V23h-5z' fill='%23fff'/%3E%3Cpath d='M16 9l7 2.5v9L16 23v-5.2l4-.8v-2l-4-.8z' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/suite.css?v=54ca34056aa3">
-<link rel="stylesheet" href="assets/hub.css?v=54ca34056aa3">
-<script src="assets/hub.js?v=54ca34056aa3"></script>
+<link rel="stylesheet" href="assets/suite.css?v=7236e33af1c3">
+<link rel="stylesheet" href="assets/hub.css?v=7236e33af1c3">
+<script src="assets/hub.js?v=7236e33af1c3"></script>
 </head>
 <body>
 <div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Nothing here is real project data.</div>
@@ -49,6 +49,10 @@
       <a class="side-link" href="../me_design_review/index.html" data-tool="me" title="Signoff ME: mechanical design review">
         <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/></svg></span>
         <span>Signoff ME<small>Mechanical design review</small></span>
+      </a>
+      <a class="side-link" href="../fw_design_review/index.html" data-tool="fw" title="Signoff FW: firmware design review (prototype)">
+        <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="11" height="11" rx="1.8"/><path d="M6.5 1.5v2M11.5 1.5v2M6.5 14.5v2M11.5 14.5v2"/><path d="M7.6 7.2L6 9l1.6 1.8M10.4 7.2L12 9l-1.6 1.8"/></svg></span>
+        <span>Signoff FW<small>Firmware design review</small></span>
       </a>
       <div>
         <div class="side-head"><span class="side-label">Dovetail tools</span></div>
@@ -154,6 +158,24 @@
             <path class="a-dim" d="M36 58v38M32 58h8M32 96h8"/>
           </symbol>
 
+          <!-- Signoff FW: a microcontroller in front of its code -->
+          <symbol id="art-fw" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="126" cy="136" rx="86" ry="8"/>
+            <rect x="84" y="16" width="134" height="104" rx="10" fill="#0f2226"/>
+            <g fill="#4a6468"><circle cx="97" cy="28" r="3"/><circle cx="107" cy="28" r="3"/><circle cx="117" cy="28" r="3"/></g>
+            <g fill="#7fd8e2"><rect x="128" y="44" width="34" height="5" rx="2.5"/><rect x="140" y="68" width="22" height="5" rx="2.5"/></g>
+            <g fill="#5cc282"><rect x="168" y="44" width="30" height="5" rx="2.5"/><rect x="152" y="80" width="40" height="5" rx="2.5"/></g>
+            <g fill="#c9ccd1" fill-opacity=".55"><rect x="128" y="56" width="58" height="5" rx="2.5"/><rect x="140" y="92" width="30" height="5" rx="2.5"/><rect x="128" y="104" width="12" height="5" rx="2.5"/></g>
+            <rect x="168" y="68" width="26" height="5" rx="2.5" fill="#ff9f0a"/>
+            <rect x="122" y="77" width="88" height="11" rx="3" fill="#ff453a" fill-opacity=".18"/>
+            <rect x="30" y="60" width="64" height="64" rx="6" fill="#14181b"/>
+            <path d="M38 56h48M38 128h48M26 68v48M98 68v48" stroke="#c9ccd1" stroke-width="5" stroke-dasharray="2.5 4.5"/>
+            <circle cx="40" cy="70" r="2.4" fill="#4a4f55"/>
+            <path d="M54 84l-8 8 8 8M70 84l8 8-8 8" fill="none" stroke="#7fd8e2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle class="a-badge" cx="214" cy="20" r="14"/>
+            <path d="M207.5 20l4.5 4.5 8.5-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </symbol>
+
           <!-- Fabcheck: copper and drills on a dark board, with findings marked where they are -->
           <symbol id="art-fabcheck" viewBox="0 0 240 150">
             <rect class="a-shadow" x="32" y="24" width="188" height="118" rx="9"/>
@@ -206,6 +228,11 @@
             <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-me"/></svg></span>
             <span class="pk-cat">Reviews</span>
             <span class="pk-name">Signoff ME</span>
+          </a>
+          <a class="pk-tile" href="../fw_design_review/index.html" data-tool="fw" data-pick="fw">
+            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fw"/></svg></span>
+            <span class="pk-cat">Reviews</span>
+            <span class="pk-name">Signoff FW <span class="pk-proto">Prototype</span></span>
           </a>
           <a class="pk-tile" href="../pcb_dfm/index.html" data-tool="fabcheck" data-pick="fabcheck">
             <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fabcheck"/></svg></span>
@@ -262,6 +289,21 @@
                 <a class="btn btn-primary pk-open" href="../me_design_review/index.html" data-tool="me">Open Signoff ME<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
                 <a class="btn btn-plain" href="../me_design_review/index.html?demo" data-internal>Try the demo</a>
                 <a class="pk-more" href="#about-me">More about ME</a>
+              </div>
+            </div>
+          </article>
+          <article class="pk-panel" data-panel="fw" hidden>
+            <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fw"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Reviews · Firmware</div>
+              <h2 class="pk-title">Signoff FW <span class="pk-proto">Prototype</span></h2>
+              <p class="pk-desc">Firmware design review for one firmware image, from architecture to factory programming and field updates.</p>
+              <div class="pk-stats"><div><b>196</b><span>checks</span></div><div><b>11</b><span>checklists</span></div></div>
+              <div class="chips"><span class="chip">HW interface</span><span class="chip">Memory &amp; faults</span><span class="chip">Security</span><span class="chip">Updates</span><span class="chip">Release</span></div>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../fw_design_review/index.html" data-tool="fw">Open Signoff FW<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../fw_design_review/index.html?demo" data-internal>Try the demo</a>
+                <a class="pk-more" href="#about-fw">More about FW</a>
               </div>
             </div>
           </article>
@@ -363,6 +405,30 @@
                 <tr><td>Enclosure</td><td>Sealing and IP rating, environment, drop, thermal management</td></tr>
                 <tr><td>Drawings</td><td>Title block, views, dimensioning, notes, release</td></tr>
                 <tr><td>Validation</td><td>Prototype builds, test plans, design and production validation (DVT/PVT)</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+
+          <div class="about-part" id="about-fw">
+            <div class="about-tool-head">
+              <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="11" height="11" rx="1.8"/><path d="M6.5 1.5v2M11.5 1.5v2M6.5 14.5v2M11.5 14.5v2"/><path d="M7.6 7.2L6 9l1.6 1.8M10.4 7.2L12 9l-1.6 1.8"/></svg></div>
+              <div><div class="about-eyebrow">Firmware · Prototype</div><h3>Signoff FW</h3></div>
+            </div>
+            <p>Firmware design review for one firmware image, with 196 checks in eleven checklists, from requirements and architecture to factory programming and field updates. It's a prototype: the checks still need a review by Dovetail's firmware engineers.</p>
+            <div class="table-wrap"><table>
+              <thead><tr><th>Checklist</th><th>Covers</th></tr></thead>
+              <tbody>
+                <tr><td>Architecture</td><td>Firmware requirements, architecture, flash/RAM/CPU budgets, third-party code, functional safety</td></tr>
+                <tr><td>HW interface</td><td>Pins and peripherals against the schematic, clocks, drivers and errata, sensing, outputs, display</td></tr>
+                <tr><td>Memory &amp; faults</td><td>Startup, linker and map file, stacks, non-volatile storage, watchdog and fault handling</td></tr>
+                <tr><td>Concurrency</td><td>Interrupts, tasks and scheduling, shared data</td></tr>
+                <tr><td>Power</td><td>Low-power modes, battery, brownout and power loss</td></tr>
+                <tr><td>Comms</td><td>Wired interfaces, wireless, cloud and protocols, USB</td></tr>
+                <tr><td>Security</td><td>Secure boot and debug lock, keys and credentials, input handling, vulnerabilities</td></tr>
+                <tr><td>Updates</td><td>Bootloader, over-the-air updates and rollback, data migration</td></tr>
+                <tr><td>Code quality</td><td>Coding standard, warnings, static analysis, code review</td></tr>
+                <tr><td>Testing</td><td>Unit and integration tests, hardware-in-the-loop, soak and fault injection</td></tr>
+                <tr><td>Release</td><td>Reproducible builds, versioning, factory programming and provisioning, SBOM</td></tr>
               </tbody>
             </table></div>
           </div>

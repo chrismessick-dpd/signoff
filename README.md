@@ -8,7 +8,8 @@ The landing page for Dovetail's design review tools. It is one static page (`ind
 |---|---|---|
 | **Signoff EE** | `../ee_design_review/index.html` | Electrical reviews: schematic, layout, assembly, fab and bring-up |
 | **Signoff ME** | `../me_design_review/index.html` | Mechanical design reviews |
-| **Signoff PL** | `../signoff_pl/index.html` | Project lead: the whole product as assemblies and Parts linked to EE/ME reviews (FTEs) |
+| **Signoff FW** (prototype) | `../fw_design_review/index.html` | Firmware design reviews |
+| **Signoff PL** | `../signoff_pl/index.html` | Project lead: the whole product as assemblies and Parts linked to EE/ME/FW reviews (FTEs) |
 | **Fabcheck** (related tool) | `../pcb_dfm/index.html` | Fab package DFM checker |
 | **Partcheck** (related tool, prototype) | `../partcheck/index.html` | Mechanical package check: STEP, drawings, flat patterns, 3D previews |
 
@@ -27,6 +28,7 @@ tools/
   signoff/            ← this hub
   ee_design_review/   ← Signoff EE
   me_design_review/   ← Signoff ME
+  fw_design_review/   ← Signoff FW (prototype)
   signoff_pl/         ← Signoff PL
   pcb_dfm/            ← Fabcheck
   partcheck/          ← Partcheck (prototype)
@@ -68,4 +70,4 @@ Then open http://localhost:8790/signoff/index.html.
 
 ## Keeping it current
 
-- The check counts (EE 930, ME 845) are copied by hand from each tool's templates. Update them when the templates change.
+- The check counts (EE 930, ME 845, FW 196) are copied by hand from each tool's templates. Update them when the templates change.
