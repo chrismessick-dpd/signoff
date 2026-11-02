@@ -29,5 +29,8 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   `data-internal`, hidden in demo mode).
 - **Hand-copied numbers.** The check counts on the picker panels and in the About sheet (EE 930, ME 845,
   Fabcheck's 28 rules) are copied by hand. Update them when the templates change.
+- **Stamp before committing.** Run `python tools/stamp_version.py` after any change to
+  `index.html` or `assets/` (including `sync_suite_css.py`). It puts `?v=<hash>` on the asset
+  URLs so a phone never mixes a new page with cached old CSS or JS; `--check` exits 1 when stale.
 - **Before committing**, open `index.html` (from disk or served) and check every link and the dark
   mode toggle. There are no tests or build step.
