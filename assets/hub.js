@@ -121,6 +121,46 @@
       else if (e.key === '[' && !e.ctrlKey && !e.metaKey && !e.altKey && !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) { e.preventDefault(); toggleSidebar(); }
     });
 
+    // The tool picker. A plain click on a tile selects it and shows it on the stage; a click on the
+    // tile already selected opens it, so a double-click opens too, and so does Enter on a focused,
+    // selected tile. Modifier and middle clicks are left to the browser. The choice is remembered.
+    var tiles = [].slice.call(document.querySelectorAll('.pk-tile'));
+    // On narrow windows the tiles are one sideways-scrolling row; keep the selected one in view.
+    function pick(id) {
+      tiles.forEach(function (t) {
+        var on = t.getAttribute('data-pick') === id;
+        t.classList.toggle('sel', on);
+        if (on) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current');
+        var row = t.parentNode;
+        if (on && row.scrollWidth > row.clientWidth && (t.offsetLeft < row.scrollLeft || t.offsetLeft + t.offsetWidth > row.scrollLeft + row.clientWidth)) {
+          row.scrollTo({ left: t.offsetLeft - 4, behavior: 'smooth' });
+        }
+      });
+      document.querySelectorAll('.pk-panel').forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== id; });
+      var ui = readUi();
+      ui.pick = id;
+      writeUi(ui);
+    }
+    if (tiles.length) {
+      var saved = readUi().pick;
+      pick(tiles.some(function (t) { return t.getAttribute('data-pick') === saved; }) ? saved : 'ee');
+      document.getElementById('picker').addEventListener('click', function (e) {
+        var tile = e.target.closest('.pk-tile');
+        if (!tile || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (tile.classList.contains('sel')) return;
+        e.preventDefault();
+        pick(tile.getAttribute('data-pick'));
+      });
+      document.getElementById('picker').addEventListener('keydown', function (e) {
+        var i = tiles.indexOf(e.target);
+        if (i < 0 || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+        e.preventDefault();
+        var next = tiles[(i + (e.key === 'ArrowRight' ? 1 : tiles.length - 1)) % tiles.length];
+        next.focus();
+        pick(next.getAttribute('data-pick'));
+      });
+    }
+
     main.addEventListener('scroll', function () { document.getElementById('toolbar').classList.toggle('scrolled', main.scrollTop > 60); }, { passive: true });
   });
 })();

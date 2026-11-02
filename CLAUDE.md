@@ -18,9 +18,16 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   `python tools/sync_suite_css.py`. Never edit it here.
 - **People & access link** (FTEs only) opens Signoff EE's `?page=people`. `hub.js` copies the
   engine's `model.tokenTag`; keep it identical.
-- **Demo mode.** `?demo` appends `?demo` to every `[data-tool]` link. Each tool card and sidebar
-  link needs `data-tool`.
-- **Hand-copied numbers.** The check counts on the cards and in the About sheet (EE 930, ME 845,
+- **Tool picker.** The page opens with a gallery of the five tools (`.pk-tile`) over a stage
+  (`.pk-panel`, one per tool) that previews the selected one. A plain click selects; a click on
+  the selected tile, a double-click or Enter opens it; modifier clicks open as links. The choice is
+  remembered in `signoff.hub.ui.pick` (EE by default). The art is SVG `<symbol>`s at the top of
+  the picker, made up (never a real board). Theme colors for it are CSS variables on `:root`,
+  because rules inside `<use>` copies can't see `:root`.
+- **Demo mode.** `?demo` appends `?demo` to every `[data-tool]` link. Each tile, Open button and
+  sidebar link needs `data-tool`; the panels' "Try the demo" links must not have it (they're
+  `data-internal`, hidden in demo mode).
+- **Hand-copied numbers.** The check counts on the picker panels and in the About sheet (EE 930, ME 845,
   Fabcheck's 28 rules) are copied by hand. Update them when the templates change.
 - **Before committing**, open `index.html` (from disk or served) and check every link and the dark
   mode toggle. There are no tests or build step.

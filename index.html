@@ -86,67 +86,218 @@
         <div class="page-head-text">
           <div class="eyebrow">Dovetail Product Design</div>
           <h1 class="page-title">Dovetail Signoff</h1>
-          <div class="page-sub">Design review checklists for electrical and mechanical work, in one place.</div>
+          <div class="page-sub">Design review and package checks for electrical and mechanical work, in one place.</div>
         </div>
       </div>
 
-      <h2 class="section-title">Projects</h2>
-      <div class="grid tools">
-        <a class="card cl-card tool-card secondary" href="../signoff_pl/index.html" data-tool="pl">
-          <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="1.8" width="5" height="4" rx="1"/><rect x="1.8" y="12.2" width="5" height="4" rx="1"/><rect x="11.2" y="12.2" width="5" height="4" rx="1"/><path d="M9 5.8v3.2M4.3 12.2V9h9.4v3.2"/></svg></div>
-          <div>
-            <div class="cl-card-title">Signoff PL</div>
-            <div class="cl-card-desc">Project lead: the whole product as assemblies and Parts, each linked to its EE or ME review, with progress and open issues rolled up</div>
-          </div>
-          <span class="tool-open"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span>
-        </a>
-      </div>
+      <!-- The tool picker: a tile selects a tool and the stage below previews it; a second click on
+           the selected tile (or a double-click, or Enter) opens it. Without JS the tiles are plain
+           links. Each tile and Open button needs data-tool. The art is drawn once as symbols. -->
+      <svg class="art-defs" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="g-pcb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d8a50"/><stop offset="1" stop-color="#17502f"/></linearGradient>
+          <linearGradient id="g-fab" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14261d"/><stop offset="1" stop-color="#0b1510"/></linearGradient>
+          <linearGradient id="g-hot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff453a"/><stop offset="1" stop-color="#ff9f0a"/></linearGradient>
+          <linearGradient id="g-ok" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9be15d"/><stop offset="1" stop-color="#30c158"/></linearGradient>
+          <linearGradient id="g-mid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffd60a"/><stop offset="1" stop-color="#ff9f0a"/></linearGradient>
+          <linearGradient id="g-scale" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#30c158"/><stop offset="0.5" stop-color="#ffd60a"/><stop offset="1" stop-color="#ff453a"/></linearGradient>
 
-      <h2 class="section-title">Reviews</h2>
-      <div class="grid tools primary">
-        <a class="card cl-card tool-card" href="../ee_design_review/index.html" data-tool="ee">
-          <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><rect x="4.5" y="4.5" width="9" height="9" rx="1.5"/><path d="M7 1.5v3M11 1.5v3M7 13.5v3M11 13.5v3M1.5 7h3M1.5 11h3M13.5 7h3M13.5 11h3"/></svg></div>
-          <div>
-            <div class="cl-card-title">Signoff EE</div>
-            <div class="cl-card-desc">Electrical design reviews: schematic, layout, assembly, fab and bring-up.</div>
-          </div>
-          <div class="chips"><span class="chip">Schematic</span><span class="chip">Layout</span><span class="chip">Assembly</span><span class="chip">Fab</span><span class="chip">Bring-up</span></div>
-          <!-- Check count is hand-copied from Signoff EE's templates; update it when they change. -->
-          <div class="cl-card-foot"><span><b>930</b> checks</span><span class="tool-open">Open<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span></div>
-        </a>
-        <a class="card cl-card tool-card" href="../me_design_review/index.html" data-tool="me">
-          <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/></svg></div>
-          <div>
-            <div class="cl-card-title">Signoff ME</div>
-            <div class="cl-card-desc">Mechanical design reviews: concept, part DFM, tolerancing, assembly, analysis and validation.</div>
-          </div>
-          <div class="chips"><span class="chip">Part DFM</span><span class="chip">Tolerancing</span><span class="chip">Enclosure</span><span class="chip">Drawings</span><span class="chip">Validation</span></div>
-          <!-- Check count is hand-copied from Signoff ME's templates; update it when they change. -->
-          <div class="cl-card-foot"><span><b>845</b> checks</span><span class="tool-open">Open<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span></div>
-        </a>
-      </div>
+          <!-- Signoff PL: the product as a tree of assemblies and Parts, with progress rings -->
+          <symbol id="art-pl" viewBox="0 0 240 150">
+            <path class="a-line" d="M120 44v10M48 54h144M48 54v8M120 54v8M192 54v8M48 92v8M28 100h40M28 100v8M68 100v8M192 92v8M172 100h40M172 100v8M212 100v8"/>
+            <rect class="a-hero" x="86" y="14" width="68" height="30" rx="8"/>
+            <circle cx="101" cy="29" r="7" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3"/>
+            <circle cx="101" cy="29" r="7" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="31 44" stroke-linecap="round" transform="rotate(-90 101 29)"/>
+            <rect x="113" y="23" width="32" height="4" rx="2" fill="#fff"/><rect x="113" y="31" width="20" height="3" rx="1.5" fill="#fff" fill-opacity=".6"/>
+            <g class="a-cards"><rect x="18" y="62" width="60" height="30" rx="7"/><rect x="90" y="62" width="60" height="30" rx="7"/><rect x="162" y="62" width="60" height="30" rx="7"/>
+              <rect x="12" y="108" width="32" height="24" rx="6"/><rect x="52" y="108" width="32" height="24" rx="6"/><rect x="156" y="108" width="32" height="24" rx="6"/><rect x="196" y="108" width="32" height="24" rx="6"/></g>
+            <g class="a-ring-bg"><circle cx="32" cy="77" r="6"/><circle cx="104" cy="77" r="6"/><circle cx="176" cy="77" r="6"/></g>
+            <g class="a-ring"><circle cx="32" cy="77" r="6" stroke-dasharray="25 38" transform="rotate(-90 32 77)"/><circle cx="104" cy="77" r="6" stroke-dasharray="14 38" transform="rotate(-90 104 77)"/><circle cx="176" cy="77" r="6" stroke-dasharray="34 38" transform="rotate(-90 176 77)"/></g>
+            <g class="a-bar"><rect x="44" y="71" width="26" height="4" rx="2"/><rect x="116" y="71" width="26" height="4" rx="2"/><rect x="188" y="71" width="26" height="4" rx="2"/>
+              <rect x="31" y="116" width="9" height="3" rx="1.5"/><rect x="71" y="116" width="9" height="3" rx="1.5"/><rect x="175" y="116" width="9" height="3" rx="1.5"/><rect x="215" y="116" width="9" height="3" rx="1.5"/></g>
+            <g class="a-bar soft"><rect x="44" y="79" width="18" height="3" rx="1.5"/><rect x="116" y="79" width="18" height="3" rx="1.5"/><rect x="188" y="79" width="18" height="3" rx="1.5"/>
+              <rect x="31" y="122" width="6" height="3" rx="1.5"/><rect x="71" y="122" width="6" height="3" rx="1.5"/><rect x="175" y="122" width="6" height="3" rx="1.5"/><rect x="215" y="122" width="6" height="3" rx="1.5"/></g>
+            <g class="a-thumb"><rect x="18" y="114" width="10" height="12" rx="2"/><rect x="58" y="114" width="10" height="12" rx="2"/><rect x="162" y="114" width="10" height="12" rx="2"/><rect x="202" y="114" width="10" height="12" rx="2"/></g>
+          </symbol>
 
-      <div>
-        <h2 class="section-title">Related tools</h2>
-        <div class="grid tools">
-          <a class="card cl-card tool-card secondary" href="../pcb_dfm/index.html" data-tool="fabcheck">
-            <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6"><rect x="1.5" y="1.5" width="15" height="15" rx="2.5"/><circle cx="6" cy="6" r="1.4" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="#fff" stroke="none"/><path d="M7.2 6H10a2 2 0 0 1 2 2v2.8" stroke-linecap="round"/></svg></div>
-            <div>
-              <div class="cl-card-title">Fabcheck</div>
-              <div class="cl-card-desc">Fab package DFM checker</div>
-            </div>
-            <span class="tool-open"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span>
+          <!-- Signoff EE: a board under review -->
+          <symbol id="art-ee" viewBox="0 0 240 150">
+            <rect class="a-shadow" x="36" y="26" width="172" height="112" rx="10"/>
+            <rect x="30" y="18" width="172" height="112" rx="10" fill="url(#g-pcb)"/>
+            <g fill="#d9b45c"><circle cx="43" cy="31" r="6"/><circle cx="189" cy="31" r="6"/><circle cx="43" cy="117" r="6"/><circle cx="189" cy="117" r="6"/></g>
+            <g fill="#0d2a19"><circle cx="43" cy="31" r="3"/><circle cx="189" cy="31" r="3"/><circle cx="43" cy="117" r="3"/><circle cx="189" cy="117" r="3"/></g>
+            <path d="M126 62h22V48h18M126 74h40M126 86h22v14h18M86 74H62v26M106 92v16h26M70 48h16v8" fill="none" stroke="#5cc282" stroke-opacity=".65" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="86" y="54" width="40" height="40" rx="3" fill="#14181b"/>
+            <path d="M91 51h30M91 97h30M83 59v30M129 59v30" stroke="#c9ccd1" stroke-width="4" stroke-dasharray="2 3"/>
+            <circle cx="92" cy="60" r="1.6" fill="#4a4f55"/>
+            <rect x="52" y="36" width="18" height="12" rx="1.5" fill="#14181b"/>
+            <path d="M54 34h14M54 50h14" stroke="#c9ccd1" stroke-width="2.5" stroke-dasharray="2 2"/>
+            <g fill="#c8ab80"><rect x="58" y="62" width="9" height="4.5" rx="1"/><rect x="58" y="84" width="9" height="4.5" rx="1"/><rect x="138" y="106" width="9" height="4.5" rx="1"/><rect x="96" y="112" width="9" height="4.5" rx="1"/></g>
+            <rect x="166" y="38" width="24" height="72" rx="3" fill="#2f6fd6"/>
+            <g fill="#a9c4ef" stroke="#1d4fa0" stroke-width="1.5"><circle cx="178" cy="52" r="4.5"/><circle cx="178" cy="67" r="4.5"/><circle cx="178" cy="82" r="4.5"/><circle cx="178" cy="97" r="4.5"/></g>
+            <rect x="52" y="120" width="34" height="3" rx="1.5" fill="#fff" fill-opacity=".75"/>
+            <circle cx="133" cy="50" r="7" fill="#ff453a" fill-opacity=".2" stroke="#ff453a" stroke-width="2"/>
+            <circle class="a-badge" cx="200" cy="22" r="14"/>
+            <path d="M193.5 22l4.5 4.5 8.5-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </symbol>
+
+          <!-- Signoff ME: an enclosure, with its parting line and a dimension -->
+          <symbol id="art-me" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="122" cy="134" rx="74" ry="9"/>
+            <path class="a-iso-t" d="M120 22l68 34-68 34-68-34z"/>
+            <path class="a-iso-l" d="M52 56l68 34v40l-68-34z"/>
+            <path class="a-iso-r" d="M120 90l68-34v40l-68 34z"/>
+            <path class="a-edge" d="M52 66l68 34 68-34"/>
+            <path d="M116 40l36 18-24 12-36-18z" fill="#0f2226"/>
+            <path class="a-glow" d="M112 50l16 8M106 53l8 4"/>
+            <path class="a-edge" d="M140 102l14-7M140 109l14-7M140 116l14-7M162 91l14-7M162 98l14-7"/>
+            <path class="a-dim" d="M36 58v38M32 58h8M32 96h8"/>
+          </symbol>
+
+          <!-- Fabcheck: copper and drills on a dark board, with findings marked where they are -->
+          <symbol id="art-fabcheck" viewBox="0 0 240 150">
+            <rect class="a-shadow" x="32" y="24" width="188" height="118" rx="9"/>
+            <rect x="26" y="16" width="188" height="118" rx="9" fill="url(#g-fab)" stroke="#2c4a3a"/>
+            <g fill="none" stroke="#c4843c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M40 40h28l10 10v10M40 52h20l18 18h44M120 70l14-14h48M40 112h52l14-14h44M150 98l12-12V64M60 124v-12M100 34v-8M132 34v-8M196 112h-26l-8 8"/>
+            </g>
+            <path d="M96 34h40M96 58h40" stroke="#d99a52" stroke-width="9" stroke-dasharray="4 4"/>
+            <g fill="#c4843c"><circle cx="78" cy="62" r="4"/><circle cx="162" cy="62" r="4"/><circle cx="150" cy="98" r="4"/><circle cx="60" cy="124" r="4"/><circle cx="196" cy="112" r="4"/><circle cx="182" cy="56" r="4"/></g>
+            <g fill="#0b1510"><circle cx="78" cy="62" r="1.6"/><circle cx="162" cy="62" r="1.6"/><circle cx="150" cy="98" r="1.6"/><circle cx="60" cy="124" r="1.6"/><circle cx="196" cy="112" r="1.6"/><circle cx="182" cy="56" r="1.6"/></g>
+            <g fill="#0b1510" stroke="#7d8a84" stroke-width="1.2"><circle cx="38" cy="28" r="4"/><circle cx="202" cy="28" r="4"/><circle cx="38" cy="122" r="4"/><circle cx="202" cy="122" r="4"/></g>
+            <circle class="a-pulse" cx="120" cy="70" r="10"/>
+            <circle cx="120" cy="70" r="10" fill="#ff453a" fill-opacity=".18" stroke="#ff453a" stroke-width="2"/>
+            <circle cx="162" cy="86" r="8" fill="#ff9f0a" fill-opacity=".18" stroke="#ff9f0a" stroke-width="2"/>
+            <circle cx="68" cy="46" r="7" fill="#ff453a" fill-opacity=".18" stroke="#ff453a" stroke-width="2"/>
+            <path d="M120 54v-6M120 92v-6M104 70h-6M142 70h-6" stroke="#ff453a" stroke-width="1.5" stroke-linecap="round"/>
+          </symbol>
+
+          <!-- Partcheck: a bracket shaded for draft, with the pull direction -->
+          <symbol id="art-partcheck" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="114" cy="122" rx="66" ry="9"/>
+            <path d="M72 82.4L132 112.4V118L72 88z" fill="url(#g-mid)"/>
+            <path d="M168 94.4L132 112.4V118L168 100z" fill="#ff9f0a"/>
+            <path d="M116 68.4L168 94.4L132 112.4L80 86.4z" fill="url(#g-ok)"/>
+            <path d="M72 48.8L80 52.8V86.4L72 82.4z" fill="url(#g-mid)"/>
+            <path d="M116 34.8L80 52.8V86.4L116 68.4z" fill="url(#g-hot)"/>
+            <path d="M108 30.8L116 34.8L80 52.8L72 48.8z" fill="#9be15d"/>
+            <path class="a-edge strong" d="M72 48.8L108 30.8l8 4v33.6l52 26V100l-36 18-60-30zM80 52.8v33.6l52 26M80 86.4l-8-4"/>
+            <ellipse cx="124" cy="90.5" rx="8" ry="4" fill="#0f2226" fill-opacity=".75"/>
+            <ellipse cx="98" cy="58" rx="4" ry="7" fill="#7a1c14" fill-opacity=".65" transform="rotate(-28 98 58)"/>
+            <path class="a-dim arrow" d="M186 70V22M180 30l6-8 6 8"/>
+            <rect x="160" y="132" width="56" height="5" rx="2.5" fill="url(#g-scale)"/>
+          </symbol>
+        </defs>
+      </svg>
+
+      <section class="picker" id="picker" aria-label="Signoff tools">
+        <nav class="pk-tiles" aria-label="Choose a tool">
+          <a class="pk-tile" href="../signoff_pl/index.html" data-tool="pl" data-pick="pl">
+            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-pl"/></svg></span>
+            <span class="pk-cat">Projects</span>
+            <span class="pk-name">Signoff PL</span>
           </a>
-          <a class="card cl-card tool-card secondary" href="../partcheck/index.html" data-tool="partcheck">
-            <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/><path d="M12.5 13.5l1.6 1.6 2.9-3" stroke-linecap="round"/></svg></div>
-            <div>
-              <div class="cl-card-title">Partcheck <span class="chip">Prototype</span></div>
-              <div class="cl-card-desc">Mechanical package check: STEP, drawings and flat patterns, with 3D previews</div>
-            </div>
-            <span class="tool-open"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></span>
+          <a class="pk-tile" href="../ee_design_review/index.html" data-tool="ee" data-pick="ee">
+            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-ee"/></svg></span>
+            <span class="pk-cat">Reviews</span>
+            <span class="pk-name">Signoff EE</span>
           </a>
+          <a class="pk-tile" href="../me_design_review/index.html" data-tool="me" data-pick="me">
+            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-me"/></svg></span>
+            <span class="pk-cat">Reviews</span>
+            <span class="pk-name">Signoff ME</span>
+          </a>
+          <a class="pk-tile" href="../pcb_dfm/index.html" data-tool="fabcheck" data-pick="fabcheck">
+            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fabcheck"/></svg></span>
+            <span class="pk-cat">Dovetail tools</span>
+            <span class="pk-name">Fabcheck</span>
+          </a>
+          <a class="pk-tile" href="../partcheck/index.html" data-tool="partcheck" data-pick="partcheck">
+            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-partcheck"/></svg></span>
+            <span class="pk-cat">Dovetail tools</span>
+            <span class="pk-name">Partcheck <span class="pk-proto">Prototype</span></span>
+          </a>
+        </nav>
+
+        <div class="pk-stage card" aria-live="polite">
+          <article class="pk-panel" data-panel="pl" hidden>
+            <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-pl"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Projects · Project lead</div>
+              <h2 class="pk-title">Signoff PL</h2>
+              <p class="pk-desc">The whole product as assemblies and Parts, each linked to its EE or ME review, with progress and open issues rolled up. Map, gallery and exploded views, a BOM, and builds from EVT to PVT.</p>
+              <div class="chips"><span class="chip">Structure map</span><span class="chip">BOM</span><span class="chip">Issues</span><span class="chip">3D models</span></div>
+              <p class="pk-note">For Dovetail project leads.</p>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../signoff_pl/index.html" data-tool="pl">Open Signoff PL<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../signoff_pl/index.html?demo" data-internal>Try the demo</a>
+              </div>
+            </div>
+          </article>
+          <!-- Check counts on the panels are hand-copied from Signoff EE's and ME's templates; update them when they change. -->
+          <article class="pk-panel" data-panel="ee">
+            <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-ee"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Reviews · Electrical</div>
+              <h2 class="pk-title">Signoff EE</h2>
+              <p class="pk-desc">Electrical design review for a single board, from first schematic to first boards on the bench.</p>
+              <div class="pk-stats"><div><b>930</b><span>checks</span></div><div><b>6</b><span>checklists</span></div></div>
+              <div class="chips"><span class="chip">Schematic</span><span class="chip">Interfaces</span><span class="chip">Layout</span><span class="chip">Assembly</span><span class="chip">Fab</span><span class="chip">Bring-up</span></div>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../ee_design_review/index.html" data-tool="ee">Open Signoff EE<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../ee_design_review/index.html?demo" data-internal>Try the demo</a>
+                <a class="pk-more" href="#about-ee">More about EE</a>
+              </div>
+            </div>
+          </article>
+          <article class="pk-panel" data-panel="me" hidden>
+            <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-me"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Reviews · Mechanical</div>
+              <h2 class="pk-title">Signoff ME</h2>
+              <p class="pk-desc">Mechanical design review for a part or product, from concept to production validation.</p>
+              <div class="pk-stats"><div><b>845</b><span>checks</span></div><div><b>9</b><span>checklists</span></div></div>
+              <div class="chips"><span class="chip">Part DFM</span><span class="chip">Tolerancing</span><span class="chip">Enclosure</span><span class="chip">Drawings</span><span class="chip">Validation</span></div>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../me_design_review/index.html" data-tool="me">Open Signoff ME<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../me_design_review/index.html?demo" data-internal>Try the demo</a>
+                <a class="pk-more" href="#about-me">More about ME</a>
+              </div>
+            </div>
+          </article>
+          <article class="pk-panel" data-panel="fabcheck" hidden>
+            <div class="pk-panel-art dark"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fabcheck"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Dovetail tools · Fabrication</div>
+              <h2 class="pk-title">Fabcheck</h2>
+              <p class="pk-desc">Checks a PCB fab and assembly package the way a board house would, before you send it, and shows exactly where on the board each problem is.</p>
+              <div class="pk-stats"><div><b>28</b><span>DFM rules</span></div><div><b>3</b><span>rule profiles</span></div></div>
+              <div class="chips"><span class="chip">Gerbers</span><span class="chip">Drill</span><span class="chip">Pick-and-place</span><span class="chip">BOM</span><span class="chip">ODB++</span></div>
+              <p class="pk-note">Files never leave the computer.</p>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../pcb_dfm/index.html" data-tool="fabcheck">Open Fabcheck<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../pcb_dfm/index.html?demo" data-internal>Try the demo</a>
+                <a class="pk-more" href="#about-fabcheck">More about Fabcheck</a>
+              </div>
+            </div>
+          </article>
+          <article class="pk-panel" data-panel="partcheck" hidden>
+            <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-partcheck"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Dovetail tools · Mechanical fabrication</div>
+              <h2 class="pk-title">Partcheck <span class="pk-proto">Prototype</span></h2>
+              <p class="pk-desc">Checks that a part's STEP model, drawing, flat pattern and BOM agree before they go to the shop. Every part in 3D, with its mass, draft and wall thickness.</p>
+              <div class="chips"><span class="chip">STEP</span><span class="chip">Drawing PDF</span><span class="chip">DXF</span><span class="chip">BOM</span><span class="chip">STL · OBJ · GLB</span></div>
+              <p class="pk-note">Files never leave the computer.</p>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../partcheck/index.html" data-tool="partcheck">Open Partcheck<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../partcheck/index.html?demo" data-internal>Try the demo</a>
+                <a class="pk-more" href="#about-partcheck">More about Partcheck</a>
+              </div>
+            </div>
+          </article>
         </div>
-      </div>
+      </section>
 
       <!-- The Dovetail Signoff summary sheet. Check counts are hand-copied, like the cards above. -->
       <section class="about" aria-labelledby="about-title">
@@ -175,7 +326,7 @@
             </div>
           </div>
 
-          <div class="about-part">
+          <div class="about-part" id="about-ee">
             <div class="about-tool-head">
               <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><rect x="4.5" y="4.5" width="9" height="9" rx="1.5"/><path d="M7 1.5v3M11 1.5v3M7 13.5v3M11 13.5v3M1.5 7h3M1.5 11h3M13.5 7h3M13.5 11h3"/></svg></div>
               <div><div class="about-eyebrow">Electrical</div><h3>Signoff EE</h3></div>
@@ -194,7 +345,7 @@
             </table></div>
           </div>
 
-          <div class="about-part">
+          <div class="about-part" id="about-me">
             <div class="about-tool-head">
               <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/></svg></div>
               <div><div class="about-eyebrow">Mechanical</div><h3>Signoff ME</h3></div>
@@ -216,7 +367,7 @@
             </table></div>
           </div>
 
-          <div class="about-part">
+          <div class="about-part" id="about-fabcheck">
             <div class="about-tool-head">
               <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6"><rect x="1.5" y="1.5" width="15" height="15" rx="2.5"/><circle cx="6" cy="6" r="1.4" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="#fff" stroke="none"/><path d="M7.2 6H10a2 2 0 0 1 2 2v2.8" stroke-linecap="round"/></svg></div>
               <div><div class="about-eyebrow">Fabrication</div><h3>Fabcheck</h3></div>
@@ -238,7 +389,7 @@
             <p class="note"><b>Rules for your board house.</b> Start from typical limits (Prototype, Standard or Advanced HDI-lite, each with documented sources), or set the limits to a specific fab's published capabilities. Change a limit and the board is re-checked straight away; click any finding and the board view zooms to it. Two revisions of a package can also be compared side by side.</p>
           </div>
 
-          <div class="about-part">
+          <div class="about-part" id="about-partcheck">
             <div class="about-tool-head">
               <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/><path d="M12.5 13.5l1.6 1.6 2.9-3" stroke-linecap="round"/></svg></div>
               <div><div class="about-eyebrow">Mechanical fabrication · prototype</div><h3>Partcheck</h3></div>
