@@ -1,8 +1,8 @@
 /* Demo tour: a short guided path through the Smart Thermostat demo, across the Signoff tools.
    Every tool loads it (../signoff/assets/tour.js; the tools share one origin when hosted and when
-   served locally). It does nothing outside ?demo, and shows its card only after a visitor starts
-   the tour from the hub's "Start here" card. Its state is localStorage signoff.demo.tour:
-   { step } while it runs; it's removed when the visitor ends it. */
+   served locally). It does nothing outside ?demo. In the hub's and Signoff PL's sidebars it adds a
+   Take the tour button, which opens an intro and then the tour's card. Its state is localStorage
+   signoff.demo.tour: { step } while it runs; it's removed when the visitor ends it. */
 (function () {
   'use strict';
   if (!/[?&]demo\b/.test(location.search)) return;
@@ -43,19 +43,25 @@
   // A step's page, from wherever this page is: every tool is a sibling folder.
   function href(step) { return folder() === 'signoff' || folder() ? STEPS[step].url : STEPS[step].url.replace(/^\.\.\//, ''); }
 
+  // Colors are the suite's theme tokens (every tool loads the engine's styles or suite.css), so the
+  // card follows light and dark mode; the fallbacks are the light theme's.
   var css = '.tour{position:fixed;left:16px;bottom:16px;z-index:55;width:340px;max-width:calc(100vw - 32px);box-sizing:border-box;' +
-    'background:var(--surface-2,var(--surface,#1c1c1e));color:var(--text,#f5f5f7);border:1px solid var(--border,rgba(255,255,255,.14));border-radius:14px;' +
-    'box-shadow:0 12px 40px rgba(0,0,0,.35);padding:14px 16px;font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}' +
-    '.tour .t-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent,#3ec6d4);font-weight:600}' +
-    '.tour .t-top span{flex:1}.tour .t-x{background:none;border:0;color:var(--text-2,#a1a1a6);cursor:pointer;font-size:12px;padding:2px 4px}' +
-    '.tour h3{margin:0 0 6px;font-size:15px}.tour p{margin:0 0 8px;color:var(--text-2,#c7c7cc)}.tour .t-try{color:var(--text,#f5f5f7)}' +
-    '.tour .t-dots{display:flex;gap:4px;margin:10px 0}.tour .t-dots i{flex:1;height:3px;border-radius:2px;background:var(--border,rgba(255,255,255,.18))}.tour .t-dots i.on{background:var(--accent,#3ec6d4)}' +
-    '.tour .t-act{display:flex;gap:8px;justify-content:flex-end}.tour button.t-b{border-radius:8px;padding:6px 12px;font:inherit;font-weight:600;cursor:pointer;border:1px solid var(--border,rgba(255,255,255,.18));background:transparent;color:inherit}' +
-    '.tour button.t-b.p{background:var(--accent,#3ec6d4);border-color:transparent;color:#00262b}.tour.min{width:auto;padding:8px 12px;cursor:pointer}' +
-    '.tour-start{margin:0 0 24px;box-sizing:border-box;border:1px solid var(--border,rgba(255,255,255,.14));border-radius:16px;padding:18px 20px;background:var(--surface,#1c1c1e);color:var(--text,#f5f5f7);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}' +
-    '.tour-start h2{margin:0 0 4px;font-size:18px}.tour-start p{margin:0 0 12px;color:var(--text-2,#c7c7cc)}.tour-start ol{margin:0 0 14px;padding-left:20px;columns:2;column-gap:28px}.tour-start li{margin:0 0 4px;break-inside:avoid}' +
-    '.tour-start .t-b{border-radius:9px;padding:8px 16px;font:inherit;font-weight:600;cursor:pointer;border:0;background:var(--accent,#3ec6d4);color:#00262b}' +
-    '@media (max-width:640px){.tour-start ol{columns:1}}';
+    'background:var(--bg-elev,#fff);color:var(--text,#1d1d1f);border:1px solid var(--hair-2,rgba(0,0,0,.14));border-radius:14px;' +
+    'box-shadow:var(--shadow-lg,0 24px 64px rgba(0,0,0,.18));padding:14px 16px;font:13px/1.45 var(--sans,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif)}' +
+    '.tour .t-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent,#00727f);font-weight:600}' +
+    '.tour .t-top span{flex:1}.tour .t-x{background:none;border:0;color:var(--text-3,#86868b);cursor:pointer;font-size:12px;padding:2px 4px}.tour .t-x:hover{color:var(--text,#1d1d1f)}' +
+    '.tour h3{margin:0 0 6px;font-size:15px;color:var(--text,#1d1d1f)}.tour p{margin:0 0 8px;color:var(--text-2,#515154)}.tour .t-try{color:var(--text,#1d1d1f);font-weight:500}' +
+    '.tour .t-dots{display:flex;gap:4px;margin:10px 0}.tour .t-dots i{flex:1;height:3px;border-radius:2px;background:var(--hair-2,rgba(0,0,0,.14))}.tour .t-dots i.on{background:var(--accent,#00727f)}' +
+    '.tour .t-act,.tour-intro .t-act{display:flex;gap:8px;justify-content:flex-end}' +
+    '.tour button.t-b,.tour-intro button.t-b{border-radius:8px;padding:6px 12px;font:inherit;font-weight:600;cursor:pointer;border:1px solid var(--hair-2,rgba(0,0,0,.14));background:transparent;color:var(--text,#1d1d1f)}' +
+    '.tour button.t-b.p,.tour-intro button.t-b.p{background:var(--accent,#00727f);border-color:transparent;color:#fff}' +
+    '.tour.min{width:auto;padding:8px 12px;cursor:pointer}' +
+    '.tour-scrim{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;padding:16px}' +
+    '.tour-intro{width:560px;max-width:100%;max-height:calc(100vh - 32px);overflow:auto;box-sizing:border-box;background:var(--bg-elev,#fff);color:var(--text,#1d1d1f);' +
+    'border-radius:16px;box-shadow:var(--shadow-lg,0 24px 64px rgba(0,0,0,.18));padding:22px 24px;font:14px/1.5 var(--sans,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif)}' +
+    '.tour-intro h2{margin:0 0 6px;font-size:19px}.tour-intro p{margin:0 0 12px;color:var(--text-2,#515154)}' +
+    '.tour-intro ol{margin:0 0 18px;padding-left:20px}.tour-intro li{margin:0 0 3px}.tour-intro li span{color:var(--text-3,#86868b)}' +
+    '.tour-link{width:100%;border:0;background:none;font:inherit;text-align:left;cursor:pointer}';
 
   function style() { if (document.getElementById('tour-css')) return; var s = document.createElement('style'); s.id = 'tour-css'; s.textContent = css; document.head.appendChild(s); }
 
@@ -94,26 +100,50 @@
     });
   }
 
-  // The hub: a "Start here" card under the demo banner.
-  function startCard() {
-    var head = document.querySelector('.page-head'), main = document.querySelector('main') || document.body;
-    var box = document.createElement('section');
-    box.className = 'tour-start';
-    box.innerHTML = '<h2>Start here: a 5-minute tour</h2>' +
+  // The intro: what the demo is and where the tour goes, then Start.
+  function intro() {
+    if (document.querySelector('.tour-scrim')) return;
+    var scrim = document.createElement('div');
+    scrim.className = 'tour-scrim';
+    scrim.innerHTML = '<div class="tour-intro" role="dialog" aria-modal="true" aria-label="Demo tour"><h2>A 5-minute tour of the demo</h2>' +
       '<p>Every tool in this demo shows the same made-up product, a Smart Thermostat for Acme Climate, part way through its first engineering build. The tour follows it from tool to tool:</p>' +
-      '<ol>' + STEPS.map(function (s) { return '<li><b>' + esc(s.title) + '</b> <span style="color:var(--text-2,#a1a1a6)">· ' + esc(NAMES[s.tool]) + '</span></li>'; }).join('') + '</ol>' +
-      '<button class="t-b" data-t="start">Start the tour</button> <span style="margin-left:10px;color:var(--text-2,#a1a1a6)">or pick any tool below and look around. Nothing you change leaves this browser.</span>';
-    if (head) head.parentNode.insertBefore(box, head.nextSibling); else main.insertBefore(box, main.firstChild);
-    box.querySelector('[data-t="start"]').addEventListener('click', function () { go(0); });
+      '<ol>' + STEPS.map(function (s) { return '<li><b>' + esc(s.title) + '</b> <span>· ' + esc(NAMES[s.tool]) + '</span></li>'; }).join('') + '</ol>' +
+      '<p>Nothing you change leaves this browser. You can leave the tour at any step and look around.</p>' +
+      '<div class="t-act"><button class="t-b" data-t="close">Not now</button><button class="t-b p" data-t="start">Start the tour</button></div></div>';
+    document.body.appendChild(scrim);
+    function close() { scrim.remove(); document.removeEventListener('keydown', key); }
+    function key(e) { if (e.key === 'Escape') close(); }
+    document.addEventListener('keydown', key);
+    scrim.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-t]');
+      if (e.target === scrim || (t && t.getAttribute('data-t') === 'close')) close();
+      else if (t && t.getAttribute('data-t') === 'start') { close(); start(); }
+    });
+    var b = scrim.querySelector('[data-t="start"]'); if (b) b.focus();
+  }
+  // From the first step's own page, no reload: the card just appears.
+  function start() { if (folder() === STEPS[0].tool) { set({ step: 0 }); card(); } else go(0); }
+
+  // The hub and Signoff PL: a Tour button in the sidebar, over its footer.
+  function sideButton() {
+    var foot = document.querySelector('.sidebar .side-foot');
+    if (!foot || document.getElementById('tour-link')) return;
+    var b = document.createElement('button');
+    b.id = 'tour-link'; b.type = 'button'; b.className = 'side-link tour-link';
+    b.title = 'A 5-minute tour of the demo, from tool to tool';
+    b.innerHTML = '<span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7"/><path d="M11.8 6.2 10 10l-3.8 1.8L8 8z"/></svg></span>' +
+      '<span>Take the tour<small>5 minutes through the demo</small></span>';
+    b.addEventListener('click', intro);
+    foot.parentNode.insertBefore(b, foot);
   }
 
   function init() {
     style();
-    if (folder() === 'signoff') startCard();
+    if (folder() === 'signoff' || folder() === 'signoff_pl') sideButton();
     card();
     // Another tab moved the tour on, or ended it.
     window.addEventListener('storage', function (e) { if (e.key === KEY) card(); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.SignoffTour = { start: function () { go(0); }, end: function () { set(null); card(); } };
+  window.SignoffTour = { start: start, intro: intro, end: function () { set(null); card(); } };
 })();
