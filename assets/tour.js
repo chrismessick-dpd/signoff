@@ -61,7 +61,11 @@
     'border-radius:16px;box-shadow:var(--shadow-lg,0 24px 64px rgba(0,0,0,.18));padding:22px 24px;font:14px/1.5 var(--sans,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif)}' +
     '.tour-intro h2{margin:0 0 6px;font-size:19px}.tour-intro p{margin:0 0 12px;color:var(--text-2,#515154)}' +
     '.tour-intro ol{margin:0 0 18px;padding-left:20px}.tour-intro li{margin:0 0 3px}.tour-intro li span{color:var(--text-3,#86868b)}' +
-    '.tour-link{width:100%;border:0;background:none;font:inherit;text-align:left;cursor:pointer}';
+    '.tour-side{margin:6px 0 10px}' +
+    '.tour-link{width:calc(100% - 20px);box-sizing:border-box;border:0;font:inherit;text-align:left;cursor:pointer;background:var(--accent-soft,rgba(0,114,127,.1));color:var(--text,#1d1d1f);animation:tour-breathe 2.4s ease-in-out infinite}' +
+    '.tour-link:hover{background:var(--accent-soft,rgba(0,114,127,.1));filter:brightness(1.04)}' +
+    '@keyframes tour-breathe{50%{box-shadow:0 0 0 4px var(--accent-soft,rgba(0,114,127,.1))}}' +
+    '@media (prefers-reduced-motion:reduce){.tour-link{animation:none}}';
 
   function style() { if (document.getElementById('tour-css')) return; var s = document.createElement('style'); s.id = 'tour-css'; s.textContent = css; document.head.appendChild(s); }
 
@@ -124,17 +128,22 @@
   // From the first step's own page, no reload: the card just appears.
   function start() { if (folder() === STEPS[0].tool) { set({ step: 0 }); card(); } else go(0); }
 
-  // The hub and Signoff PL: a Tour button in the sidebar, over its footer.
+  // The hub and Signoff PL: a Demo section in the sidebar with a Take the tour button, over the
+  // list of tools (on the hub, under Home; in PL, over the Dovetail Signoff links).
   function sideButton() {
-    var foot = document.querySelector('.sidebar .side-foot');
-    if (!foot || document.getElementById('tour-link')) return;
+    var at = document.querySelector('.sidebar #side-tools') || document.querySelector('.sidebar .side-nav .side-head');
+    if (!at || document.getElementById('tour-link')) return;
     var b = document.createElement('button');
     b.id = 'tour-link'; b.type = 'button'; b.className = 'side-link tour-link';
     b.title = 'A 5-minute tour of the demo, from tool to tool';
     b.innerHTML = '<span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7"/><path d="M11.8 6.2 10 10l-3.8 1.8L8 8z"/></svg></span>' +
       '<span>Take the tour<small>5 minutes through the demo</small></span>';
     b.addEventListener('click', intro);
-    foot.parentNode.insertBefore(b, foot);
+    var sec = document.createElement('div');
+    sec.className = 'tour-side';
+    sec.innerHTML = '<div class="side-head"><span class="side-label">Demo</span></div>';
+    sec.appendChild(b);
+    at.parentNode.insertBefore(sec, at);
   }
 
   function init() {
