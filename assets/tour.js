@@ -1,8 +1,10 @@
 /* Demo tour: a short guided path through the Smart Thermostat demo, across the Signoff tools.
    Every tool loads it (../signoff/assets/tour.js; the tools share one origin when hosted and when
    served locally). It does nothing outside ?demo. In the hub's and Signoff PL's sidebars it adds a
-   Take the tour button, which opens an intro and then the tour's card. Its state is localStorage
-   signoff.demo.tour: { step } while it runs; it's removed when the visitor ends it. */
+   Take the tour button, which opens an intro and then the tour's card. Its state is sessionStorage
+   signoff.demo.tour: { step } while it runs, removed when the visitor ends it. sessionStorage
+   belongs to the tab, which the tools share (they open each other in the same tab), so a tour
+   left unfinished doesn't come back in a later visit or another tab. */
 (function () {
   'use strict';
   if (!/[?&]demo\b/.test(location.search)) return;
@@ -37,8 +39,8 @@
   ];
 
   function folder() { var m = /\/([^\/]+)\/[^\/]*$/.exec(location.pathname); return m ? m[1] : ''; }
-  function get() { try { var s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && typeof s.step === 'number' && s.step >= 0 && s.step < STEPS.length ? s : null; } catch (e) { return null; } }
-  function set(s) { try { if (s) localStorage.setItem(KEY, JSON.stringify(s)); else localStorage.removeItem(KEY); } catch (e) { /* storage blocked */ } }
+  function get() { try { var s = JSON.parse(sessionStorage.getItem(KEY) || 'null'); return s && typeof s.step === 'number' && s.step >= 0 && s.step < STEPS.length ? s : null; } catch (e) { return null; } }
+  function set(s) { try { if (s) sessionStorage.setItem(KEY, JSON.stringify(s)); else sessionStorage.removeItem(KEY); } catch (e) { /* storage blocked */ } }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   // A step's page, from wherever this page is: every tool is a sibling folder.
   function href(step) { return folder() === 'signoff' || folder() ? STEPS[step].url : STEPS[step].url.replace(/^\.\.\//, ''); }
@@ -69,7 +71,14 @@
 
   function style() { if (document.getElementById('tour-css')) return; var s = document.createElement('style'); s.id = 'tour-css'; s.textContent = css; document.head.appendChild(s); }
 
-  function go(step) { set({ step: step }); location.href = href(step); }
+  // To a step: on this page already (same tool, and every parameter of the step's URL is in this
+  // one), only the card changes; otherwise its page opens.
+  function go(step) {
+    set({ step: step });
+    var want = new URL(href(step), location.href), here = new URL(location.href);
+    var same = STEPS[step].tool === folder() && Array.from(want.searchParams.keys()).every(function (k) { return here.searchParams.get(k) === want.searchParams.get(k); });
+    if (same) card(); else location.href = want.href;
+  }
 
   function card() {
     var st = get(), el = document.getElementById('tour');
@@ -149,9 +158,9 @@
   function init() {
     style();
     if (folder() === 'signoff' || folder() === 'signoff_pl') sideButton();
+    // An older version kept the tour in localStorage, where an unfinished one came back later.
+    try { localStorage.removeItem(KEY); } catch (e) { /* storage blocked */ }
     card();
-    // Another tab moved the tour on, or ended it.
-    window.addEventListener('storage', function (e) { if (e.key === KEY) card(); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
   window.SignoffTour = { start: start, intro: intro, end: function () { set(null); card(); } };
