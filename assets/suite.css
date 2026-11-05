@@ -429,7 +429,9 @@ textarea.input { resize: vertical; min-height: 64px; line-height: 1.45; }
 .cmt-del:hover { color: var(--issue); }
 .composer { border-top: 1px solid var(--hair); padding: 12px 14px 14px; }
 .composer textarea { min-height: 44px; max-height: 160px; }
-.composer-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 11.5px; color: var(--text-3); }
+.composer-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; margin-top: 8px; font-size: 11.5px; color: var(--text-3); }
+.composer-hints { display: flex; flex-direction: column; gap: 2px; }
+.composer-hints b { font-weight: 600; color: var(--text-2); }
 kbd { font: 500 11px var(--mono); padding: 1px 5px; border-radius: 4px; background: var(--bg-sunk); border: 1px solid var(--hair); }
 
 /* ── Findings table ── */
@@ -488,6 +490,26 @@ kbd { font: 500 11px var(--mono); padding: 1px 5px; border-radius: 4px; backgrou
 .menu button.danger { color: var(--issue); }
 .menu button.danger:hover { background: var(--issue); color: #fff; }
 .menu hr { border: none; border-top: 1px solid var(--hair); margin: 4px 6px; }
+
+/* What's unsynced: the list above the sidebar's sync pill */
+.sync-pop { width: 340px; max-width: calc(100vw - 16px); max-height: min(70vh, 520px); overflow-y: auto; padding: 6px; }
+.sync-pop-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 6px 10px 8px; font-size: 13px; font-weight: 600; }
+.sync-pop-head small { font-size: 11px; font-weight: 400; color: var(--text-3); }
+.sync-pop-group { border-top: 1px solid var(--hair); padding: 4px 0; }
+.sync-pop .sync-pop-group button { display: grid; grid-template-columns: auto 1fr; column-gap: 8px; row-gap: 1px; align-items: baseline; padding: 6px 10px; }
+.sync-pop-name { grid-column: 1 / -1; font-weight: 600; font-size: 12.5px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sync-pop-name + .sync-pop-badge { grid-column: 1 / -1; justify-self: start; }
+.sync-pop-badge { font-size: 10.5px; padding: 1px 6px; border-radius: 980px; background: var(--hair); color: var(--text-2); }
+.sync-pop-kind { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-3); white-space: nowrap; }
+.sync-pop-text { font-size: 12.5px; min-width: 0; overflow-wrap: anywhere; }
+.sync-pop-text em { font-style: normal; color: var(--text-3); }
+.sync-pop-sub { grid-column: 2; font-size: 11px; color: var(--text-3); }
+.sync-pop-name + .sync-pop-sub { grid-column: 1 / -1; }
+.sync-pop .sync-pop-group button:hover .sync-pop-kind,
+.sync-pop .sync-pop-group button:hover .sync-pop-text em,
+.sync-pop .sync-pop-group button:hover .sync-pop-sub { color: rgba(255, 255, 255, 0.8); }
+.sync-pop-note { font-size: 11.5px; color: var(--text-3); padding: 4px 10px 6px; }
+.sync-details[hidden] { display: none; }
 
 /* Toast */
 .toasts { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 90; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
@@ -622,6 +644,15 @@ button.fab-rev { border: none; margin-left: 6px; cursor: pointer; background: va
 .rev-issue { display: flex; align-items: center; gap: 10px; text-align: left; border: none; background: transparent; border-radius: 7px; padding: 5px 7px; font-size: 13px; color: var(--text); cursor: pointer; }
 .rev-issue:hover { background: var(--bg-sunk); }
 .rev-issue > span:nth-child(2) { flex: 1; min-width: 0; }
+.rev-notes-count { font: 400 13px var(--sans); }
+.rev-notes-list { padding: 8px 12px; }
+.rev-notes-empty p { margin: 0; }
+.rev-note { padding: 6px 0 2px; }
+.rev-note + .rev-note { border-top: 1px solid var(--hair); }
+.rev-note-head { width: 100%; font-weight: 500; margin-bottom: 6px; }
+.rev-note-head:disabled { cursor: default; background: transparent; }
+.rev-note-cl { font-size: 12px; font-weight: 400; flex: none; min-width: 0; }
+.rev-note .cmt { margin: 0 0 10px 7px; }
 .rev-older { border-top: 1px solid var(--hair); padding-top: 10px; margin-top: 10px; }
 .rev-older .rev-acts { margin-top: 8px; }
 @media (max-width: 860px) { .rev-body { padding-left: 18px; } }

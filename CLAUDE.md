@@ -28,7 +28,7 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   sidebar link needs `data-tool`; the panels' "Try the demo" links must not have it (they're
   `data-internal`, hidden in demo mode).
 - **Hand-copied numbers.** The check counts on the picker panels and in the About sheet (EE 930, ME 845,
-  FW 196, Fabcheck's 28 rules) are copied by hand. Update them when the templates change.
+  FW 196, Fabcheck's 33 rules) are copied by hand. Update them when the templates change.
 - **Stamp before committing.** Run `python tools/stamp_version.py` after any change to
   `index.html` or `assets/` (including `sync_suite_css.py`). It puts `?v=<hash>` on the asset
   URLs so a phone never mixes a new page with cached old CSS or JS; `--check` exits 1 when stale.
