@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'">
+<title>Logo Motion Lab</title>
+<link rel="stylesheet" href="../assets/suite.css">
+<style>
+  body { background: var(--bg); color: var(--text); margin: 0; font-family: var(--display); }
+  .lab { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; }
+  .lab h1 { font: 600 26px/1.2 var(--display); letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lab .lede { color: var(--text-2); margin: 0 0 28px; max-width: 64ch; line-height: 1.5; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--bg-elev); border-radius: 16px; padding: 20px; }
+  .card h2 { font: 600 12px/1 var(--display); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin: 0 0 16px; }
+  .hero { display: grid; place-items: center; padding: 36px 20px; }
+  .tile { background: #004952; display: grid; place-items: center; flex: none; overflow: hidden; }
+  .tile svg { display: block; overflow: visible; }
+  .t240 { width: 240px; height: 240px; border-radius: 56px; }
+  .t240 svg { height: 144px; width: 86px; }
+  .t96 { width: 96px; height: 96px; border-radius: 24px; }
+  .t96 svg { height: 58px; width: 35px; }
+  .t48 { width: 48px; height: 48px; border-radius: 12px; }
+  .t48 svg { height: 29px; width: 17px; }
+  .t30 { width: 30px; height: 30px; border-radius: 8px; }
+  .t30 svg { height: 18px; width: 11px; }
+  .sizes { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 24px; }
+  .sizes figure { margin: 0; display: grid; justify-items: center; gap: 8px; }
+  .sizes figcaption { font-size: 11px; color: var(--text-3); }
+  .sidebar { display: flex; align-items: center; gap: 10px; padding: 14px; border-radius: 12px; background: var(--bg); }
+  .sidebar b { display: block; font: 600 15px/1.1 var(--display); }
+  .sidebar small { display: block; font-size: 11px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px; }
+  .bare { display: flex; gap: 16px; }
+  .bare div { width: 96px; height: 96px; border-radius: 16px; display: grid; place-items: center; overflow: hidden; }
+  .bare svg { height: 64px; width: 38px; overflow: visible; }
+  .bare .light { background: #fff; border: 1px solid rgba(0,0,0,0.08); }
+  .bare .dark { background: #000; }
+  .ctl { display: grid; gap: 16px; }
+  .ctl label { display: grid; gap: 6px; font-size: 13px; color: var(--text-2); }
+  .ctl .row { display: flex; justify-content: space-between; }
+  .ctl output { color: var(--text-3); font-variant-numeric: tabular-nums; }
+  .seg { display: flex; background: var(--bg-sunk); border-radius: 9px; padding: 2px; }
+  .seg button { flex: 1; border: 0; background: none; color: var(--text-2); font: inherit; font-size: 13px; padding: 6px 8px; border-radius: 7px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--bg-elev); color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btns button { flex: 1; border: 1px solid var(--line, rgba(128,128,128,0.3)); background: var(--bg); color: var(--text); font: inherit; font-size: 13px; padding: 7px 10px; border-radius: 8px; cursor: pointer; }
+  .note { font-size: 12px; color: var(--text-3); line-height: 1.5; margin: 0; }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  .ctl label.check { display: flex; align-items: center; gap: 8px; color: var(--text); }
+  .ctl label.check input { accent-color: var(--accent); width: 16px; height: 16px; margin: 0; }
+  .tabs { max-width: 360px; margin: 0 0 20px; }
+  .tabs button { font-size: 14px; padding: 8px 12px; }
+  [hidden] { display: none !important; }
+  .rm { display: none; font-size: 13px; color: var(--text-2); background: var(--accent-soft); padding: 10px 12px; border-radius: 10px; margin-bottom: 16px; }
+</style>
+<script src="logo-motion.js?v=4db2ad0f"></script>
+<script src="logo-spin.js?v=e8438db2"></script>
+<script src="logo-motion-lab.js?v=64ed8f66" defer></script>
+</head>
+<body>
+<main class="lab">
+  <h1>Logo motion lab</h1>
+  <p class="lede">The Dovetail mark is a block drawn in perspective with a dovetail set into it. Each tab animates it a different way. This is a prototype. Nothing here is used by the tools yet.</p>
+  <div class="seg tabs" role="tablist" aria-label="Animation">
+    <button type="button" role="tab" data-tab="tap" aria-pressed="true" aria-selected="true">Tap out</button>
+    <button type="button" role="tab" data-tab="spin" aria-pressed="false" aria-selected="false">Spin about</button>
+  </div>
+  <p class="rm" id="rm">Your system asks for reduced motion, so the marks start still. Press <b>Play</b> to watch them anyway.</p>
+
+  <div class="grid">
+    <div>
+      <section class="card hero"><div class="tile t240" data-mark></div></section>
+      <section class="card" style="margin-top:24px">
+        <h2>Where it would appear</h2>
+        <div class="sizes">
+          <div class="sidebar">
+            <div class="tile t30" data-mark></div>
+            <div><b>Signoff EE</b><small>Electrical design review</small></div>
+          </div>
+          <figure><div class="tile t96" data-mark></div><figcaption>96 px</figcaption></figure>
+          <figure><div class="tile t48" data-mark></div><figcaption>48 px</figcaption></figure>
+          <figure><div class="tile t30" data-mark></div><figcaption>30 px tile</figcaption></figure>
+        </div>
+        <div class="sizes bare">
+          <div class="light" data-mark data-fill="#004952"></div>
+          <div class="light" data-mark data-fill="#000"></div>
+          <div class="dark" data-mark data-fill="#fff"></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="card ctl" aria-label="Animation settings">
+      <h2>Settings</h2>
+      <div class="ctl" id="ctl-tap">
+      <p class="note">The dovetail sits in the block, is tapped out of its right side a tap at a time, falls away to leave the logo, and then seats again. With cutting on, each round starts from a blank block and the dovetail's lines are drawn in first.</p>
+      <label class="check"><input type="checkbox" id="cut" checked> Cut the dovetail first</label>
+      <label><span class="row">Cutting time <output id="cut-out">2 s</output></span>
+        <input type="range" id="cutTime" min="0.5" max="8" step="0.25" value="2"></label>
+      <label><span class="row">Seated for <output id="seated-out">3 s</output></span>
+        <input type="range" id="seated" min="0.5" max="20" step="0.5" value="3"></label>
+      <label><span class="row">Tap-out speed <output id="speed-out">1×</output></span>
+        <input type="range" id="speed" min="0.25" max="3" step="0.05" value="1"></label>
+      <label><span class="row">Logo shown for <output id="logo-out">6 s</output></span>
+        <input type="range" id="logo" min="0.5" max="30" step="0.5" value="6"></label>
+      <p class="note">Cutting time is how long the lines take to draw in. Seated is how long the dovetail sits in the block before the taps start. Tap-out speed sets how quickly the taps come and the dovetail falls. Logo shown is how long the logo stays before the dovetail seats again.</p>
+      <div class="btns">
+        <button type="button" id="b-tap">Tap out now</button>
+        <button type="button" id="b-reseat">Seat now</button>
+      </div>
+      </div>
+      <div class="ctl" id="ctl-spin" hidden>
+      <p class="note">The block spins half a turn about z, into the image, while the dovetail stays put. Then the dovetail spins about y, up the image, changing color each turn. It rests as the logo between moves.</p>
+      <label><span class="row">Rest between moves <output id="rest-out">2 s</output></span>
+        <input type="range" id="rest" min="0.5" max="15" step="0.5" value="2"></label>
+      <label><span class="row">Block spin <output id="block-out">2.4 s</output></span>
+        <input type="range" id="blockTime" min="0.6" max="8" step="0.2" value="2.4"></label>
+      <label><span class="row">Dovetail turns <output id="turns-out">2</output></span>
+        <input type="range" id="turns" min="1" max="6" step="1" value="2"></label>
+      <label><span class="row">Time per dovetail turn <output id="turn-out">1.4 s</output></span>
+        <input type="range" id="turnTime" min="0.4" max="5" step="0.1" value="1.4"></label>
+      </div>
+      <div class="btns">
+        <button type="button" id="b-pause">Pause</button>
+        <button type="button" id="b-restart">Start over</button>
+      </div>
+      <p class="note">In the tools, only the sidebar mark would move, and it would stay still for anyone whose system asks for reduced motion.</p>
+    </aside>
+  </div>
+</main>
+</body>
+</html>
