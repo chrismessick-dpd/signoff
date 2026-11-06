@@ -1,4 +1,7 @@
-// Animated Dovetail mark (prototype): the dovetail is tapped out of the block.
+// The animated Dovetail mark: the dovetail is cut into the block, tapped out of its side, and
+// falls away to leave the logo. Every Signoff tool loads this with a plain script tag, like
+// tour.js; it swaps the static logo in the sidebar's .brand-mark tile for this one, and leaves it
+// alone for anyone whose system asks for reduced motion. lab/logo-motion.html tunes it.
 (function () {
   'use strict';
   var NS = 'http://www.w3.org/2000/svg';
@@ -32,6 +35,7 @@
     logo: 6,        // seconds the logo shows before the dovetail seats again
     cut: true,      // start each round from a blank block and draw the dovetail's lines in
     cutTime: 2,     // seconds to draw the lines
+    startWith: 'block',  // 'logo' starts on the plain logo, as a page opens, and holds it first
     firstSeated: null  // seconds for the first wait only, to stagger several marks
   };
 
@@ -169,6 +173,7 @@
     var out = 0, from = 0, to = 0, tapAt = 0, nextTap = 0;
     var kx = 0, fy = 0, vy = 0, vx = 0, rot = 0, spin = 0;
     var keyA = o.cut ? 0 : 1, holeA = o.cut ? 0 : 1, cutP = 0, cutA = 0, paused = false, last = 0, raf = 0;
+    if (o.startWith === 'logo') { phase = 'logo'; keyA = 0; holeA = 1; }
 
     function now() { return performance.now() / 1000; }
     function travel() { return U + 0.5; }
@@ -297,6 +302,26 @@
       stop: function () { cancelAnimationFrame(raf); }
     };
   }
+
+  // The tools' fixed settings (Chris, 2026-11-05).
+  var TOOL = { cut: true, cutTime: 5, seated: 5, speed: 1, logo: 30, startWith: 'logo' };
+
+  // Swaps each sidebar logo for the animated one.
+  function autostart() {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    [].forEach.call(document.querySelectorAll('.brand-mark'), function (host) {
+      var old = host.querySelector('svg');
+      if (!old || host.getAttribute('data-animated')) return;
+      host.setAttribute('data-animated', '1');
+      host.style.overflow = 'hidden';   // the falling dovetail stays inside the tile
+      var opts = {}, k;
+      for (k in TOOL) opts[k] = TOOL[k];
+      create(host, opts);
+      old.remove();
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', autostart);
+  else autostart();
 
   window.DovetailMark = {
     create: create,
