@@ -126,10 +126,24 @@
     return faces;
   }
 
+  // The color showing behind the mark (the tile's), for lines that should match the hairline.
+  function backdrop(node) {
+    for (; node && node.nodeType === 1; node = node.parentNode) {
+      var m = /rgba?\(([^)]+)\)/.exec(getComputedStyle(node).backgroundColor);
+      if (!m) continue;
+      var v = m[1].split(',').map(Number);
+      if (v.length > 3 && v[3] === 0) continue;
+      return '#' + v.slice(0, 3).map(function (x) { return (x < 16 ? '0' : '') + Math.round(x).toString(16); }).join('');
+    }
+    return null;
+  }
+
   function create(host, opts) {
     var o = {}, k;
     for (k in DEFAULTS) o[k] = DEFAULTS[k];
     for (k in opts || {}) o[k] = opts[k];
+    // The dovetail's lines are the color behind the mark, like the hairline.
+    var line = o.bg || backdrop(host) || shade(o.fill, 0.7);
     var id = 'dvt-tap-' + (++uid);
     var svg = el('svg', { viewBox: VB, 'aria-hidden': 'true', overflow: 'visible' });
     var defs = el('defs', {});
@@ -158,7 +172,7 @@
     var keyG = el('g', {});
     svg.appendChild(keyG);
     // The cut lines, drawn along the path as the cut goes on.
-    var cut = el('path', { d: CUT, fill: 'none', stroke: shade(o.fill, 0.7), 'stroke-width': '0.8',
+    var cut = el('path', { d: CUT, fill: 'none', stroke: line, 'stroke-width': '2',
       'stroke-linecap': 'round', 'stroke-linejoin': 'round', pathLength: '1', 'stroke-dasharray': '1 1',
       'stroke-dashoffset': '1', opacity: '0' });
     svg.appendChild(cut);
@@ -192,11 +206,14 @@
       if (seated) keyG.setAttribute('mask', 'url(#' + id + 'k)'); else keyG.removeAttribute('mask');
       if (seated) keyG.removeAttribute('filter'); else keyG.setAttribute('filter', 'url(#' + id + 's)');
       if (keyA <= 0) { keyG.innerHTML = ''; return; }
-      var face = shade(o.fill, 0.28), html = '', front = '';
+      // The dovetail is the block's own color; an edge in the backdrop's color shows where it is.
+      var face = o.fill, soft = line, html = '', front = '';
       if (seated) {
-        // Seated: exactly the logo's cut-out, a shade off the block so the key reads as its own
-        // piece, with a soft edge rather than an outline.
-        html = '<path d="' + KEY + '" fill="' + face + '" stroke="' + shade(o.fill, 0.36) + '" stroke-width="0.4" stroke-linejoin="round"/>';
+        // Seated: the logo's cut-out in the block's color, outlined along the same lines the cut
+        // draws, so nothing shifts when it fills in. Its two edges on the hairline aren't stroked;
+        // the hairline is their line, and stroking them would widen it.
+        html = '<path d="' + KEY + '" fill="' + face + '"/>' +
+          '<path d="' + CUT + '" fill="none" stroke="' + soft + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
       } else {
         keyFaces(kx, fy, rot).forEach(function (f) {
           if (dot(f.n, sub(EYE, centroid(f.poly))) <= 0) return;   // faces away from the viewer
@@ -204,10 +221,9 @@
           // out past the block's side face, until it's falling free.
           var poly = (f.name === 'front' || f.name === 'right' || phase === 'falling') ? f.poly : clipRight(f.poly, U + 0.01);
           if (poly.length < 3) return;
-          // Gentle shading, and each face stroked in its own color with round joins, so the edges
-          // and corners are slightly rounded instead of outlined. The front goes on last, on top.
-          var fill = f.name === 'front' ? face : shade(o.fill, 0.2 + 0.16 * (1 - dot(f.n, LIGHT3)) / 2 + (f.name === 'right' ? 0.05 : 0));
-          var path = '<path d="' + pathOf(poly) + '" fill="' + fill + '" stroke="' + fill + '" stroke-width="1.1" stroke-linejoin="round"/>';
+          // Flat, in the block's color, with thin lines in the backdrop's color on its visible
+          // edges. The front goes on last, on top.
+          var path = '<path d="' + pathOf(poly) + '" fill="' + o.fill + '" stroke="' + line + '" stroke-width="1" stroke-linejoin="round"/>';
           if (f.name === 'front') front = path; else html += path;
         });
         html += front;
