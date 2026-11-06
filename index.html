@@ -9,9 +9,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Dovetail Signoff</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23004952'/%3E%3Csvg x='10' y='6' width='12' height='20' viewBox='0 0 59.21 98.68'%3E%3Cpath d='M0 0h18.19v41.88H0zM0 56.79h18.19v41.88H0zM18.2 41.89h1.59v14.91H18.2zM19.79 0v41.89l24.96-6.63v28.16L19.79 56.79v41.89l39.42-10.47V10.47z' fill='%23fff'/%3E%3C/svg%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/suite.css?v=2230401ec3df">
-<link rel="stylesheet" href="assets/hub.css?v=2230401ec3df">
-<script src="assets/hub.js?v=2230401ec3df"></script>
+<link rel="stylesheet" href="assets/suite.css?v=39f4232f194f">
+<link rel="stylesheet" href="assets/hub.css?v=39f4232f194f">
+<script src="assets/hub.js?v=39f4232f194f"></script>
 </head>
 <body>
 <div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Every tool shows the same made-up product, a Smart Thermostat for Acme Climate, so you can follow it from one tool to the next. Nothing here is real project data.</div>
@@ -63,6 +63,10 @@
         <a class="side-link" href="../partcheck/index.html" data-tool="partcheck" title="Partcheck: mechanical package check (prototype)">
           <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/><path d="M12.5 13.5l1.6 1.6 2.9-3" stroke-linecap="round"/></svg></span>
           <span>Partcheck<small>Mechanical package check</small></span>
+        </a>
+        <a class="side-link" href="../loom/index.html" data-tool="loom" title="Loom: harness drawings (prototype)">
+          <span class="tool-mark"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"><path d="M2.5 6.5h3.5c3 0 3 7 6 7h5.5M2.5 13.5h3.5c3 0 3-7 6-7h5.5"/></svg></span>
+          <span>Loom<small>Harness drawings</small></span>
         </a>
       </div>
     </nav>
@@ -209,6 +213,27 @@
             <path class="a-dim arrow" d="M186 70V22M180 30l6-8 6 8"/>
             <rect x="160" y="132" width="56" height="5" rx="2.5" fill="url(#g-scale)"/>
           </symbol>
+
+          <!-- Loom: two connector tables and a cable box, wires running through it (made up) -->
+          <symbol id="art-loom" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="120" cy="128" rx="96" ry="7"/>
+            <g fill="none" stroke-linecap="round" stroke-width="5" stroke="var(--art-edge)" stroke-opacity=".5">
+              <path d="M66 52C90 52 90 62 104 62h32c14 0 14-20 38-20"/><path d="M66 66C90 66 90 76 104 76h32c14 0 14-20 38-20"/>
+              <path d="M66 80C90 80 90 90 104 90h32c14 0 14-20 38-20"/><path d="M66 94C90 94 90 104 104 104h32c14 0 14-20 38-20"/>
+            </g>
+            <g fill="none" stroke-linecap="round" stroke-width="3">
+              <path stroke="#ff453a" d="M66 52C90 52 90 62 104 62h32c14 0 14-20 38-20"/><path stroke="#8e8e93" d="M66 66C90 66 90 76 104 76h32c14 0 14-20 38-20"/>
+              <path stroke="#0a84ff" d="M66 80C90 80 90 90 104 90h32c14 0 14-20 38-20"/><path stroke="#ffd60a" d="M66 94C90 94 90 104 104 104h32c14 0 14-20 38-20"/>
+            </g>
+            <rect x="24" y="30" width="42" height="74" rx="3" fill="var(--art-iso-t)" stroke="var(--art-edge)" stroke-opacity=".55"/>
+            <rect x="24" y="30" width="42" height="12" rx="3" fill="#00727f" fill-opacity=".85"/>
+            <path class="a-edge strong" d="M24 59h42M24 73h42M24 87h42M52 45v59"/>
+            <rect x="174" y="20" width="42" height="74" rx="3" fill="var(--art-iso-t)" stroke="var(--art-edge)" stroke-opacity=".55"/>
+            <rect x="174" y="20" width="42" height="12" rx="3" fill="#00727f" fill-opacity=".85"/>
+            <path class="a-edge strong" d="M174 49h42M174 63h42M174 77h42M188 35v59"/>
+            <rect x="104" y="46" width="32" height="66" rx="2" fill="var(--art-iso-t)" fill-opacity=".35" stroke="var(--art-edge)" stroke-opacity=".6" stroke-dasharray="4 3"/>
+            <rect x="104" y="46" width="32" height="10" fill="#00727f" fill-opacity=".85"/>
+          </symbol>
         </defs>
       </svg>
 
@@ -243,6 +268,11 @@
             <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-partcheck"/></svg></span>
             <span class="pk-cat">Dovetail tools</span>
             <span class="pk-name">Partcheck <span class="pk-proto">Prototype</span></span>
+          </a>
+          <a class="pk-tile" href="../loom/index.html" data-tool="loom" data-pick="loom">
+            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-loom"/></svg></span>
+            <span class="pk-cat">Dovetail tools</span>
+            <span class="pk-name">Loom <span class="pk-proto">Prototype</span></span>
           </a>
         </nav>
 
@@ -335,6 +365,20 @@
                 <a class="btn btn-primary pk-open" href="../partcheck/index.html" data-tool="partcheck">Open Partcheck<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
                 <a class="btn btn-plain" href="../partcheck/index.html?demo" data-internal>Try the demo</a>
                 <a class="pk-more" href="#about-partcheck">More about Partcheck</a>
+              </div>
+            </div>
+          </article>
+          <article class="pk-panel" data-panel="loom" hidden>
+            <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-loom"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Dovetail tools · Harnesses</div>
+              <h2 class="pk-title">Loom <span class="pk-proto">Prototype</span></h2>
+              <p class="pk-desc">Draws the harness a tech builds from: connector tables, cables and wires in a wiring diagram, with connector faces, a wire list and a BOM on one sheet. Board connectors come from a Signoff EE board's fab package, with their pins and nets.</p>
+              <div class="chips"><span class="chip">Wiring diagram</span><span class="chip">Wire list</span><span class="chip">BOM</span><span class="chip">From a board</span></div>
+              <p class="pk-note">Harnesses stay in the browser until you save a file.</p>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../loom/index.html" data-tool="loom">Open Loom<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../loom/index.html?demo" data-internal>Try the demo</a>
               </div>
             </div>
           </article>
@@ -489,7 +533,7 @@
     </div>
   </main>
 </div>
-<script src="assets/tour.js?v=2230401ec3df"></script>
-<script src="assets/mark.js?v=2230401ec3df"></script>
+<script src="assets/tour.js?v=39f4232f194f"></script>
+<script src="assets/mark.js?v=39f4232f194f"></script>
 </body>
 </html>

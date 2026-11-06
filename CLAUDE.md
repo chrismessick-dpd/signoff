@@ -2,7 +2,7 @@
 
 This repo is the landing page for the suite: one static page, `index.html`, plus `assets/hub.js`
 and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee_design_review`,
-`me_design_review`, `fw_design_review` (a prototype), `signoff_pl`, `pcb_dfm` and `partcheck` (a prototype). When the suite folder is checked out, read
+`me_design_review`, `fw_design_review` (a prototype), `signoff_pl`, `pcb_dfm`, `partcheck` (a prototype) and `loom` (a prototype; only the hub links to it so far). When the suite folder is checked out, read
 `../CLAUDE.md` first. This repo is public.
 
 - **`docs/guide.md` is the suite-wide guide.** It covers:
@@ -18,7 +18,7 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   `python tools/sync_suite_css.py`. Never edit it here.
 - **People & access link** (FTEs only) opens Signoff EE's `?page=people`. `hub.js` copies the
   engine's `model.tokenTag`; keep it identical.
-- **Tool picker.** The page opens with a gallery of the six tools (`.pk-tile`) over a stage
+- **Tool picker.** The page opens with a gallery of the seven tools (`.pk-tile`) over a stage
   (`.pk-panel`, one per tool) that previews the selected one. A plain click selects; a click on
   the selected tile, a double-click or Enter opens it; modifier clicks open as links. The choice is
   remembered in `signoff.hub.ui.pick` (EE by default). The art is SVG `<symbol>`s at the top of
