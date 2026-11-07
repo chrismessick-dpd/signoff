@@ -1,28 +1,31 @@
 // Animated Loom mark (prototype): the twisted pair spins about its own axis.
 // The Loom icon is two strands that cross once (Loom's sidebar SVG, 20 by 20:
-// "M2.5 6.5h3.5c3 0 3 7 6 7h5.5" and its mirror). Here each strand is a curve wound about the
-// axis y = 10 at radius 3.5. A strand's angle about the axis is 0 on the left lead (y = 6.5) and
-// half a turn on the right lead (y = 13.5). Across the twist the angle is read back from the icon's
-// own cubic, so the resting frame is exactly the icon. Spinning adds the same angle to every
+// "M2.5 6.5h3.5c3 0 3 7 6 7h5.5" and its mirror). That icon crosses at x = 9, left of center, so
+// here the twist is moved one unit right to cross at x = 10, with leads of 4.5 on each side.
+// Each strand is a curve wound about the axis y = 10 at radius 3.5. A strand's angle about the
+// axis is 0 on the left lead (y = 6.5) and half a turn on the right lead (y = 13.5). Across the
+// twist the angle is read back from the icon's cubic, so the resting frame is the icon, centered. Spinning adds the same angle to every
 // point: y = 10 - 3.5 cos(a + spin), depth = sin(a + spin). The other strand is half a turn behind,
 // so after every half turn the mark is the icon again.
 //
 // Depth: each strand is split where it passes the axis plane. The back pieces are drawn first,
 // a little fainter and thinner, and the front pieces cut a gap through them (an SVG mask, so it
-// works on any background). The cue fades out as a spin ends, so the resting mark is the icon.
+// works on any background). The fading and thinning ease out as a spin ends. The gap stays at rest
+// (o.restGap), so the resting mark reads as one strand passing over the other; without it the
+// resting mark is the flat icon, where the strands seem to meet.
 (function () {
   'use strict';
   var NS = 'http://www.w3.org/2000/svg';
-  var AXIS = 10, R = 3.5, X0 = 2.5, X1 = 17.5, TW0 = 6, TW1 = 12;
+  var AXIS = 10, R = 3.5, X0 = 2.5, X1 = 17.5, TW0 = 7, TW1 = 13, TWM = (TW0 + TW1) / 2;
   var uid = 0;
 
   // The strand's angle along x: [x, angle] pairs. Leads are straight; the twist samples the icon's
-  // cubic (6,6.5) (9,6.5) (9,13.5) (12,13.5).
+  // cubic, centered: (7,6.5) (10,6.5) (10,13.5) (13,13.5).
   var PROFILE = (function () {
     var p = [[X0, 0]], N = 64;
     for (var i = 0; i <= N; i++) {
       var t = i / N, m = 1 - t;
-      var x = m * m * m * TW0 + 3 * m * m * t * 9 + 3 * m * t * t * 9 + t * t * t * TW1;
+      var x = m * m * m * TW0 + 3 * m * m * t * TWM + 3 * m * t * t * TWM + t * t * t * TW1;
       var y = m * m * m * 6.5 + 3 * m * m * t * 6.5 + 3 * m * t * t * 13.5 + t * t * t * 13.5;
       p.push([x, Math.acos(Math.max(-1, Math.min(1, (AXIS - y) / R)))]);
     }
@@ -63,7 +66,7 @@
     return { front: front, back: back };
   }
 
-  var DEFAULTS = { fill: '#fff', size: 0.72, weight: 1.7, turnTime: 2.4, turns: 1, rest: 3, firstRest: null };
+  var DEFAULTS = { fill: '#fff', size: 0.72, weight: 1.7, turnTime: 2.4, turns: 1, rest: 3, restGap: true, firstRest: null };
 
   function create(host, opts) {
     var o = {}, k;
@@ -122,14 +125,14 @@
 
     function render() {
       var p = pieces(spin);
-      var sw = o.weight;
+      var sw = o.weight, gap = o.restGap ? 1 : cue;
       front.setAttribute('d', p.front);
       back.setAttribute('d', p.back);
       halo.setAttribute('d', p.front);
       front.setAttribute('stroke', o.fill); back.setAttribute('stroke', o.fill);
       front.setAttribute('stroke-width', f(sw));
       back.setAttribute('stroke-width', f(sw * (1 - 0.18 * cue)));
-      halo.setAttribute('stroke-width', f(cue > 0 ? sw + 2 * 0.55 * sw * cue : 0));
+      halo.setAttribute('stroke-width', f(gap > 0 ? sw + 2 * 0.55 * sw * gap : 0));
       backG.setAttribute('opacity', f(1 - 0.38 * cue));
       dirty = false;
     }

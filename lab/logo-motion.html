@@ -57,8 +57,8 @@
 </style>
 <script src="../assets/mark.js"></script>
 <script src="logo-spin.js?v=e8438db2"></script>
-<script src="loom-spin.js?v=d1ce5f96"></script>
-<script src="logo-motion-lab.js?v=088f67e4" defer></script>
+<script src="loom-spin.js?v=936b7bcf"></script>
+<script src="logo-motion-lab.js?v=dc20d8dd" defer></script>
 </head>
 <body>
 <main class="lab">
@@ -124,7 +124,8 @@
         <input type="range" id="turnTime" min="0.4" max="5" step="0.1" value="1.4"></label>
       </div>
       <div class="ctl" id="ctl-loom" hidden>
-      <p class="note">Loom's mark is a twisted pair. Here the two strands spin about the axis they share, then rest as the mark. The strands are alike, so every half turn lands back on the mark. While it spins, the strand behind is a little fainter and the one in front cuts a gap through it.</p>
+      <p class="note">Loom's mark is a twisted pair. Here the two strands spin about the axis they share, then rest as the mark. The strands are alike, so every half turn lands back on the mark. The strand in front cuts a gap through the one behind, so one passes over the other; while it spins, the strand behind is also a little fainter.</p>
+      <label class="check"><input type="checkbox" id="lgap" checked> Over and under at rest</label>
       <label><span class="row">Size in its tile <output id="lsize-out">72%</output></span>
         <input type="range" id="lsize" min="0.4" max="0.9" step="0.01" value="0.72"></label>
       <label><span class="row">Strand weight <output id="lweight-out">1.7</output></span>
