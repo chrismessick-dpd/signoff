@@ -57,8 +57,8 @@
 </style>
 <script src="../assets/mark.js"></script>
 <script src="logo-spin.js?v=e8438db2"></script>
-<script src="../../loom/assets/mark.js?v=8bd844a1"></script>
-<script src="logo-motion-lab.js?v=dc20d8dd" defer></script>
+<script src="../../loom/assets/mark.js?v=812f47be"></script>
+<script src="logo-motion-lab.js?v=2bc04d46" defer></script>
 </head>
 <body>
 <main class="lab">
@@ -130,13 +130,17 @@
         <input type="range" id="lsize" min="0.4" max="0.9" step="0.01" value="0.75"></label>
       <label><span class="row">Strand weight <output id="lweight-out">2</output></span>
         <input type="range" id="lweight" min="0.8" max="3" step="0.05" value="2"></label>
+      <label><span class="row">Shade at the top <output id="ltop-out">15%</output></span>
+        <input type="range" id="ltop" min="0" max="0.6" step="0.01" value="0.15"></label>
+      <label><span class="row">Shade at the bottom <output id="lbot-out">0%</output></span>
+        <input type="range" id="lbot" min="0" max="0.8" step="0.01" value="0"></label>
       <label><span class="row">Turns per spin <output id="lturns-out">½</output></span>
         <input type="range" id="lturns" min="0.5" max="4" step="0.5" value="0.5"></label>
       <label><span class="row">Time per turn <output id="lturn-out">8 s</output></span>
         <input type="range" id="lturnTime" min="0.6" max="12" step="0.2" value="8"></label>
-      <label><span class="row">Rest between spins <output id="lrest-out">36 s</output></span>
-        <input type="range" id="lrest" min="0" max="60" step="1" value="36"></label>
-      <p class="note">Size is how much of the tile's width the strands span (the Dovetail mark is 60% of its tile's height). Weight is the stroke in the mark's 20-unit drawing; Loom's static icon used 1.7. Set the rest to 0 to spin without stopping. These start at Loom's own settings; the animation itself is <code>loom/assets/mark.js</code>, which Loom's sidebar runs.</p>
+      <label><span class="row">Rest between spins <output id="lrest-out">24 s</output></span>
+        <input type="range" id="lrest" min="0" max="60" step="1" value="24"></label>
+      <p class="note">Size is how much of the tile's width the strands span (the Dovetail mark is 60% of its tile's height). Weight is the stroke in the mark's 20-unit drawing; Loom's static icon used 1.7. The shades fade the strands toward the background from top to bottom, so they aren't a glaring white and each strand shades as it rises and falls. Set the rest to 0 to spin without stopping. These start at Loom's own settings; the animation itself is <code>loom/assets/mark.js</code>, which Loom's sidebar runs.</p>
       <div class="btns">
         <button type="button" id="b-lspin">Spin now</button>
       </div>

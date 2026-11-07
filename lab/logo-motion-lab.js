@@ -11,7 +11,7 @@
   function settings() {
     if (tab === 'tap') return { seated: num('seated'), speed: num('speed'), logo: num('logo'), cut: $('cut').checked, cutTime: num('cutTime') };
     if (tab === 'spin') return { rest: num('rest'), blockTime: num('blockTime'), turns: num('turns'), turnTime: num('turnTime') };
-    return { size: num('lsize'), weight: num('lweight'), turns: num('lturns'), turnTime: num('lturnTime'), rest: num('lrest'), restGap: $('lgap').checked };
+    return { size: num('lsize'), weight: num('lweight'), turns: num('lturns'), turnTime: num('lturnTime'), rest: num('lrest'), restGap: $('lgap').checked, top: num('ltop'), bottom: num('lbot') };
   }
   // The sidebar sample names the tool whose mark is showing.
   var SIDE = { dovetail: ['Signoff EE', 'Electrical design review'], loom: ['Loom', 'Dovetail harness drawings'] };
@@ -30,6 +30,8 @@
     $('lweight-out').textContent = num('lweight').toFixed(2).replace(/\.?0+$/, '');
     $('lturns-out').textContent = num('lturns') === 0.5 ? '½' : String(num('lturns'));
     $('lturn-out').textContent = secs(num('lturnTime'));
+    $('ltop-out').textContent = Math.round(num('ltop') * 100) + '%';
+    $('lbot-out').textContent = Math.round(num('lbot') * 100) + '%';
     $('lrest-out').textContent = num('lrest') ? secs(num('lrest')) : 'none';
   }
 
@@ -70,7 +72,7 @@
     });
   });
   ['seated', 'speed', 'logo', 'cut', 'cutTime', 'rest', 'blockTime', 'turns', 'turnTime',
-    'lsize', 'lweight', 'lturns', 'lturnTime', 'lrest', 'lgap'].forEach(function (id) {
+    'lsize', 'lweight', 'lturns', 'lturnTime', 'lrest', 'lgap', 'ltop', 'lbot'].forEach(function (id) {
     $(id).addEventListener('input', function () { show(); var s = settings(); all(function (m) { m.set(s); }); });
   });
   $('b-tap').addEventListener('click', function () { if (paused) setPaused(false); all(function (m) { m.snap(); }); });
