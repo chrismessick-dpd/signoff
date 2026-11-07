@@ -50,22 +50,24 @@
   input[type=range] { width: 100%; accent-color: var(--accent); }
   .ctl label.check { display: flex; align-items: center; gap: 8px; color: var(--text); }
   .ctl label.check input { accent-color: var(--accent); width: 16px; height: 16px; margin: 0; }
-  .tabs { max-width: 360px; margin: 0 0 20px; }
+  .tabs { max-width: 480px; margin: 0 0 20px; }
   .tabs button { font-size: 14px; padding: 8px 12px; }
   [hidden] { display: none !important; }
   .rm { display: none; font-size: 13px; color: var(--text-2); background: var(--accent-soft); padding: 10px 12px; border-radius: 10px; margin-bottom: 16px; }
 </style>
 <script src="../assets/mark.js"></script>
 <script src="logo-spin.js?v=e8438db2"></script>
-<script src="logo-motion-lab.js?v=64ed8f66" defer></script>
+<script src="loom-spin.js?v=d1ce5f96"></script>
+<script src="logo-motion-lab.js?v=088f67e4" defer></script>
 </head>
 <body>
 <main class="lab">
   <h1>Logo motion lab</h1>
-  <p class="lede">The Dovetail mark is a block drawn in perspective with a dovetail set into it. Each tab animates it a different way. This is a prototype. Nothing here is used by the tools yet.</p>
+  <p class="lede" id="lede">The Dovetail mark is a block drawn in perspective with a dovetail set into it. The first two tabs animate it different ways; the Loom tab animates Loom's own mark. This is a prototype. Nothing here is used by the tools yet.</p>
   <div class="seg tabs" role="tablist" aria-label="Animation">
     <button type="button" role="tab" data-tab="tap" aria-pressed="true" aria-selected="true">Tap out</button>
     <button type="button" role="tab" data-tab="spin" aria-pressed="false" aria-selected="false">Spin about</button>
+    <button type="button" role="tab" data-tab="loom" aria-pressed="false" aria-selected="false">Loom</button>
   </div>
   <p class="rm" id="rm">Your system asks for reduced motion, so the marks start still. Press <b>Play</b> to watch them anyway.</p>
 
@@ -77,7 +79,7 @@
         <div class="sizes">
           <div class="sidebar">
             <div class="tile t30" data-mark></div>
-            <div><b>Signoff EE</b><small>Electrical design review</small></div>
+            <div><b id="side-name">Signoff EE</b><small id="side-sub">Electrical design review</small></div>
           </div>
           <figure><div class="tile t96" data-mark></div><figcaption>96 px</figcaption></figure>
           <figure><div class="tile t48" data-mark></div><figcaption>48 px</figcaption></figure>
@@ -120,6 +122,23 @@
         <input type="range" id="turns" min="1" max="6" step="1" value="2"></label>
       <label><span class="row">Time per dovetail turn <output id="turn-out">1.4 s</output></span>
         <input type="range" id="turnTime" min="0.4" max="5" step="0.1" value="1.4"></label>
+      </div>
+      <div class="ctl" id="ctl-loom" hidden>
+      <p class="note">Loom's mark is a twisted pair. Here the two strands spin about the axis they share, then rest as the mark. The strands are alike, so every half turn lands back on the mark. While it spins, the strand behind is a little fainter and the one in front cuts a gap through it.</p>
+      <label><span class="row">Size in its tile <output id="lsize-out">72%</output></span>
+        <input type="range" id="lsize" min="0.4" max="0.9" step="0.01" value="0.72"></label>
+      <label><span class="row">Strand weight <output id="lweight-out">1.7</output></span>
+        <input type="range" id="lweight" min="0.8" max="3" step="0.05" value="1.7"></label>
+      <label><span class="row">Turns per spin <output id="lturns-out">1</output></span>
+        <input type="range" id="lturns" min="0.5" max="4" step="0.5" value="1"></label>
+      <label><span class="row">Time per turn <output id="lturn-out">2.4 s</output></span>
+        <input type="range" id="lturnTime" min="0.6" max="8" step="0.2" value="2.4"></label>
+      <label><span class="row">Rest between spins <output id="lrest-out">3 s</output></span>
+        <input type="range" id="lrest" min="0" max="15" step="0.5" value="3"></label>
+      <p class="note">Size is how much of the tile's width the strands span (the Dovetail mark is 60% of its tile's height). Weight is the stroke in the mark's 20-unit drawing; Loom's sidebar uses 1.7. Set the rest to 0 to spin without stopping.</p>
+      <div class="btns">
+        <button type="button" id="b-lspin">Spin now</button>
+      </div>
       </div>
       <div class="btns">
         <button type="button" id="b-pause">Pause</button>
