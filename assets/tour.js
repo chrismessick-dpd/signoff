@@ -21,7 +21,9 @@
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7&item=xfcu3tc7n', title: 'An issue raised by Fabcheck',
       text: 'Fabcheck checked the fab package and found diode D2 placed 180° off. The reviewer tied it to the bring-up issue where D2 went on backwards on three boards.',
       try: 'Click Open in Fabcheck, in the issue’s panel, to see it on the board.' },
-    { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo', title: 'The fab package, checked',
+    // The hash is Fabcheck's deep link to the Main PCBA's fixed demo run (pcb_dfm/demo/boards.js), so
+    // the board opens and runs on arrival.
+    { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/board?run=rdemo1042b&project=pdemo7', title: 'The fab package, checked',
       text: 'Fabcheck reads the Gerbers, drill files, pick-and-place and BOM in the browser and checks them the way a board house and an assembler would. Nothing is uploaded.',
       try: 'Click any finding to zoom to it. Back to Signoff EE returns you to the issue. (If no board is open, pick Main PCBA.)' },
     { tool: 'me_design_review', url: '../me_design_review/index.html?demo&project=mdemo5', title: 'The enclosure’s review',
