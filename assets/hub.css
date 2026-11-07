@@ -164,9 +164,7 @@
 body.has-banner { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
 body.has-banner .app { height: auto; flex: 1; min-height: 0; }
 
-.scrim { display: none; }
 @media (max-width: 860px) {
-  .app.nav-open .scrim { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.3); }
   .toolbar-title { opacity: 1; }
   .about-hero, .about-part { padding: 22px 18px; }
   .shared { grid-template-columns: minmax(0, 1fr); }

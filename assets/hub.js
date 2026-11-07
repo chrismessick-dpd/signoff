@@ -103,16 +103,25 @@
       app.classList.toggle('side-collapsed', ui.sideCollapsed);
       writeUi(ui);
     }
-    if (readUi().sideCollapsed && !narrow.matches) app.classList.add('side-collapsed');
+    // Start as it was left, without playing the slide. Applied on narrow windows too (suite.css
+    // only hides it above 860 px), so widening the window later shows it as it was left.
+    if (readUi().sideCollapsed) {
+      app.style.transition = 'none';
+      app.classList.add('side-collapsed');
+      void app.offsetWidth;
+      app.style.transition = '';
+    }
 
     document.addEventListener('click', function (e) {
+      // A tap outside the open menu (on its scrim, suite.css) closes it and goes no further.
+      if (app.classList.contains('nav-open') && e.target === app) { setNav(false); e.preventDefault(); return; } // the scrim is #app's ::after
       if (e.target.closest('#theme-btn')) {
         var next = isDark(currentTheme()) ? 'light' : 'dark';
         writeTheme(next);
         applyTheme(next);
       } else if (e.target.closest('#nav-btn') || e.target.closest('#side-collapse')) {
         toggleSidebar();
-      } else if (e.target.closest('#scrim') || e.target.closest('.sidebar a')) {
+      } else if (e.target.closest('.sidebar a')) {
         setNav(false);
       }
     });
