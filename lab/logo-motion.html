@@ -57,7 +57,7 @@
 </style>
 <script src="../assets/mark.js"></script>
 <script src="logo-spin.js?v=e8438db2"></script>
-<script src="loom-spin.js?v=936b7bcf"></script>
+<script src="../../loom/assets/mark.js?v=8bd844a1"></script>
 <script src="logo-motion-lab.js?v=dc20d8dd" defer></script>
 </head>
 <body>
@@ -126,17 +126,17 @@
       <div class="ctl" id="ctl-loom" hidden>
       <p class="note">Loom's mark is a twisted pair. Here the two strands spin about the axis they share, then rest as the mark. The strands are alike, so every half turn lands back on the mark. The strand in front cuts a gap through the one behind, so one passes over the other; while it spins, the strand behind is also a little fainter.</p>
       <label class="check"><input type="checkbox" id="lgap" checked> Over and under at rest</label>
-      <label><span class="row">Size in its tile <output id="lsize-out">72%</output></span>
-        <input type="range" id="lsize" min="0.4" max="0.9" step="0.01" value="0.72"></label>
-      <label><span class="row">Strand weight <output id="lweight-out">1.7</output></span>
-        <input type="range" id="lweight" min="0.8" max="3" step="0.05" value="1.7"></label>
-      <label><span class="row">Turns per spin <output id="lturns-out">1</output></span>
-        <input type="range" id="lturns" min="0.5" max="4" step="0.5" value="1"></label>
-      <label><span class="row">Time per turn <output id="lturn-out">2.4 s</output></span>
-        <input type="range" id="lturnTime" min="0.6" max="8" step="0.2" value="2.4"></label>
-      <label><span class="row">Rest between spins <output id="lrest-out">3 s</output></span>
-        <input type="range" id="lrest" min="0" max="15" step="0.5" value="3"></label>
-      <p class="note">Size is how much of the tile's width the strands span (the Dovetail mark is 60% of its tile's height). Weight is the stroke in the mark's 20-unit drawing; Loom's sidebar uses 1.7. Set the rest to 0 to spin without stopping.</p>
+      <label><span class="row">Size in its tile <output id="lsize-out">75%</output></span>
+        <input type="range" id="lsize" min="0.4" max="0.9" step="0.01" value="0.75"></label>
+      <label><span class="row">Strand weight <output id="lweight-out">2</output></span>
+        <input type="range" id="lweight" min="0.8" max="3" step="0.05" value="2"></label>
+      <label><span class="row">Turns per spin <output id="lturns-out">½</output></span>
+        <input type="range" id="lturns" min="0.5" max="4" step="0.5" value="0.5"></label>
+      <label><span class="row">Time per turn <output id="lturn-out">8 s</output></span>
+        <input type="range" id="lturnTime" min="0.6" max="12" step="0.2" value="8"></label>
+      <label><span class="row">Rest between spins <output id="lrest-out">36 s</output></span>
+        <input type="range" id="lrest" min="0" max="60" step="1" value="36"></label>
+      <p class="note">Size is how much of the tile's width the strands span (the Dovetail mark is 60% of its tile's height). Weight is the stroke in the mark's 20-unit drawing; Loom's static icon used 1.7. Set the rest to 0 to spin without stopping. These start at Loom's own settings; the animation itself is <code>loom/assets/mark.js</code>, which Loom's sidebar runs.</p>
       <div class="btns">
         <button type="button" id="b-lspin">Spin now</button>
       </div>
