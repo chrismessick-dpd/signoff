@@ -53,6 +53,12 @@
         // Frames stay loaded while the sheet is open, so switching tabs back is instant.
         var f = document.createElement('iframe');
         f.title = 'People & access in ' + TOOLS.filter(function (t) { return t.id === tab; })[0].label;
+        // Hidden until it has loaded: the tool hides its sidebar only once its app.js runs (html.embed),
+        // so a first, uncached load would flash the tool's sidebar before its People page.
+        f.style.visibility = 'hidden';
+        var reveal = function () { f.style.visibility = ''; };
+        f.addEventListener('load', reveal);
+        setTimeout(reveal, 6000);   // never stay blank if load doesn't fire
         f.src = '../' + tab + '/index.html?page=people&embed=1';
         p.classList.add('framed');
         p.appendChild(f);
