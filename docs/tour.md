@@ -42,6 +42,8 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
 
 Steps 3 to 7 pick each other tool on the hub's stage the same way, so the visitor sees the whole suite,
 then the whole product (step 8), before any one tool's detail (Chris, 2026-11-08). Each rings its tile.
+Steps 1 to 7 keep the hub's page at the top, where the picked tool's panel is: their rings never
+scroll the page, even when the tile is below the fold (`still`).
 
 ### 3. Signoff ME
 

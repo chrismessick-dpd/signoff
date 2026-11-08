@@ -28,39 +28,39 @@
   var ALL = [
     // 1–2: the hub, with a tool picked on its stage.
     { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Dovetail Signoff',
-      at: function () { return hubPicked('pl'); }, fix: function () { hubPick('pl'); }, enter: function () { hubPick('pl'); }, place: 'the hub, with Signoff PL picked',
+      at: function () { return hubPicked('pl'); }, fix: function () { hubPick('pl'); }, enter: function () { hubPick('pl'); hubTop(); }, still: true, place: 'the hub, with Signoff PL picked',
       text: 'Signoff is Dovetail’s set of tools for design reviews, requirements, checklists, fab and package checks, harness drawings, and project tracking. Each review is built around one board, harness, or part, in pages made for working on it together. Project data lives in private Git repositories: engineers, clients, and contractors see the same data at the same time, and every change (a requirement, an issue, a checked item) syncs to the project’s repo in the background, with its history kept. One source of truth, versioned, and shared only with the people a project is shared with.',
       try: 'Dovetail engineers see every project and can share one with a client or contractor, who then sees exactly what Dovetail sees about it. {Signoff PL}, picked here, ties a product’s boards, harnesses, parts, and firmware together for the project lead.',
       spot: ['.pk-tile[data-pick="pl"]'] },
     { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Signoff EE',
-      at: function () { return hubPicked('ee'); }, fix: function () { hubPick('ee'); }, enter: function () { hubPick('ee'); }, place: 'the hub, with Signoff EE picked',
+      at: function () { return hubPicked('ee'); }, fix: function () { hubPick('ee'); }, enter: function () { hubPick('ee'); hubTop(); }, still: true, place: 'the hub, with Signoff EE picked',
       text: 'Signoff EE follows a board through its whole life, from requirements and schematic to layout, fab release, and bring-up. Each board is set up with its requirements and the checklists its design type needs. It works with Fabcheck: every fab package Fabcheck checks can send its errors and warnings to the board’s review as issues, and every run is kept, so DFM checks repeat with each revision and their issues are tracked to closure.',
       try: 'The tour comes back to the Smart Thermostat’s Main PCBA in Signoff EE. First, the other tools: {Next} picks Signoff ME.',
       spot: ['.pk-tile[data-pick="ee"]'] },
     // 3–7: the other tools, each picked on the hub's stage, so the visitor sees the whole suite before
     // any one tool (Chris, 2026-11-08).
     { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Signoff ME',
-      at: function () { return hubPicked('me'); }, fix: function () { hubPick('me'); }, enter: function () { hubPick('me'); }, place: 'the hub, with Signoff ME picked',
+      at: function () { return hubPicked('me'); }, fix: function () { hubPick('me'); }, enter: function () { hubPick('me'); hubTop(); }, still: true, place: 'the hub, with Signoff ME picked',
       text: 'Signoff ME reviews a mechanical part or product from concept to production validation: part design and DFM, tolerancing, materials, the enclosure, drawings, and validation testing. Like a board in Signoff EE, each part is set up with its requirements and the checklists it needs, and its requirements flow down from the product’s.',
       try: 'In the demo, the Smart Thermostat’s Enclosure and Wall Bracket are reviewed here. {Next} picks Signoff FW.',
       spot: ['.pk-tile[data-pick="me"]'] },
     { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Signoff FW',
-      at: function () { return hubPicked('fw'); }, fix: function () { hubPick('fw'); }, enter: function () { hubPick('fw'); }, place: 'the hub, with Signoff FW picked',
+      at: function () { return hubPicked('fw'); }, fix: function () { hubPick('fw'); }, enter: function () { hubPick('fw'); hubTop(); }, still: true, place: 'the hub, with Signoff FW picked',
       text: 'Signoff FW reviews one firmware image from architecture to factory programming and field updates: hardware interfaces, memory and faults, concurrency, power, communications, security, and release. It works the same way as Signoff EE and ME, with requirements and checklists picked for the product.',
       try: 'The demo reviews the Smart Thermostat’s firmware. {Next} picks Fabcheck.',
       spot: ['.pk-tile[data-pick="fw"]'] },
     { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Fabcheck',
-      at: function () { return hubPicked('fabcheck'); }, fix: function () { hubPick('fabcheck'); }, enter: function () { hubPick('fabcheck'); }, place: 'the hub, with Fabcheck picked',
+      at: function () { return hubPicked('fabcheck'); }, fix: function () { hubPick('fabcheck'); }, enter: function () { hubPick('fabcheck'); hubTop(); }, still: true, place: 'the hub, with Fabcheck picked',
       text: 'Fabcheck checks a PCB fab and assembly package (Gerbers, drill files, pick-and-place, BOM, or ODB++) the way a board house would, before it’s sent, and shows exactly where on the board each problem is. It runs in the browser, so the files never leave the computer, and it sends what it finds to the board’s review in Signoff EE.',
       try: 'Later in the tour you run the Main PCBA’s package through it. {Next} picks Loom.',
       spot: ['.pk-tile[data-pick="fabcheck"]'] },
     { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Loom',
-      at: function () { return hubPicked('loom'); }, fix: function () { hubPick('loom'); }, enter: function () { hubPick('loom'); }, place: 'the hub, with Loom picked',
+      at: function () { return hubPicked('loom'); }, fix: function () { hubPick('loom'); }, enter: function () { hubPick('loom'); hubTop(); }, still: true, place: 'the hub, with Loom picked',
       text: 'Loom draws the harnesses that join the boards and parts: connectors, wires, twisted pairs, shields, cables, and bundles in one wiring diagram, with the connector faces, wire list, and BOM on the sheet a tech builds from. Board connectors come from a Signoff EE board’s fab package, with their pins and net names.',
       try: 'Signed in, harnesses sync with Loom’s private data repo, and Signoff PL places them in the product. {Next} picks Partcheck.',
       spot: ['.pk-tile[data-pick="loom"]'] },
     { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Partcheck',
-      at: function () { return hubPicked('partcheck'); }, fix: function () { hubPick('partcheck'); }, enter: function () { hubPick('partcheck'); }, place: 'the hub, with Partcheck picked',
+      at: function () { return hubPicked('partcheck'); }, fix: function () { hubPick('partcheck'); }, enter: function () { hubPick('partcheck'); hubTop(); }, still: true, place: 'the hub, with Partcheck picked',
       text: 'Partcheck is Fabcheck’s mechanical counterpart. It checks that a part’s STEP model, drawing, flat pattern, and BOM agree before they go to the shop, and shows every part in 3D with its mass, draft, and wall thickness. Like Fabcheck, it runs in the browser, and its findings give evidence for checks in Signoff ME.',
       try: '{Next} opens Signoff PL, where all of these come together as one product.',
       spot: ['.pk-tile[data-pick="partcheck"]'] },
@@ -230,6 +230,9 @@
   // The hub (signoff/assets/hub.js): the tool picked on its stage. A click on a tile that isn't picked
   // picks it; one on the picked tile would open the tool, so it's never clicked.
   function hubPicked(id) { var t = document.querySelector('.pk-tile[data-pick="' + id + '"]'); return !!t && t.classList.contains('sel'); }
+  // The hub's steps keep its page at the top, where the picked tool's panel is (Chris: step 5 scrolled
+  // down to Fabcheck's tile, off its details); their rings never scroll the page (still).
+  function hubTop() { var m = document.getElementById('main'); if (m) m.scrollTop = 0; window.scrollTo(0, 0); }
   function hubPick(id) { var t = document.querySelector('.pk-tile[data-pick="' + id + '"]'); if (t && !t.classList.contains('sel')) t.click(); }
   // The review tools' tabs (the engine's data-view buttons), and Revisions with its first run open.
   function eeView(v) { var b = document.querySelector('[data-view="' + v + '"]'); if (b && !b.classList.contains('on')) b.click(); }
@@ -391,8 +394,8 @@
     if (spotWas !== f.el) {
       if (!spotWas || f.el.textContent !== spotWas.textContent) spotSince = Date.now();
       spotWas = f.el;
-      if (off) f.el.scrollIntoView({ block: y1 - y0 > innerHeight * 0.6 ? 'start' : 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-    } else if (off && Date.now() - spotSince < 1500 && Date.now() - spotSince > 400) {
+      if (off && !s.still) f.el.scrollIntoView({ block: y1 - y0 > innerHeight * 0.6 ? 'start' : 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    } else if (off && !s.still && Date.now() - spotSince < 1500 && Date.now() - spotSince > 400) {
       f.el.scrollIntoView({ block: y1 - y0 > innerHeight * 0.6 ? 'start' : 'center', behavior: 'auto' });
     }
     spotRaf = requestAnimationFrame(spotTick);
