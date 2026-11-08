@@ -35,7 +35,7 @@
 .marks { display: inline-flex; gap: 5px; vertical-align: 1px; }
 .pill { font: 600 11px/1 var(--sans); padding: 3px 8px; border-radius: 999px; }
 .pill.pass { color: var(--pass); background: var(--pass-soft); }
-.pill.issue { color: var(--issue); background: var(--issue-soft); }
+.pill.issue { color: var(--issue); background: var(--issue-hatch), var(--issue-soft); }
 .pill.na { color: var(--na); background: var(--na-soft); }
 .shared { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; margin-top: 26px; padding-top: 24px; border-top: 1px solid var(--hair); }
 .shared h4 { font-size: 14.5px; margin-bottom: 3px; }
