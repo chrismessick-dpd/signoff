@@ -564,7 +564,7 @@
     if (document.querySelector('.tour-scrim')) return;
     var scrim = document.createElement('div');
     scrim.className = 'tour-scrim';
-    scrim.innerHTML = '<div class="tour-intro" role="dialog" aria-modal="true" aria-label="Demo tour"><h2>A 10-minute tour of the demo</h2>' +
+    scrim.innerHTML = '<div class="tour-intro" role="dialog" aria-modal="true" aria-label="Demo tour"><h2>A 15- to 20-minute tour of the demo</h2>' +
       '<p>Every tool in this demo shows the same made-up product, a Smart Thermostat for Acme Climate, part way through its first engineering build. The tour follows it from tool to tool:</p>' +
       '<ol>' + STEPS.map(function (s) { return '<li><b>' + esc(s.title) + '</b> <span>· ' + esc(NAMES[s.tool]) + '</span></li>'; }).join('') + '</ol>' +
       '<p>Nothing you change leaves this browser. You can leave the tour at any step and look around.</p>' +
@@ -595,9 +595,9 @@
     if (!at || document.getElementById('tour-link')) return;
     var b = document.createElement('button');
     b.id = 'tour-link'; b.type = 'button'; b.className = 'side-link tour-link';
-    b.title = 'A 10-minute tour of the demo, from tool to tool';
+    b.title = 'A 15- to 20-minute tour of the demo, from tool to tool';
     b.innerHTML = '<span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7"/><path d="M11.8 6.2 10 10l-3.8 1.8L8 8z"/></svg></span>' +
-      '<span>Take the tour<small>10 minutes through the demo</small></span>';
+      '<span>Take the tour<small>15–20 minutes through the demo</small></span>';
     b.addEventListener('click', intro);
     var sec = document.createElement('div');
     sec.className = 'tour-side';
