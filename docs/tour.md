@@ -117,15 +117,28 @@ scroll the page, even when the tile is below the fold (`still`).
   for the next revision. {Recent discussion} collects the latest comments, including the issues
   Fabcheck raised.
 - **Try:** Click one of the Fabcheck comments to open its issue: {Open in Fabcheck} in its panel opens
-  that finding in Fabcheck. {Next} goes to Fabcheck to run the Main PCBA's package yourself.
-- **Side path:** Open in Fabcheck lands on Fabcheck's Board tab, so the tour moves on to step 14.
+  that finding in Fabcheck. {Next} opens the board's {Fab & Release} checklist.
+- **Side path:** Open in Fabcheck lands on Fabcheck's Board tab, so the tour moves on to step 15 (passing step 11).
 
-### 11. Check a fab package
+### 11. Board review, including DFM
+
+- **Page:** the Main PCBA's {Fab & Release} tab (`fab`). **Rings:** the first "Fabcheck: …" item
+  (scrolled into view), else the tab.
+- **Card:** This is the Main PCBA's {Fab & Release} checklist. Standard checklists make sure an
+  engineer has included details like updated dates, revision notes, and part numbers on the drawings.
+
+  Signoff EE's board checklists are bolstered by Fabcheck, a standalone tool that runs manufacturer DFM
+  on a fabrication package before it's built. Errors and warnings found in Fabcheck can be sent to a
+  board in Signoff EE, where they appear as new items in the {Fab & Release} checklist.
+- **Try:** The items that start "Fabcheck:" came from its last run, each in the section it belongs to.
+  {Next} goes to Fabcheck to run the Main PCBA's package yourself.
+
+### 12. Check a fab package
 
 - **Page:** Fabcheck's start page, `pcb_dfm/index.html?demo`, with no package open.
 - **Rings:** the {Main PCBA (DT-1042 rev B)} button, pulsing, for the visitor to press.
 - **Behavior:** the button opens the board by its fixed run (`#/overview?run=rdemo1042b&project=pdemo7`,
-  as the demo links do), and once that run is going the tour moves on to step 12 by itself. It always
+  as the demo links do), and once that run is going the tour moves on to step 13 by itself. It always
   loads the package and runs its checks live, even when this browser keeps that run (Fabcheck's
   `state.liveRun`; Chris, 2026-11-08).
 - **Card:** Fabcheck is Dovetail's DFM check for fab packages. It reads a package in the browser,
@@ -135,7 +148,7 @@ scroll the page, even when the tile is below the fold (`still`).
   come from fab houses' published capabilities and can be copied and tailored to a particular fab.
 - **Try:** Click {Main PCBA (DT-1042 rev B)} to check the Main PCBA's package.
 
-### 12. The fab package, checked
+### 13. The fab package, checked
 
 - **Page:** Fabcheck, the Main PCBA's run on Overview (`#/overview?run=rdemo1042b&project=pdemo7`). The
   run plays on the inspection stage and the page stays on Overview when it finishes.
@@ -148,7 +161,7 @@ scroll the page, even when the tile is below the fold (`still`).
   run, you can click and slide along the status bar to view individual checks and the limits they
   are using. {Next} goes to the findings.
 
-### 13. Findings
+### 14. Findings
 
 - **Page:** Fabcheck's Findings tab for the run (`#/findings?run=…`), scrolled to **Build & assembly**.
 - **Rings:** the D2 error at the top of Build & assembly ("D2: pin 1 is 180° off from the other 2
@@ -158,7 +171,7 @@ scroll the page, even when the tile is below the fold (`still`).
   {Build & assembly} is an error: D2 sits 180° from the other two SOD-123 diodes.
 - **Try:** Click the D2 error: its details and a preview of the spot on the board open on the right.
 
-### 14. Errors in the CAM viewer
+### 15. Errors in the CAM viewer
 
 - **Page:** Fabcheck's Board tab for the run. **Rings:** the first error in the rail. The card keeps
   clear of the layers list.
@@ -169,7 +182,7 @@ scroll the page, even when the tile is below the fold (`still`).
   board flies to it and turns on its layers. Then play: zoom and pan, show and hide layers on the left,
   flip to {Bottom}, and switch {Realistic} on for the board as built.
 
-### 15. Send a run to Signoff EE
+### 16. Send a run to Signoff EE
 
 - **Page:** the run's Overview, scrolled to its foot. **Rings:** the Project picker and
   {Send to Signoff EE} row; the card moves to the top right, off it.
@@ -180,7 +193,7 @@ scroll the page, even when the tile is below the fold (`still`).
   again updates the same issues and keeps their status in Signoff.
 - **Try:** Check that the project is {Main PCBA}, click {Send to Signoff EE}, then {Open in Signoff EE}.
 
-### 16. Fabcheck's issues in the review
+### 17. Fabcheck's issues in the review
 
 - **Page:** Signoff EE, the Main PCBA's Findings tab. **Rings:** the "Fabcheck: D2: pin 1…" issue.
 - **Card:** The run's errors and warnings are issues on the Main PCBA's {Fab & Release} checklist now,
@@ -189,7 +202,7 @@ scroll the page, even when the tile is below the fold (`still`).
 - **Try:** Click the D2 issue to open it, then change its status or resolution, or leave a comment on
   any issue: everyone on the board sees it.
 
-### 17. Revisions
+### 18. Revisions
 
 - **Page:** the Main PCBA's Revisions tab, with its run (tagged B.1) expanded. Nothing rings.
 - **Card:** The {Revisions} tab lists the Main PCBA's Fabcheck runs. A run that went to the fab is
@@ -198,7 +211,7 @@ scroll the page, even when the tile is below the fold (`still`).
 - **Try:** B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects
   every comment tagged @revnotes.
 
-### 18. Harness drawings
+### 19. Harness drawings
 
 - **Page:** Loom, `?demo&project=hdemo1`, the demo harness (an example for a made-up Zone Controller,
   not the thermostat). The menu and the parts pane fold away and the diagram fits the canvas; a
@@ -211,7 +224,7 @@ scroll the page, even when the tile is below the fold (`still`).
 - **Try:** Click a connector, a wire or a cable: its Properties open on the right. Loom's own guide
   walks through every feature on this harness.
 
-### 19. Build the thermostat's harness
+### 20. Build the thermostat's harness
 
 - **Page:** Loom, with the menu and the panes back out.
 - **Card:** Now one of your own, next to the example: the thermostat's mains leads, from the Main
@@ -227,7 +240,7 @@ scroll the page, even when the tile is below the fold (`still`).
   5. Select P1, the end you didn't use, and press {Delete}.
 - **When done:** That's a harness. {Drawing} shows its sheet, ready for a tech.
 
-### 20. The firmware review
+### 21. The firmware review
 
 - **Page:** Signoff FW, `?demo&project=fdemo3`, the Thermostat Firmware's Overview.
 - **Rings:** {Edit profile}, then the sheet's Checklists.
@@ -237,7 +250,7 @@ scroll the page, even when the tile is below the fold (`still`).
 - **Try:** Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel}
   leaves it as it was.
 
-### 21. The enclosure's review
+### 22. The enclosure's review
 
 - **Page:** Signoff ME, `?demo&project=mdemo5`, the Enclosure's Overview.
 - **Card:** Signoff ME reviews the Enclosure the same way, with mechanical checklists: part design and
@@ -245,7 +258,7 @@ scroll the page, even when the tile is below the fold (`still`).
   the {Requirements} tab.
 - **Try:** Open {Findings} to see every issue in one list.
 
-### 22. The package that goes to the molder
+### 23. The package that goes to the molder
 
 - **Page:** Partcheck, `?demo`.
 - **Card:** Partcheck checks that the models, drawings and BOM agree before they're sent out. Here the
@@ -257,7 +270,7 @@ scroll the page, even when the tile is below the fold (`still`).
 ### Hidden: The firmware, and a failing requirement
 
 Kept in `tour.js` with `skip: true`, to add back later (Chris, 2026-11-08). It would sit right after
-step 20.
+step 21.
 
 - **Page:** Signoff FW, `?demo&project=fdemo3&req=q3-1`, with REQ-002's panel open.
 - **Card:** Signoff FW reviews the firmware. This requirement flows down from the product's ESD
@@ -283,14 +296,14 @@ step 20.
 - **On arrival** (`enter`), a step sets its page up: a tab (EE's Findings or Revisions, FW's Overview),
   the hub's tile, Loom's panels. It runs once per arrival at the step's tool, before the page is
   checked.
-- **Moving on by itself.** `advance` (step 11: the run is going) moves to the next step on the same page.
-  `landing` (step 14) catches the visitor arriving at Fabcheck another way: when the next step isn't
+- **Moving on by itself.** `advance` (step 12: the run is going) moves to the next step on the same page.
+  `landing` (step 15) catches the visitor arriving at Fabcheck another way: when the next step isn't
   the page they landed on, a later Fabcheck step that is takes over.
 - **The ring** (`spot`) goes round the first candidate shown on the page, so a step can point at the
   next thing to click as the visitor goes. A target off screen is scrolled into view and kept there for
   a moment, since some tools redraw just after arriving.
 - **The card** sits at the bottom left, or the bottom right or top right when its corner would cover the
-  ring or what the step asks it to keep clear of (`avoid`: Fabcheck's layers list on step 14). A long
+  ring or what the step asks it to keep clear of (`avoid`: Fabcheck's layers list on step 15). A long
   card scrolls.
 - **Fabcheck runs on Overview.** A run link with no check or place (`#/overview?run=…`,
   `#/findings?run=…`) stays on that view; links from Signoff EE, which carry a check or a place, go to

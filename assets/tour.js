@@ -69,7 +69,7 @@
       text: 'Signoff PL is the project lead’s view. The Smart Thermostat is a tree of Parts: the two boards, the firmware, the enclosure and the wall bracket, each linked to its review, plus purchased Parts. Rings show how much of each review is done, and the colored numbers are open issues.',
       try: 'Open the {Requirements} tab: the product’s ESD requirement, REQ-002, is failing with the firmware’s under it. (Clicking a Part first shows only that Part’s.) {Next} goes into one of these Parts: the Main PCBA’s review in Signoff EE.',
       spot: ['[data-view="reqs"]:not(.on)'] },
-    // 9–10: the Main PCBA's review in Signoff EE.
+    // 9–11: the Main PCBA's review in Signoff EE.
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'A board’s design review',
       at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('overview'); }, place: 'the Main PCBA in Signoff EE',
       text: 'This is the Main PCBA’s review. Signoff EE reviews a board against checklists, from schematic and layout to fab release and bring-up. Each board picks the checklists it needs, and its profile (mains, RF, certification…) sets aside the checks that don’t apply, so the list fits the design.',
@@ -78,10 +78,16 @@
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Reviewing together',
       at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('overview'); }, place: 'the Main PCBA in Signoff EE',
       text: 'Everyone on the board works in the same review: checks are marked {Pass}, {Issue} or {N/A}, issues get a severity, a resolution and a comment thread, and @revnotes in a comment lists it for the next revision. {Recent discussion} collects the latest comments, including the issues Fabcheck raised.',
-      try: 'Click one of the Fabcheck comments to open its issue: {Open in Fabcheck} in its panel opens that finding in Fabcheck. {Next} goes to Fabcheck to run the Main PCBA’s package yourself.',
+      try: 'Click one of the Fabcheck comments to open its issue: {Open in Fabcheck} in its panel opens that finding in Fabcheck. {Next} opens the board’s {Fab & Release} checklist.',
       // The board picture in EE's header opens Fabcheck too (.head-pic-img); ring the issue panel's button.
       spot: ['[data-act="open-fabcheck"]:not(.head-pic-img)', ['.section-title', 'Recent discussion', 'group']] },
-    // 11–15: Fabcheck. The start page, where the visitor starts the Main PCBA's run (its button opens the
+    // 11: the Fab & Release checklist, where Fabcheck's issues land as items (Chris, 2026-11-08).
+    { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Board review, including DFM',
+      at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('fab'); }, place: 'the Main PCBA in Signoff EE',
+      text: 'This is the Main PCBA’s {Fab & Release} checklist. Standard checklists make sure an engineer has included details like updated dates, revision notes, and part numbers on the drawings.\n\nSignoff EE’s board checklists are bolstered by Fabcheck, a standalone tool that runs manufacturer DFM on a fabrication package before it’s built. Errors and warnings found in Fabcheck can be sent to a board in Signoff EE, where they appear as new items in the {Fab & Release} checklist.',
+      try: 'The items that start “Fabcheck:” came from its last run, each in the section it belongs to. {Next} goes to Fabcheck to run the Main PCBA’s package yourself.',
+      spot: [['.item', 'Fabcheck:'], '[data-view="fab"]'] },
+    // 12–16: Fabcheck. The start page, where the visitor starts the Main PCBA's run (its button opens the
     // board by its fixed run, rdemo1042b, as the links do; pcb_dfm 'sample'), then that run.
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo', title: 'Check a fab package',
       at: function () { return !/run=/.test(location.hash) && !fabRun(); }, fix: function () { location.href = location.pathname + location.search; },
@@ -119,7 +125,7 @@
       text: '{Send to Signoff EE}, at the foot of {Overview}, turns the run’s errors and warnings into issues on the Main PCBA’s Fabrication & Release checklist and keeps the run with the review. Sending again updates the same issues and keeps their status in Signoff.',
       try: 'Check that the project is {Main PCBA}, click {Send to Signoff EE}, then {Open in Signoff EE}.',
       spot: ['.filters:has([data-act="signoff-send"])', '[data-act="signoff-send"]'] },
-    // 16–17: back in the Main PCBA's review.
+    // 17–18: back in the Main PCBA's review.
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Fabcheck’s issues in the review',
       at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('findings'); }, place: 'the Main PCBA in Signoff EE',
       text: 'The run’s errors and warnings are issues on the Main PCBA’s {Fab & Release} checklist now, listed with every other issue under {Findings}. D2’s error came over with Fabcheck’s details and a link back to the finding.',
@@ -130,7 +136,7 @@
       enter: function () { eeView('revisions'); setTimeout(eeExpandRun, 150); },
       text: 'The {Revisions} tab lists the Main PCBA’s Fabcheck runs. A run that went to the fab is tagged as a revision, here B.1, with its status, fab house, date and order, so everyone knows which package was built. In a real review, each run’s fab package can be downloaded here.',
       try: 'B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects every comment tagged @revnotes.' },
-    // 18–19: Loom. It opens on its demo harness, an example for another made-up product, with the menu
+    // 19–20: Loom. It opens on its demo harness, an example for another made-up product, with the menu
     // and the parts pane folded away and the diagram fitted, so it's big enough to click (Chris). A
     // selection brings the parts pane back (loom/assets/app.js, unfoldForSelection).
     { tool: 'loom', url: '../loom/index.html?demo&project=hdemo1', title: 'Harness drawings',
@@ -175,13 +181,13 @@
       // so the canvas fits whenever the harness gains or loses one.
       refit: true,
       done: 'That’s a harness. {Drawing} shows its sheet, ready for a tech.' },
-    // 20: the firmware's review, on its Overview.
+    // 21: the firmware's review, on its Overview.
     { tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3', title: 'The firmware review',
       at: function () { return eeShows('thermostat-firmware'); }, enter: function () { eeView('overview'); }, place: 'the Thermostat Firmware in Signoff FW',
       text: 'Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and checklists picked for the product, from architecture and hardware interfaces to memory, concurrency, power, communications and security. Its profile tags set aside the checks that don’t apply.',
       try: 'Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel} leaves it as it was.',
       spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
-    // 21–22: the enclosure and its package.
+    // 22–23: the enclosure and its package.
     { tool: 'me_design_review', url: '../me_design_review/index.html?demo&project=mdemo5', title: 'The enclosure’s review',
       at: function () { return eeShows('enclosure'); }, fix: function () { eeOpen('enclosure'); }, enter: function () { eeView('overview'); }, place: 'the Enclosure in Signoff ME',
       text: 'Signoff ME reviews the Enclosure the same way, with mechanical checklists: part design and DFM, tolerancing, materials, drawings. Its requirements flow down from the product’s: look for ↑ on the {Requirements} tab.',
@@ -281,6 +287,8 @@
   }
   // A step's text names buttons and tabs in braces, drawn as chips so "Edit profile shows…" doesn't read
   // as a sentence (Chris).
+  // A blank line in a step's text starts a new paragraph.
+  function paras(t) { return t.split('\n\n').map(function (x) { return '<p>' + marks(x) + '</p>'; }).join(''); }
   function marks(s) { return esc(s).replace(/\{([^{}]+)\}/g, '<span class="t-ui">$1</span>'); }
   // A step's page, from wherever this page is: every tool is a sibling folder.
   function href(step) { return folder() === 'signoff' || folder() ? STEPS[step].url : STEPS[step].url.replace(/^\.\.\//, ''); }
@@ -459,8 +467,12 @@
     if (!st) { if (el) el.remove(); return; }
     // Arriving at the next step's tool another way (Open in Fabcheck, a sidebar link): move on.
     var here = folder();
-    if (STEPS[st.step].tool !== here && STEPS[st.step + 1] && STEPS[st.step + 1].tool === here) {
-      st.step++;
+    // One more step of the same tool may sit between (Open in Fabcheck from Reviewing together passes
+    // the Fab & Release step).
+    var nx = st.step + 1;
+    if (STEPS[nx] && STEPS[nx].tool === STEPS[st.step].tool && STEPS[nx + 1] && STEPS[nx + 1].tool === here) nx++;
+    if (STEPS[st.step].tool !== here && STEPS[nx] && STEPS[nx].tool === here) {
+      st.step = nx;
       // When the next step isn't this page (Open in Fabcheck lands on the board, not the start page), a
       // later step of this tool that is (landing) takes over.
       if (!onStep(STEPS[st.step])) {
@@ -495,7 +507,7 @@
       '<button class="t-x" data-t="min" title="Shrink the tour">▾</button><button class="t-x" data-t="end" title="End the tour">✕</button></div>' +
       (st.contents ? toc(st.step)
         : '<h3>' + esc(s.title) + '</h3>' +
-          (atStep ? '<p>' + marks(s.text) + '</p>' + tryHtml
+          (atStep ? paras(s.text) + tryHtml
             : '<p>This step is on ' + esc(s.place && s.tool === here ? s.place : NAMES[s.tool] || s.tool) + '.</p>') +
           (guide ? '<p><button class="t-b" data-t="guide">Open Loom’s guide</button></p>' : '')) +
       '<div class="t-dots">' + STEPS.map(function (x, i) { return '<i class="' + (i <= st.step ? 'on' : '') + '"></i>'; }).join('') + '</div>' +
