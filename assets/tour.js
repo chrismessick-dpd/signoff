@@ -18,49 +18,52 @@
   var STEPS = [
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'A board’s design review',
       text: 'Signoff EE reviews a board against checklists, from schematic and layout to fab release and bring-up. Each board picks the checklists it needs, and its profile (mains, RF, certification…) sets aside the checks that don’t apply, so the list fits the design.',
-      try: 'Click Edit profile to see every checklist that can be turned on for this board, and the profile tags. Cancel leaves it as it was.',
+      try: 'Click {Edit profile} to see every checklist that can be turned on for this board, and the profile tags. {Cancel} leaves it as it was.',
       spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Reviewing together',
-      text: 'Everyone on the board works in the same review: checks are marked Pass, Issue or N/A, issues get a severity, a resolution and a comment thread, and @revnotes in a comment lists it for the next revision. Recent discussion collects the latest comments, including the issues Fabcheck raised.',
-      try: 'Click one of the Fabcheck comments to open its issue, then click Open in Fabcheck in the issue’s panel.',
+      text: 'Everyone on the board works in the same review: checks are marked {Pass}, {Issue} or {N/A}, issues get a severity, a resolution and a comment thread, and @revnotes in a comment lists it for the next revision. {Recent discussion} collects the latest comments, including the issues Fabcheck raised.',
+      try: 'Click one of the Fabcheck comments to open its issue, then click {Open in Fabcheck} in the issue’s panel.',
       spot: ['[data-act="open-fabcheck"]', ['.section-title', 'Recent discussion', 'group']] },
     // Fabcheck's deep link to the Main PCBA's fixed demo run (pcb_dfm/demo/boards.js): the board opens
     // and runs on arrival. Signoff EE's Open in Fabcheck lands here too.
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/board?run=rdemo1042b&project=pdemo7', title: 'The fab package, checked',
       text: 'Fabcheck reads the Gerbers, drill files, pick-and-place and BOM in the browser and checks them the way a board house and an assembler would, under the fab’s rules. Nothing is uploaded. This is the Main PCBA’s run, the one its Fabcheck issues came from.',
-      try: 'Look through Findings and click one to zoom to it on the board. Next opens the other board’s package.' },
+      try: 'Look through {Findings} and click one to zoom to it on the board. {Next} opens the other board’s package.' },
     // The Display & Sensor Board's run isn't tagged in the demo, so sending it gives the next step a
     // run to tag (the Main PCBA's is already B.1).
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/board?run=rdemo1043a&project=pdemo11', title: 'Send a run to Signoff EE',
-      text: 'This is the Display & Sensor Board’s package, checked. Send to Signoff EE turns its errors and warnings into issues on the board’s Fabrication & Release checklist and keeps the run with the review. Sending again updates the same issues.',
-      try: 'On the Overview tab, check that the project is Display & Sensor Board, click Send to Signoff EE, then Open in Signoff EE.',
+      text: 'This is the Display & Sensor Board’s package, checked. {Send to Signoff EE} turns its errors and warnings into issues on the board’s Fabrication & Release checklist and keeps the run with the review. Sending again updates the same issues.',
+      try: 'On the {Overview} tab, check that the project is Display & Sensor Board, click {Send to Signoff EE}, then {Open in Signoff EE}.',
       spot: ['[data-act="signoff-send"]', '[data-view="overview"]'] },
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo11', title: 'Tag the run as a revision',
-      text: 'Back in Signoff EE, the Revisions tab lists the board’s Fabcheck runs. Tagging one names the revision that went to the fab: its label, status, fab house, date and order, so everyone knows which package was built. (In a real review, the package zip can be downloaded here too.)',
-      try: 'Open the Revisions tab, click the run you sent to open it, then click Tag as revision. If no run is listed, go back a step and send it.',
+      text: 'Back in Signoff EE, the {Revisions} tab lists the board’s Fabcheck runs. Tagging one names the revision that went to the fab: its label, status, fab house, date and order, so everyone knows which package was built. (In a real review, the package zip can be downloaded here too.)',
+      try: 'Open the {Revisions} tab, click the run you sent to open it, then click {Tag as revision}. If no run is listed, go back a step and send it.',
       spot: ['.sheet #v-label', '[data-act="rev-tag"]', '[data-act="rev-toggle"]', '[data-view="revisions"]'] },
     { tool: 'loom', url: '../loom/index.html?demo', title: 'The harness between the boards',
       text: 'Loom draws the cable harness a tech builds from: connectors, wires, splices, twisted pairs, shields, cables and bundles, then the wiring diagram, wire list and BOM. This one joins the Main PCBA to the Display & Sensor Board and the remote sensor. Pin labels are the boards’ net names, read from the packages Fabcheck checked.',
       try: 'Click a connector, a wire or a cable to see its properties. Loom’s own guide walks through every feature.',
       guide: true },
     { tool: 'me_design_review', url: '../me_design_review/index.html?demo&project=mdemo5', title: 'The enclosure’s review',
-      text: 'Signoff ME reviews the Enclosure the same way, with mechanical checklists: part design and DFM, tolerancing, materials, drawings. Its requirements flow down from the product’s: look for ↑ on the Requirements tab.',
-      try: 'Open Findings to see every issue in one list.' },
+      text: 'Signoff ME reviews the Enclosure the same way, with mechanical checklists: part design and DFM, tolerancing, materials, drawings. Its requirements flow down from the product’s: look for ↑ on the {Requirements} tab.',
+      try: 'Open {Findings} to see every issue in one list.' },
     { tool: 'partcheck', url: '../partcheck/index.html?demo', title: 'The package that goes to the molder',
       text: 'Partcheck checks that the models, drawings and BOM agree before they’re sent out. Here the back cover’s drawing and the BOM name different plastics, and the light pipe has no files.',
-      try: 'In Findings, each chip opens the Signoff ME check it gives evidence for.' },
+      try: 'In {Findings}, each chip opens the Signoff ME check it gives evidence for.' },
     { tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3&req=q3-1', title: 'The firmware, and a failing requirement',
       text: 'Signoff FW reviews the firmware. This requirement flows down from the product’s ESD requirement, and it’s failing: at ±8 kV the touch controller stopped responding until the power was cycled.',
       try: 'The checks it traces to are listed under it, with the open issue.' },
     { tool: 'signoff_pl', url: '../signoff_pl/index.html?demo', title: 'The whole product',
       text: 'Signoff PL is the project lead’s view. The Smart Thermostat is a tree of Parts: the two boards, the firmware, the enclosure and the wall bracket, each linked to its review, plus purchased Parts. Rings show how much of each review is done, and the colored numbers are open issues. The failing firmware requirement shows on the product’s ESD requirement, next to the boards’ ESD issues.',
-      try: 'Click a Part, then open the Requirements tab. That’s the tour: explore anything, and Reset demo in any tool starts it over.' }
+      try: 'Click a Part, then open the {Requirements} tab. That’s the tour: explore anything, and {Reset demo} in any tool starts it over.' }
   ];
 
   function folder() { var m = /\/([^\/]+)\/[^\/]*$/.exec(location.pathname); return m ? m[1] : ''; }
   function get() { try { var s = JSON.parse(sessionStorage.getItem(KEY) || 'null'); return s && typeof s.step === 'number' && s.step >= 0 && s.step < STEPS.length ? s : null; } catch (e) { return null; } }
   function set(s) { try { if (s) sessionStorage.setItem(KEY, JSON.stringify(s)); else sessionStorage.removeItem(KEY); } catch (e) { /* storage blocked */ } }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // A step's text names buttons and tabs in braces, drawn as chips so "Edit profile shows…" doesn't read
+  // as a sentence (Chris).
+  function marks(s) { return esc(s).replace(/\{([^{}]+)\}/g, '<span class="t-ui">$1</span>'); }
   // A step's page, from wherever this page is: every tool is a sibling folder.
   function href(step) { return folder() === 'signoff' || folder() ? STEPS[step].url : STEPS[step].url.replace(/^\.\.\//, ''); }
 
@@ -73,6 +76,7 @@
     '.tour .t-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent,#00727f);font-weight:600}' +
     '.tour .t-top span{flex:1}.tour .t-x{background:none;border:0;color:var(--text-3,#86868b);cursor:pointer;font-size:12px;padding:2px 4px}.tour .t-x:hover{color:var(--text,#1d1d1f)}' +
     '.tour h3{margin:0 0 6px;font-size:15px;color:var(--text,#1d1d1f)}.tour p{margin:0 0 8px;color:var(--text-2,#515154)}.tour .t-try{color:var(--text,#1d1d1f);font-weight:500}' +
+    '.tour .t-ui{display:inline-block;padding:0 6px;border:1px solid var(--hair-2,rgba(0,0,0,.14));border-radius:6px;background:var(--bg,#f5f5f7);font-size:.92em;font-weight:600;line-height:1.45;white-space:nowrap;color:var(--text,#1d1d1f)}' +
     '.tour .t-dots{display:flex;gap:4px;margin:10px 0}.tour .t-dots i{flex:1;height:3px;border-radius:2px;background:var(--hair-2,rgba(0,0,0,.14))}.tour .t-dots i.on{background:var(--accent,#00727f)}' +
     '.tour .t-act,.tour-intro .t-act{display:flex;gap:8px;justify-content:flex-end}' +
     '.tour button.t-b,.tour-intro button.t-b{border-radius:8px;padding:6px 12px;font:inherit;font-weight:600;cursor:pointer;border:1px solid var(--hair-2,rgba(0,0,0,.14));background:transparent;color:var(--text,#1d1d1f)}' +
@@ -166,7 +170,7 @@
     el.innerHTML = '<div class="t-top"><span>Demo tour · ' + (st.step + 1) + ' of ' + STEPS.length + '</span>' +
       '<button class="t-x" data-t="min" title="Shrink the tour">▾</button><button class="t-x" data-t="end" title="End the tour">✕</button></div>' +
       '<h3>' + esc(s.title) + '</h3>' +
-      (atStep ? '<p>' + esc(s.text) + '</p><p class="t-try">' + esc(s.try) + '</p>'
+      (atStep ? '<p>' + marks(s.text) + '</p><p class="t-try">' + marks(s.try) + '</p>'
         : '<p>This step is in ' + esc(NAMES[s.tool] || s.tool) + '.</p>') +
       (guide ? '<p><button class="t-b" data-t="guide">Open Loom’s guide</button></p>' : '') +
       '<div class="t-dots">' + STEPS.map(function (x, i) { return '<i class="' + (i <= st.step ? 'on' : '') + '"></i>'; }).join('') + '</div>' +
