@@ -9,6 +9,7 @@
   'use strict';
   if (!/[?&]demo\b/.test(location.search)) return;
   var KEY = 'signoff.demo.tour';
+  var SRC = document.currentScript && document.currentScript.src;
   var NAMES = { signoff: 'the hub', signoff_pl: 'Signoff PL', ee_design_review: 'Signoff EE', me_design_review: 'Signoff ME',
     fw_design_review: 'Signoff FW', pcb_dfm: 'Fabcheck', partcheck: 'Partcheck', loom: 'Loom' };
   // A step's spot: what its card points at, ringed on the page (see spot() below). Candidates in order,
@@ -49,10 +50,10 @@
       spot: ['[data-act="clear-focus"]', '.rail-list [data-act="board-finding"]:has(.dot.error)', '.sev-seg'] },
     // The Display & Sensor Board's run isn't tagged in the demo, so sending it gives the next step a
     // run to tag (the Main PCBA's is already B.1).
-    { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/board?run=rdemo1043a&project=pdemo11', title: 'Send a run to Signoff EE',
+    { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/overview?run=rdemo1043a&project=pdemo11', title: 'Send a run to Signoff EE',
       at: function () { return fabRun() === 'rdemo1043a'; }, place: 'the Display & Sensor Board’s package in Fabcheck',
       text: 'This is the Display & Sensor Board’s package, checked. {Send to Signoff EE} turns its errors and warnings into issues on the board’s Fabrication & Release checklist and keeps the run with the review. Sending again updates the same issues.',
-      try: 'On the {Overview} tab, check that the project is Display & Sensor Board, click {Send to Signoff EE}, then {Open in Signoff EE}.',
+      try: 'When its run finishes, check under {Send to Signoff EE} that the project is Display & Sensor Board, click {Send to Signoff EE}, then {Open in Signoff EE}.',
       spot: ['.filters:has([data-act="signoff-send"])', '[data-act="signoff-send"]', '[data-view="overview"]'] },
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo11', title: 'Tag the run as a revision',
       at: function () { return eeShows('display-sensor-board'); }, fix: function () { eeOpen('display-sensor-board'); }, place: 'the Display & Sensor Board in Signoff EE',
@@ -121,9 +122,35 @@
       spot: ['[data-view="reqs"]:not(.on)'] }
   ];
 
+  var V = STEPS.map(function (s) { return s.title; }).join('|');
   function folder() { var m = /\/([^\/]+)\/[^\/]*$/.exec(location.pathname); return m ? m[1] : ''; }
-  function get() { try { var s = JSON.parse(sessionStorage.getItem(KEY) || 'null'); return s && typeof s.step === 'number' && s.step >= 0 && s.step < STEPS.length ? s : null; } catch (e) { return null; } }
-  function set(s) { try { if (s) sessionStorage.setItem(KEY, JSON.stringify(s)); else sessionStorage.removeItem(KEY); } catch (e) { /* storage blocked */ } }
+  // The state names its step by title and this script's version (V, the steps' titles), because the
+  // tools load this file without a version stamp: just after a push, one page can run a cached copy
+  // with other steps (Chris: the tour got confused). A page whose copy differs from the one that last
+  // wrote the state fetches this file afresh and reloads, once per version; after that it finds the
+  // step by its title.
+  function get() {
+    try {
+      var s = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+      if (!s || typeof s.step !== 'number') return null;
+      if (s.v && s.v !== V) {
+        if (SRC && sessionStorage.getItem(KEY + '.fresh') !== s.v) {
+          sessionStorage.setItem(KEY + '.fresh', s.v);
+          fetch(SRC, { cache: 'reload' }).then(function () { location.reload(); }, function () { location.reload(); });
+          return null;
+        }
+        for (var i = 0; i < STEPS.length; i++) if (STEPS[i].title === s.id) { s.step = i; break; }
+        set(s);
+      }
+      return s.step >= 0 && s.step < STEPS.length ? s : null;
+    } catch (e) { return null; }
+  }
+  function set(s) {
+    try {
+      if (s) { s.id = STEPS[s.step] ? STEPS[s.step].title : ''; s.v = V; sessionStorage.setItem(KEY, JSON.stringify(s)); }
+      else sessionStorage.removeItem(KEY);
+    } catch (e) { /* storage blocked */ }
+  }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   // The review tools (EE, ME, FW share the engine): the board open in the sidebar, by its slug.
   function eeShows(slug) { var a = document.querySelector('.proj.active'); return !!a && a.getAttribute('data-slug') === slug; }
