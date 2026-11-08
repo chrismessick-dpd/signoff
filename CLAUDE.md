@@ -25,6 +25,8 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   remembered in `signoff.hub.ui.pick` (EE by default). The art is SVG `<symbol>`s at the top of
   the picker, made up (never a real board). Theme colors for it are CSS variables on `:root`,
   because rules inside `<use>` copies can't see `:root`.
+- **The demo tour** (`assets/tour.js`, loaded by every tool): `docs/tour.md` is the reference for its
+  steps (Chris, 2026-11-08). Change a step there and in `tour.js` together.
 - **Demo mode.** `?demo` appends `?demo` to every `[data-tool]` link. Each tile, Open button and
   sidebar link needs `data-tool`; the panels' "Try the demo" links must not have it (they're
   `data-internal`, hidden in demo mode).

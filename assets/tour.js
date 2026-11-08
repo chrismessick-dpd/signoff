@@ -16,53 +16,96 @@
   // each a selector, or [selector, text it must contain]; the first one shown on the page wins, so a
   // step can point at the next thing to click as the visitor goes (the Revisions tab, then Tag as
   // revision). `group` rings a heading together with the card under it.
-  var STEPS = [
-    // at(): the page shows what the step is about (the tools switch boards, packages and harnesses
-    // without a reload, so the URL alone can't tell); place names it for the card when it doesn't, and
-    // fix() puts it right in the page. landing(): arriving from the step before by another way (Open in
-    // Fabcheck), the page is already this step's, so the tour moves on to it.
+  // The steps, in order. signoff/docs/tour.md is the reference for them (Chris, 2026-11-08): keep the two
+  // in step. Fields:
+  //   at(): the page shows what the step is about (the tools switch boards, packages and harnesses without
+  //     a reload, so the URL alone can't tell); place names it for the card when it doesn't, and fix() puts
+  //     it right in the page. enter(): sets the page up once on arrival (a tab, a tile, folded panels).
+  //   landing(): arriving at this tool another way (Signoff EE's Open in Fabcheck), the page is already
+  //     this step's, so the tour moves on to it. advance(): the visitor did what the step asks, so the tour
+  //     moves on by itself (Fabcheck's start page, once the board is running).
+  //   skip: kept here for later, left out of the tour.
+  var ALL = [
+    // 1–2: the hub, with a tool picked on its stage.
+    { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Dovetail Signoff',
+      at: function () { return hubPicked('pl'); }, fix: function () { hubPick('pl'); }, enter: function () { hubPick('pl'); }, place: 'the hub, with Signoff PL picked',
+      text: 'Signoff is Dovetail’s set of tools for design reviews, requirements, checklists, fab and package checks, harness drawings, and project tracking. Each review is built around one board, harness, or part, in pages made for working on it together. Project data lives in private Git repositories: engineers, clients, and contractors see the same data at the same time, and every change (a requirement, an issue, a checked item) syncs to the project’s repo in the background, with its history kept. One source of truth, versioned, and shared only with the people a project is shared with.',
+      try: 'Dovetail engineers see every project and can share one with a client or contractor, who then sees exactly what Dovetail sees about it. {Signoff PL}, picked here, ties a product’s boards, harnesses, parts, and firmware together for the project lead.',
+      spot: ['.pk-tile[data-pick="pl"]'] },
+    { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Signoff EE',
+      at: function () { return hubPicked('ee'); }, fix: function () { hubPick('ee'); }, enter: function () { hubPick('ee'); }, place: 'the hub, with Signoff EE picked',
+      text: 'Signoff EE follows a board through its whole life, from requirements and schematic to layout, fab release, and bring-up. Each board is set up with its requirements and the checklists its design type needs. It works with Fabcheck: every fab package Fabcheck checks can send its errors and warnings to the board’s review as issues, and every run is kept, so DFM checks repeat with each revision and their issues are tracked to closure.',
+      try: '{Next} opens the Main PCBA, the Smart Thermostat’s main board, in Signoff EE.',
+      spot: ['.pk-tile[data-pick="ee"]'] },
+    // 3–4: the Main PCBA's review in Signoff EE.
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'A board’s design review',
-      at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, place: 'the Main PCBA in Signoff EE',
-      text: 'Signoff EE reviews a board against checklists, from schematic and layout to fab release and bring-up. Each board picks the checklists it needs, and its profile (mains, RF, certification…) sets aside the checks that don’t apply, so the list fits the design.',
-      try: 'Click {Edit profile} to see every checklist that can be turned on for this board, and the profile tags. {Cancel} leaves it as it was.',
+      at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('overview'); }, place: 'the Main PCBA in Signoff EE',
+      text: 'This is the Main PCBA’s review. Signoff EE reviews a board against checklists, from schematic and layout to fab release and bring-up. Each board picks the checklists it needs, and its profile (mains, RF, certification…) sets aside the checks that don’t apply, so the list fits the design.',
+      try: 'Click {Edit profile} to see every checklist that can be turned on for the Main PCBA, and its profile tags. {Cancel} leaves it as it was.',
       spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Reviewing together',
-      at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, place: 'the Main PCBA in Signoff EE',
+      at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('overview'); }, place: 'the Main PCBA in Signoff EE',
       text: 'Everyone on the board works in the same review: checks are marked {Pass}, {Issue} or {N/A}, issues get a severity, a resolution and a comment thread, and @revnotes in a comment lists it for the next revision. {Recent discussion} collects the latest comments, including the issues Fabcheck raised.',
-      try: 'Click one of the Fabcheck comments to open its issue, then click {Open in Fabcheck} in the issue’s panel.',
+      try: 'Click one of the Fabcheck comments to open its issue: {Open in Fabcheck} in its panel opens that finding in Fabcheck. {Next} goes to Fabcheck to run the Main PCBA’s package yourself.',
       // The board picture in EE's header opens Fabcheck too (.head-pic-img); ring the issue panel's button.
       spot: ['[data-act="open-fabcheck"]:not(.head-pic-img)', ['.section-title', 'Recent discussion', 'group']] },
-    // Fabcheck's deep link to the Main PCBA's fixed demo run (pcb_dfm/demo/boards.js): the package opens
-    // and runs on arrival, on Overview, where the stage animates the checks (Chris), and stays there
+    // 5–9: Fabcheck. The start page, where the visitor starts the Main PCBA's run (its button opens the
+    // board by its fixed run, rdemo1042b, as the links do; pcb_dfm 'sample'), then that run.
+    { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo', title: 'Check a fab package',
+      at: function () { return !/run=/.test(location.hash) && !fabRun(); }, fix: function () { location.href = location.pathname + location.search; },
+      advance: function () { return fabRun() === 'rdemo1042b'; }, place: 'Fabcheck’s start page',
+      text: 'Fabcheck is Dovetail’s DFM check for fab packages. It reads a package in the browser, nothing uploaded, and checks that its contents agree and its board data is clean: parts, descriptions, and footprints across the BOM, pick-and-place data, and Gerbers. It renders the Gerber and drill layers and checks them for errors and warnings against a fab process class. The classes come from fab houses’ published capabilities and can be copied and tailored to a particular fab.',
+      try: 'Click {Main PCBA (DT-1042 rev B)} to check the Main PCBA’s package.',
+      spot: [['[data-act="sample"]', 'Main PCBA']] },
+    // Its deep link runs the package on Overview, where the stage animates the checks, and stays there
     // (a link with no place or check keeps its view; pcb_dfm applyLink).
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/overview?run=rdemo1042b&project=pdemo7', title: 'The fab package, checked',
-      text: 'Fabcheck reads the Gerbers, drill files, pick-and-place and BOM in the browser and checks them the way a board house and an assembler would, under the fab’s rules. Nothing is uploaded. This is the Main PCBA’s package: watch the stage light each layer as its checks run and pin what they find.',
-      try: 'When the run finishes, the {Checks} cards sum up each kind of check, with its errors, warnings and info. {Next} goes to the errors on the board.',
       at: function () { return fabRun() === 'rdemo1042b'; }, place: 'the Main PCBA’s package in Fabcheck',
+      text: 'Fabcheck reads the Gerbers, drill files, pick-and-place and BOM and checks them the way a board house and an assembler would, under the fab’s rules. Watch the stage light each layer of the Main PCBA as its checks run and pin what they find.',
+      try: 'When the run finishes, the {Checks} cards sum up each kind of check, with its errors, warnings and info. {Next} goes to the findings.',
       spot: ['#stage', '.stage'] },
+    { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/findings?run=rdemo1042b&project=pdemo7', title: 'Findings',
+      at: function () { return fabRun() === 'rdemo1042b'; }, place: 'the Main PCBA’s package in Fabcheck',
+      text: '{Findings} lists everything the run found, grouped by type (package, build and assembly, BOM audit, fabrication DFM) and narrowed by the severity and type buttons. At the top of {Build & assembly} is an error: D2 sits 180° from the other two SOD-123 diodes.',
+      try: 'Click the D2 error: its details and a preview of the spot on the board open on the right.',
+      spot: [['.f-row[data-act="finding"]', 'D2: pin 1']] },
     // The same run on the Board tab, the CAM viewer. Signoff EE's Open in Fabcheck lands here (on a
-    // linked check), so arriving that way skips the Overview step (landing).
+    // linked check), so arriving that way skips to it (landing).
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/board?run=rdemo1042b&project=pdemo7', title: 'Errors in the CAM viewer',
-      text: 'The {Board} tab is Fabcheck’s CAM viewer: every Gerber and drill layer drawn as the fab will see it, with the findings pinned where they are. The rail on the right lists them; this run has 4 errors.',
-      try: 'Turn off {Warnings} and {Info} in the rail to leave only the errors (from a Signoff link, click {Show all} first), then click one: the board flies to it and turns on its layers. {Realistic} shows the board as built.',
       at: function () { return fabRun() === 'rdemo1042b'; }, place: 'the Main PCBA’s package in Fabcheck',
       landing: function () { return /^#\/board/.test(location.hash); },
-      spot: ['[data-act="clear-focus"]', '.rail-list [data-act="board-finding"]:has(.dot.error)', '.sev-seg'] },
-    // The Display & Sensor Board's run isn't tagged in the demo, so sending it gives the next step a
-    // run to tag (the Main PCBA's is already B.1).
-    { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/overview?run=rdemo1043a&project=pdemo11', title: 'Send a run to Signoff EE',
-      at: function () { return fabRun() === 'rdemo1043a'; }, place: 'the Display & Sensor Board’s package in Fabcheck',
-      text: 'This is the Display & Sensor Board’s package, checked. {Send to Signoff EE} turns its errors and warnings into issues on the board’s Fabrication & Release checklist and keeps the run with the review. Sending again updates the same issues.',
-      try: 'When its run finishes, check under {Send to Signoff EE} that the project is Display & Sensor Board, click {Send to Signoff EE}, then {Open in Signoff EE}.',
-      spot: ['.filters:has([data-act="signoff-send"])', '[data-act="signoff-send"]', '[data-view="overview"]'] },
-    { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo11', title: 'Tag the run as a revision',
-      at: function () { return eeShows('display-sensor-board'); }, fix: function () { eeOpen('display-sensor-board'); }, place: 'the Display & Sensor Board in Signoff EE',
-      text: 'Back in Signoff EE, the {Revisions} tab lists the board’s Fabcheck runs. Tagging one names the revision that went to the fab: its label, status, fab house, date and order, so everyone knows which package was built. (In a real review, the package zip can be downloaded here too.)',
-      try: 'Open the {Revisions} tab, click the board’s run to open it, then click {Tag as revision}. If no run is listed, go back a step and send it.',
-      spot: ['.sheet #v-label', '[data-act="rev-tag"]', '[data-act="rev-toggle"]', '[data-view="revisions"]'] },
-    // Loom opens on its demo harness, an example for another made-up product, with the menu and the
-    // parts pane folded away and the diagram fitted, so it's big enough to click (Chris). A selection
-    // brings the parts pane back (loom/assets/app.js, unfoldForSelection).
+      text: 'The {Board} tab is Fabcheck’s CAM viewer: every Gerber and drill layer drawn as the fab will see it, with the findings pinned where they are. The rail on the right lists them; the Main PCBA has 4 errors.',
+      try: 'Turn off {Warnings} and {Info} in the rail to leave only the errors, then click one: the board flies to it and turns on its layers. Then play: zoom and pan, show and hide layers on the left, flip to {Bottom}, and switch {Realistic} on for the board as built.',
+      spot: ['.rail-list [data-act="board-finding"]:has(.dot.error)', '.sev-seg'],
+      // The card keeps off the layers list the step asks the visitor to use (placeCard).
+      avoid: ['#layers-pane'] },
+    // Back on Overview, scrolled to its Send section (findSpot scrolls a ring off screen into view); the
+    // card moves to the top right, off it (placeCard). The picker shows Main PCBA (the link's project).
+    { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/overview?run=rdemo1042b&project=pdemo7', title: 'Send a run to Signoff EE',
+      at: function () { return fabRun() === 'rdemo1042b'; }, place: 'the Main PCBA’s package in Fabcheck',
+      text: '{Send to Signoff EE}, at the foot of {Overview}, turns the run’s errors and warnings into issues on the Main PCBA’s Fabrication & Release checklist and keeps the run with the review. Sending again updates the same issues and keeps their status in Signoff.',
+      try: 'Check that the project is {Main PCBA}, click {Send to Signoff EE}, then {Open in Signoff EE}.',
+      spot: ['.filters:has([data-act="signoff-send"])', '[data-act="signoff-send"]'] },
+    // 10–11: back in the Main PCBA's review.
+    { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Fabcheck’s issues in the review',
+      at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('findings'); }, place: 'the Main PCBA in Signoff EE',
+      text: 'The run’s errors and warnings are issues on the Main PCBA’s {Fab & Release} checklist now, listed with every other issue under {Findings}. D2’s error came over with Fabcheck’s details and a link back to the finding.',
+      try: 'Click the D2 issue to open it, then change its status or resolution, or leave a comment on any issue: everyone on the board sees it.',
+      spot: [['tr[data-act="goto-item"]', 'Fabcheck: D2'], '[data-view="findings"]'] },
+    { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Revisions',
+      at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, place: 'the Main PCBA in Signoff EE',
+      enter: function () { eeView('revisions'); setTimeout(eeExpandRun, 150); },
+      text: 'The {Revisions} tab lists the Main PCBA’s Fabcheck runs. A run that went to the fab is tagged as a revision, here B.1, with its status, fab house, date and order, so everyone knows which package was built. In a real review, each run’s fab package can be downloaded here.',
+      try: 'B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects every comment tagged @revnotes.' },
+    // 12: the firmware's review, on its Overview.
+    { tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3', title: 'The firmware review',
+      at: function () { return eeShows('thermostat-firmware'); }, enter: function () { eeView('overview'); }, place: 'the Thermostat Firmware in Signoff FW',
+      text: 'Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and checklists picked for the product, from architecture and hardware interfaces to memory, concurrency, power, communications and security. Its profile tags set aside the checks that don’t apply.',
+      try: 'Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel} leaves it as it was.',
+      spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
+    // 13–14: Loom. It opens on its demo harness, an example for another made-up product, with the menu
+    // and the parts pane folded away and the diagram fitted, so it's big enough to click (Chris). A
+    // selection brings the parts pane back (loom/assets/app.js, unfoldForSelection).
     { tool: 'loom', url: '../loom/index.html?demo&project=hdemo1', title: 'Harness drawings',
       text: 'Loom draws any cable harness, from a two-wire pigtail to a full cable set: connectors, wires, splices, twisted pairs, shields, cables and bundles. From that one picture it makes the package a tech builds from: the wiring diagram, connector faces, wire list and BOM. This example harness, for another made-up product, has a bit of everything.',
       try: 'Click a connector, a wire or a cable: its Properties open on the right. Loom’s own guide walks through every feature on this harness.',
@@ -105,14 +148,16 @@
       // so the canvas fits whenever the harness gains or loses one.
       refit: true,
       done: 'That’s a harness. {Drawing} shows its sheet, ready for a tech.' },
+    // 15–17: the enclosure, its package, and the whole product.
     { tool: 'me_design_review', url: '../me_design_review/index.html?demo&project=mdemo5', title: 'The enclosure’s review',
-      at: function () { return eeShows('enclosure'); }, fix: function () { eeOpen('enclosure'); }, place: 'the Enclosure in Signoff ME',
+      at: function () { return eeShows('enclosure'); }, fix: function () { eeOpen('enclosure'); }, enter: function () { eeView('overview'); }, place: 'the Enclosure in Signoff ME',
       text: 'Signoff ME reviews the Enclosure the same way, with mechanical checklists: part design and DFM, tolerancing, materials, drawings. Its requirements flow down from the product’s: look for ↑ on the {Requirements} tab.',
       try: 'Open {Findings} to see every issue in one list.' },
     { tool: 'partcheck', url: '../partcheck/index.html?demo', title: 'The package that goes to the molder',
       text: 'Partcheck checks that the models, drawings and BOM agree before they’re sent out. Here the back cover’s drawing and the BOM name different plastics, and the light pipe has no files.',
       try: 'In {Findings}, each chip opens the Signoff ME check it gives evidence for.' },
-    { tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3&req=q3-1', title: 'The firmware, and a failing requirement',
+    // Hidden for now (Chris, 2026-11-08): to come back later.
+    { skip: true, tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3&req=q3-1', title: 'The firmware, and a failing requirement',
       at: function () { return eeShows('thermostat-firmware'); }, place: 'the Thermostat Firmware in Signoff FW',
       text: 'Signoff FW reviews the firmware. This requirement flows down from the product’s ESD requirement, and it’s failing: at ±8 kV the touch controller stopped responding until the power was cycled.',
       try: 'Its panel is open: scroll it down to {Traced checks} for the checks it traces to, with the open issue.' },
@@ -121,6 +166,7 @@
       try: 'Open the {Requirements} tab: the product’s ESD requirement, REQ-002, is failing with the firmware’s under it. (Clicking a Part first shows only that Part’s.) That’s the tour: explore anything, and {Reset demo} in a tool’s banner starts it over.',
       spot: ['[data-view="reqs"]:not(.on)'] }
   ];
+  var STEPS = ALL.filter(function (s) { return !s.skip; });
 
   var V = STEPS.map(function (s) { return s.title; }).join('|');
   function folder() { var m = /\/([^\/]+)\/[^\/]*$/.exec(location.pathname); return m ? m[1] : ''; }
@@ -152,6 +198,13 @@
     } catch (e) { /* storage blocked */ }
   }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // The hub (signoff/assets/hub.js): the tool picked on its stage. A click on a tile that isn't picked
+  // picks it; one on the picked tile would open the tool, so it's never clicked.
+  function hubPicked(id) { var t = document.querySelector('.pk-tile[data-pick="' + id + '"]'); return !!t && t.classList.contains('sel'); }
+  function hubPick(id) { var t = document.querySelector('.pk-tile[data-pick="' + id + '"]'); if (t && !t.classList.contains('sel')) t.click(); }
+  // The review tools' tabs (the engine's data-view buttons), and Revisions with its first run open.
+  function eeView(v) { var b = document.querySelector('[data-view="' + v + '"]'); if (b && !b.classList.contains('on')) b.click(); }
+  function eeExpandRun() { var g = document.querySelector('.rev-group.collapsed [data-act="rev-toggle"]'); if (g) g.click(); }
   // The review tools (EE, ME, FW share the engine): the board open in the sidebar, by its slug.
   function eeShows(slug) { var a = document.querySelector('.proj.active'); return !!a && a.getAttribute('data-slug') === slug; }
   function eeOpen(slug) { var b = document.querySelector('.proj[data-slug="' + slug + '"]'); if (b) b.click(); }
@@ -205,7 +258,7 @@
   // card follows light and dark mode; the fallbacks are the light theme's.
   var css = '.tour{position:fixed;left:16px;bottom:16px;z-index:75;width:340px;max-width:calc(100vw - 32px);box-sizing:border-box;' +
     'background:var(--bg-elev,#fff);color:var(--text,#1d1d1f);border:1px solid var(--hair-2,rgba(0,0,0,.14));border-radius:14px;' +
-    'box-shadow:var(--shadow-lg,0 24px 64px rgba(0,0,0,.18));padding:14px 16px;font:13px/1.45 var(--sans,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif)}' +
+    'box-shadow:var(--shadow-lg,0 24px 64px rgba(0,0,0,.18));padding:14px 16px;font:13px/1.45 var(--sans,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif);max-height:calc(100vh - 88px);overflow-y:auto}' +
     '.tour .t-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent,#00727f);font-weight:600}' +
     '.tour .t-top span{flex:1}.tour .t-x{background:none;border:0;color:var(--text-3,#86868b);cursor:pointer;font-size:12px;padding:2px 4px}.tour .t-x:hover{color:var(--text,#1d1d1f)}' +
     '.tour h3{margin:0 0 6px;font-size:15px;color:var(--text,#1d1d1f)}.tour p{margin:0 0 8px;color:var(--text-2,#515154)}.tour .t-try{color:var(--text,#1d1d1f);font-weight:500}' +
@@ -263,7 +316,7 @@
   // (the tools redraw their pages with innerHTML, which would wipe a class on the target) and moved
   // every frame to follow it. While a sheet or modal is open, only a target inside it is ringed. A
   // new target off screen is scrolled into view once.
-  var spotRaf = 0, spotWas = null, refitWas = '';
+  var spotRaf = 0, spotWas = null, spotSince = 0, refitWas = '';
   function shown(el) { var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; }
   function findSpot(list) {
     var modal = document.querySelector('.sheet-wrap .sheet, .lm-modal-back:not([hidden]) .lm-modal');
@@ -288,7 +341,7 @@
       if (sig !== refitWas) { if (refitWas && sig) setTimeout(function () { var g = loomGuide(); if (g) g.fit(); }, 80); refitWas = sig; }
     }
     var f = here && (s.spot || s.stages) ? findSpot(spotList(s)) : null;
-    if (!f) { if (ring) ring.remove(); spotWas = null; placeCard(null); if (s && (s.spot || s.stages)) spotRaf = requestAnimationFrame(spotTick); return; }
+    if (!f) { if (ring) ring.remove(); spotWas = null; placeCard(avoidRects(s)); if (s && (s.spot || s.stages)) spotRaf = requestAnimationFrame(spotTick); return; }
     var r = f.el.getBoundingClientRect(), x0 = r.left, y0 = r.top, x1 = r.right, y1 = r.bottom;
     var nx = f.group && f.el.nextElementSibling;
     if (nx && shown(nx)) { var q = nx.getBoundingClientRect(); x0 = Math.min(x0, q.left); y0 = Math.min(y0, q.top); x1 = Math.max(x1, q.right); y1 = Math.max(y1, q.bottom); }
@@ -296,10 +349,16 @@
     var pad = 5;
     ring.style.left = (x0 - pad) + 'px'; ring.style.top = (y0 - pad) + 'px';
     ring.style.width = (x1 - x0 + pad * 2) + 'px'; ring.style.height = (y1 - y0 + pad * 2) + 'px';
-    placeCard({ left: x0 - pad, top: y0 - pad, right: x1 + pad, bottom: y1 + pad });
+    placeCard([{ left: x0 - pad, top: y0 - pad, right: x1 + pad, bottom: y1 + pad }].concat(avoidRects(s)));
+    // A new target off screen is scrolled into view, and kept there for a moment: a tool that redraws
+    // just after arriving (Fabcheck's Findings) puts its scroll back at the top.
+    var off = y0 < 0 || y1 > innerHeight || x0 < 0 || x1 > innerWidth;
     if (spotWas !== f.el) {
+      if (!spotWas || f.el.textContent !== spotWas.textContent) spotSince = Date.now();
       spotWas = f.el;
-      if (y0 < 0 || y1 > innerHeight || x0 < 0 || x1 > innerWidth) f.el.scrollIntoView({ block: y1 - y0 > innerHeight * 0.6 ? 'start' : 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      if (off) f.el.scrollIntoView({ block: y1 - y0 > innerHeight * 0.6 ? 'start' : 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    } else if (off && Date.now() - spotSince < 1500 && Date.now() - spotSince > 400) {
+      f.el.scrollIntoView({ block: y1 - y0 > innerHeight * 0.6 ? 'start' : 'center', behavior: 'auto' });
     }
     spotRaf = requestAnimationFrame(spotTick);
   }
@@ -308,15 +367,24 @@
   // would cover the ring or come within GAP of it (Chris: it covered what a step pointed at, such as
   // Fabcheck's Project picker); with no clear corner, the one that covers least.
   var GAP = 24;
-  function placeCard(r) {
+  // What else a step asks the card to keep clear of (avoid: selectors), as screen rects.
+  function avoidRects(s) {
+    var out = [];
+    if (s && s.avoid && s.tool === folder()) s.avoid.forEach(function (q) { var el = document.querySelector(q); if (el && shown(el)) out.push(el.getBoundingClientRect()); });
+    return out;
+  }
+  function placeCard(rs) {
     var el = document.getElementById('tour');
     if (!el || el.classList.contains('min')) return;
     var w = el.offsetWidth, ht = el.offsetHeight, W = innerWidth, H = innerHeight;
     var spots = [['', 16, H - 16 - ht], ['side', W - 16 - w, H - 16 - ht], ['top', W - 16 - w, 72]];
     var cover = function (x, y) {
-      if (!r) return 0;
-      var dx = Math.min(x + w, r.right + GAP) - Math.max(x, r.left - GAP), dy = Math.min(y + ht, r.bottom + GAP) - Math.max(y, r.top - GAP);
-      return dx > 0 && dy > 0 ? dx * dy : 0;
+      var sum = 0;
+      (rs || []).forEach(function (r) {
+        var dx = Math.min(x + w, r.right + GAP) - Math.max(x, r.left - GAP), dy = Math.min(y + ht, r.bottom + GAP) - Math.max(y, r.top - GAP);
+        if (dx > 0 && dy > 0) sum += dx * dy;
+      });
+      return sum;
     };
     var best = spots[0], least = Infinity;
     for (var i = 0; i < spots.length; i++) { var c = cover(spots[i][1], spots[i][2]); if (c < least) { least = c; best = spots[i]; } if (!c) break; }
@@ -328,7 +396,16 @@
   // the card follows a board, package, harness or route changed inside a tool.
   var entered = -1, stageShown = -1, shownKey = '';
   function pageKey() { var st = get(), s = st && STEPS[st.step]; return location.href + '|' + (st ? st.step + ':' + onStep(s) : ''); }
-  function watch() { var st = get(); if (st && !st.min && pageKey() !== shownKey) card(); }
+  function watch() {
+    var st = get(), s = st && STEPS[st.step];
+    if (!st) return;
+    // A step done by the visitor (advance) moves on, on this page, when the next step is this tool's.
+    if (s && s.advance && s.tool === folder() && STEPS[st.step + 1] && STEPS[st.step + 1].tool === s.tool) {
+      var ok = false; try { ok = s.advance(); } catch (e) { /* page not ready */ }
+      if (ok) { st.step++; set(st); card(); return; }
+    }
+    if (!st.min && pageKey() !== shownKey) card();
+  }
   function card() {
     var st = get(), el = document.getElementById('tour');
     spot();
@@ -337,14 +414,20 @@
     var here = folder();
     if (STEPS[st.step].tool !== here && STEPS[st.step + 1] && STEPS[st.step + 1].tool === here) {
       st.step++;
-      while (STEPS[st.step + 1] && STEPS[st.step + 1].tool === here && STEPS[st.step + 1].landing && STEPS[st.step + 1].landing()) st.step++;
+      // When the next step isn't this page (Open in Fabcheck lands on the board, not the start page), a
+      // later step of this tool that is (landing) takes over.
+      if (!onStep(STEPS[st.step])) {
+        for (var j = st.step + 1; STEPS[j] && STEPS[j].tool === here; j++) if (STEPS[j].landing && STEPS[j].landing()) { st.step = j; break; }
+      }
       set(st);
     }
-    var s = STEPS[st.step], atStep = onStep(s), last = st.step === STEPS.length - 1;
-    shownKey = pageKey();
-    // A step's enter() sets its page up once on arrival (Loom folds or shows its panels).
-    if (!atStep) entered = -1;
+    var s = STEPS[st.step], last = st.step === STEPS.length - 1;
+    // A step's enter() sets its page up once on arrival at its tool (a tab, a tile, Loom's panels), before
+    // the page is checked against the step, since setting it up may be what makes it match.
+    if (s.tool !== here) entered = -1;
     else if (entered !== st.step) { entered = st.step; if (s.enter) { try { s.enter(); } catch (e) { /* page not ready */ } } }
+    var atStep = onStep(s);
+    shownKey = pageKey();
     var at = atStep && s.stages ? stageAt(s) : -1;
     stageShown = at;
     var tryHtml = !atStep ? '' : s.stages

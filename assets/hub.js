@@ -7,7 +7,9 @@
   // Same detection and namespace as ee_design_review/assets/app.js, so demo and real
   // settings stay apart exactly as they do in the tools.
   var DEMO = /[?&]demo\b/.test(location.search) || location.hash === '#demo';
-  var SETTINGS_KEY = (DEMO ? 'signoff.demo.' : 'signoff.v1.') + 'settings';
+  // The light/dark theme is the suite's, under one fixed key in the demo too (Chris, 2026-11-08: the
+  // demo tour flipped between light and dark as it moved between tools that kept it apart).
+  var SETTINGS_KEY = 'signoff.v1.settings';
 
   function readSettings() {
     try { var v = JSON.parse(localStorage.getItem(SETTINGS_KEY)); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
