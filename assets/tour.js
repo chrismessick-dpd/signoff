@@ -130,13 +130,7 @@
       enter: function () { eeView('revisions'); setTimeout(eeExpandRun, 150); },
       text: 'The {Revisions} tab lists the Main PCBA’s Fabcheck runs. A run that went to the fab is tagged as a revision, here B.1, with its status, fab house, date and order, so everyone knows which package was built. In a real review, each run’s fab package can be downloaded here.',
       try: 'B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects every comment tagged @revnotes.' },
-    // 18: the firmware's review, on its Overview.
-    { tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3', title: 'The firmware review',
-      at: function () { return eeShows('thermostat-firmware'); }, enter: function () { eeView('overview'); }, place: 'the Thermostat Firmware in Signoff FW',
-      text: 'Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and checklists picked for the product, from architecture and hardware interfaces to memory, concurrency, power, communications and security. Its profile tags set aside the checks that don’t apply.',
-      try: 'Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel} leaves it as it was.',
-      spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
-    // 19–20: Loom. It opens on its demo harness, an example for another made-up product, with the menu
+    // 18–19: Loom. It opens on its demo harness, an example for another made-up product, with the menu
     // and the parts pane folded away and the diagram fitted, so it's big enough to click (Chris). A
     // selection brings the parts pane back (loom/assets/app.js, unfoldForSelection).
     { tool: 'loom', url: '../loom/index.html?demo&project=hdemo1', title: 'Harness drawings',
@@ -181,6 +175,12 @@
       // so the canvas fits whenever the harness gains or loses one.
       refit: true,
       done: 'That’s a harness. {Drawing} shows its sheet, ready for a tech.' },
+    // 20: the firmware's review, on its Overview.
+    { tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3', title: 'The firmware review',
+      at: function () { return eeShows('thermostat-firmware'); }, enter: function () { eeView('overview'); }, place: 'the Thermostat Firmware in Signoff FW',
+      text: 'Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and checklists picked for the product, from architecture and hardware interfaces to memory, concurrency, power, communications and security. Its profile tags set aside the checks that don’t apply.',
+      try: 'Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel} leaves it as it was.',
+      spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
     // 21–22: the enclosure and its package.
     { tool: 'me_design_review', url: '../me_design_review/index.html?demo&project=mdemo5', title: 'The enclosure’s review',
       at: function () { return eeShows('enclosure'); }, fix: function () { eeOpen('enclosure'); }, enter: function () { eeView('overview'); }, place: 'the Enclosure in Signoff ME',

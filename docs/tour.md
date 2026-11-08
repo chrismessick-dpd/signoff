@@ -196,17 +196,7 @@ then the whole product (step 8), before any one tool's detail (Chris, 2026-11-08
 - **Try:** B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects
   every comment tagged @revnotes.
 
-### 18. The firmware review
-
-- **Page:** Signoff FW, `?demo&project=fdemo3`, the Thermostat Firmware's Overview.
-- **Rings:** {Edit profile}, then the sheet's Checklists.
-- **Card:** Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and
-  checklists picked for the product, from architecture and hardware interfaces to memory, concurrency,
-  power, communications and security. Its profile tags set aside the checks that don't apply.
-- **Try:** Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel}
-  leaves it as it was.
-
-### 19. Harness drawings
+### 18. Harness drawings
 
 - **Page:** Loom, `?demo&project=hdemo1`, the demo harness (an example for a made-up Zone Controller,
   not the thermostat). The menu and the parts pane fold away and the diagram fits the canvas; a
@@ -219,7 +209,7 @@ then the whole product (step 8), before any one tool's detail (Chris, 2026-11-08
 - **Try:** Click a connector, a wire or a cable: its Properties open on the right. Loom's own guide
   walks through every feature on this harness.
 
-### 20. Build the thermostat's harness
+### 19. Build the thermostat's harness
 
 - **Page:** Loom, with the menu and the panes back out.
 - **Card:** Now one of your own, next to the example: the thermostat's mains leads, from the Main
@@ -234,6 +224,16 @@ then the whole product (step 8), before any one tool's detail (Chris, 2026-11-08
   4. Click P3's pin 1 (AC_N), then lead 1 on P2. Do the same for pin 2.
   5. Select P1, the end you didn't use, and press {Delete}.
 - **When done:** That's a harness. {Drawing} shows its sheet, ready for a tech.
+
+### 20. The firmware review
+
+- **Page:** Signoff FW, `?demo&project=fdemo3`, the Thermostat Firmware's Overview.
+- **Rings:** {Edit profile}, then the sheet's Checklists.
+- **Card:** Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and
+  checklists picked for the product, from architecture and hardware interfaces to memory, concurrency,
+  power, communications and security. Its profile tags set aside the checks that don't apply.
+- **Try:** Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel}
+  leaves it as it was.
 
 ### 21. The enclosure's review
 
@@ -254,8 +254,8 @@ then the whole product (step 8), before any one tool's detail (Chris, 2026-11-08
 
 ### Hidden: The firmware, and a failing requirement
 
-Kept in `tour.js` with `skip: true`, to add back later (Chris, 2026-11-08). It would sit between steps
-18 and 19.
+Kept in `tour.js` with `skip: true`, to add back later (Chris, 2026-11-08). It would sit right after
+step 20.
 
 - **Page:** Signoff FW, `?demo&project=fdemo3&req=q3-1`, with REQ-002's panel open.
 - **Card:** Signoff FW reviews the firmware. This requirement flows down from the product's ESD
