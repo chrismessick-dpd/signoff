@@ -74,8 +74,8 @@ scroll the page, even when the tile is below the fold (`still`).
 
 - **Card:** Loom draws the harnesses that join the boards and parts: connectors, wires, twisted pairs,
   shields, cables, and bundles in one wiring diagram, with the connector faces, wire list, and BOM on
-  the sheet a tech builds from. Board connectors come from a Signoff EE board's fab package, with
-  their pins and net names.
+  the sheet a tech builds from. Generic connectors can be placed, or a board's connectors pulled
+  from a Signoff EE board's fab package, with their pins and net names.
 - **Try:** Signed in, harnesses sync with Loom's private data repo, and Signoff PL places them in the
   product. {Next} picks Partcheck.
 
