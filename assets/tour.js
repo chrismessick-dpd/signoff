@@ -94,6 +94,7 @@
       advance: function () { return fabRun() === 'rdemo1042b'; }, place: 'Fabcheck’s start page',
       text: 'Fabcheck is Dovetail’s DFM check for fab packages. It reads a package in the browser, nothing uploaded, and checks that its contents agree and its board data is clean: parts, descriptions, and footprints across the BOM, pick-and-place data, and Gerbers. It renders the Gerber and drill layers and checks them for errors and warnings against a fab process class. The classes come from fab houses’ published capabilities and can be copied and tailored to a particular fab.',
       try: 'Click {Main PCBA (DT-1042 rev B)} to check the Main PCBA’s package.',
+      phoneTry: 'Tap {Main PCBA (DT-1042 rev B)}, or {Next}, to check the Main PCBA’s package.',
       spot: [['[data-act="sample"]', 'Main PCBA']] },
     // Its deep link runs the package on Overview, where the stage animates the checks, and stays there
     // (a link with no place or check keeps its view; pcb_dfm applyLink).
@@ -142,6 +143,7 @@
     { tool: 'loom', url: '../loom/index.html?demo&project=hdemo1', title: 'Harness drawings',
       text: 'Loom draws any cable harness, from a two-wire pigtail to a full cable set: connectors, wires, splices, twisted pairs, shields, cables and bundles. From that one picture it makes the package a tech builds from: the wiring diagram, connector faces, wire list and BOM. This example harness, for another made-up product, has a bit of everything.',
       try: 'Click a connector, a wire or a cable: its Properties open on the right. Loom’s own guide walks through every feature on this harness.',
+      phoneTry: 'Tap a connector, a wire or a cable: its Properties open in a sheet. Loom’s own guide walks through every feature on this harness.',
       guide: true,
       at: function () { var h = loomH(); return !!h && h.id === 'hdemo1'; }, fix: function () { var g = loomGuide(); if (g) g.demo(); }, place: 'Loom’s demo harness',
       enter: function () { var g = loomGuide(); if (g) { g.demo(); if (g.focus) g.focus(); } } },
@@ -150,6 +152,9 @@
     // ticked off from the harness as it is (loomJ1 and friends below) and rings what to do next.
     { tool: 'loom', url: '../loom/index.html?demo', title: 'Build the thermostat’s harness',
       text: 'Now one of your own, next to the example: the thermostat’s mains leads, from the Main PCBA’s terminal block J1 to the electrical box. Loom reads J1 from the package Fabcheck checked, with its designator and net names.',
+      // A phone shows and edits harnesses, but building one needs a computer (Chris).
+      phoneText: 'On a computer, this step has you build the thermostat’s mains leads: from the Main PCBA’s terminal block J1, read from the package Fabcheck checked with its net names, to two flying leads for the electrical box.',
+      phoneTry: 'On a phone, Loom shows harnesses and their drawings and edits what’s on them, but drawing a new one needs a bigger screen. {Next} goes on to the firmware.',
       // The first Loom step's ?project=hdemo1 would reopen the example on a reload; drop it here.
       enter: function () {
         try { if (/[?&]project=/.test(location.search)) history.replaceState(history.state, '', location.pathname + '?demo' + location.hash); } catch (e) { /* no history */ }
@@ -238,7 +243,11 @@
   function hubPicked(id) { var t = document.querySelector('.pk-tile[data-pick="' + id + '"]'); return !!t && t.classList.contains('sel'); }
   // The hub's steps keep its page at the top, where the picked tool's panel is (Chris: step 5 scrolled
   // down to Fabcheck's tile, off its details); their rings never scroll the page (still).
-  function hubTop() { var m = document.getElementById('main'); if (m) m.scrollTop = 0; window.scrollTo(0, 0); }
+  function hubTop() {
+    var m = document.getElementById('main'); if (m) m.scrollTop = 0; window.scrollTo(0, 0);
+    // A phone stacks the panel's picture over its text: bring the tool's name and description up.
+    if (phone()) setTimeout(function () { var b = document.querySelector('.pk-panel:not([hidden]) .pk-panel-body'); if (!b || !m) return; var bar = document.getElementById('toolbar'), y = bar ? bar.getBoundingClientRect().bottom : 0; m.scrollTop += b.getBoundingClientRect().top - y - 8; }, 60);
+  }
   function hubPick(id) { var t = document.querySelector('.pk-tile[data-pick="' + id + '"]'); if (t && !t.classList.contains('sel')) t.click(); }
   // The review tools' tabs (the engine's data-view buttons), and Revisions with its first run open.
   function eeView(v) { var b = document.querySelector('[data-view="' + v + '"]'); if (b && !b.classList.contains('on')) b.click(); }
@@ -270,6 +279,12 @@
   }
   function loomItem(n) { return n ? '[data-item="n:' + n.id + '"]' : null; }
   function loomPicked(n) { try { var s = window.LM.app.state.sel; return !!n && !!s && s.kind === 'node' && s.ids.has(n.id); } catch (e) { return false; } }
+  // A phone (Chris, 2026-11-08): the tour is for watching there, not for building. The card is a bottom
+  // sheet, folded to its title and two lines (peek) until tapped open, and a step can say what a phone
+  // shows instead (phoneText, phoneTry). A step's stages (Loom's build) are a computer's only.
+  var PHONE_Q = window.matchMedia ? matchMedia('(max-width: 600px)') : null;
+  function phone() { return !!PHONE_Q && PHONE_Q.matches; }
+  function stagesOf(s) { return s && s.stages && !phone() ? s.stages : null; }
   // A step with stages: the first one not done (stages.length when all are).
   function stageAt(s) {
     var h = loomH();
@@ -280,7 +295,7 @@
   function spotList(s) {
     var l = null;
     try {
-      if (s.stages) { var i = stageAt(s); l = i < s.stages.length ? s.stages[i].spot(loomH()) : []; }
+      if (stagesOf(s)) { var i = stageAt(s); l = i < s.stages.length ? s.stages[i].spot(loomH()) : []; }
       else l = typeof s.spot === 'function' ? s.spot() : s.spot;
     } catch (e) { l = null; }
     return (l || []).filter(Boolean);
@@ -332,6 +347,15 @@
     '@keyframes tour-spot{50%{box-shadow:0 0 0 9px var(--accent-soft,rgba(0,114,127,.1))}}' +
     // While Loom's guide runs (it adds .lm-guide-on), it has the floor.
     '.lm-guide-on .tour,.lm-guide-on .tour-spot{display:none}' +
+    // The phone's bottom sheet (phone()): full width at the foot of the screen, folded to a peek.
+    '.tour .t-grab,.tour .t-more{display:none}' +
+    '@media (max-width:600px){.tour.sheet{left:0;right:0;bottom:0;top:auto;width:auto;max-width:none;border-radius:16px 16px 0 0;border-bottom:0;' +
+    'padding:8px 16px calc(10px + env(safe-area-inset-bottom,0px));max-height:70vh}' +
+    '.tour.sheet .t-grab{display:block;width:36px;height:4px;border-radius:2px;background:var(--hair-2,rgba(0,0,0,.14));margin:0 auto 6px}' +
+    '.tour.sheet .t-more{display:inline-block;margin-right:auto}.tour.sheet h3,.tour.sheet .t-body{cursor:pointer}' +
+    '.tour.sheet.peek .t-body>:not(:first-child),.tour.sheet.peek .t-dots,.tour.sheet.peek .t-guide{display:none}' +
+    '.tour.sheet.peek .t-body>:first-child{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px}' +
+    '.tour.sheet.peek h3{margin-bottom:2px}.tour.min{left:auto;right:12px;bottom:12px}}' +
     '@media (prefers-reduced-motion:reduce){.tour-link,.tour-spot{animation:none}}';
 
   function style() { if (document.getElementById('tour-css')) return; var s = document.createElement('style'); s.id = 'tour-css'; s.textContent = css; document.head.appendChild(s); }
@@ -381,13 +405,13 @@
     spotRaf = 0;
     var st = get(), s = st && !st.min && STEPS[st.step], here = onStep(s), ring = document.getElementById('tour-spot');
     // A stage done on the page: redraw the card, which ticks it off and starts this again.
-    if (here && s.stages && stageAt(s) !== stageShown) { card(); return; }
+    if (here && stagesOf(s) && stageAt(s) !== stageShown) { card(); return; }
     if (here && s.refit) {
       var lh = loomH(), sig = lh ? lh.id + ':' + lh.nodes.length + ':' + lh.wires.length : '';
       if (sig !== refitWas) { if (refitWas && sig) setTimeout(function () { var g = loomGuide(); if (g) g.fit(); }, 80); refitWas = sig; }
     }
-    var f = here && (s.spot || s.stages) ? findSpot(spotList(s)) : null;
-    if (!f) { if (ring) ring.remove(); spotWas = null; placeCard(avoidRects(s)); if (s && (s.spot || s.stages)) spotRaf = requestAnimationFrame(spotTick); return; }
+    var f = here && (s.spot || stagesOf(s)) ? findSpot(spotList(s)) : null;
+    if (!f) { if (ring) ring.remove(); spotWas = null; placeCard(avoidRects(s)); if (s && (s.spot || stagesOf(s))) spotRaf = requestAnimationFrame(spotTick); return; }
     var r = f.el.getBoundingClientRect(), x0 = r.left, y0 = r.top, x1 = r.right, y1 = r.bottom;
     var nx = f.group && f.el.nextElementSibling;
     if (nx && shown(nx)) { var q = nx.getBoundingClientRect(); x0 = Math.min(x0, q.left); y0 = Math.min(y0, q.top); x1 = Math.max(x1, q.right); y1 = Math.max(y1, q.bottom); }
@@ -421,7 +445,7 @@
   }
   function placeCard(rs) {
     var el = document.getElementById('tour');
-    if (!el || el.classList.contains('min')) return;
+    if (!el || el.classList.contains('min') || phone()) return;
     var w = el.offsetWidth, ht = el.offsetHeight, W = innerWidth, H = innerHeight;
     var spots = [['', 16, H - 16 - ht], ['side', W - 16 - w, H - 16 - ht], ['top', W - 16 - w, 72]];
     var cover = function (x, y) {
@@ -440,7 +464,7 @@
   // entered: the step whose enter() last ran on this page; stageShown: the stage the card shows;
   // shownKey: the page the card was drawn for (pageKey), which watch() compares twice a second, so
   // the card follows a board, package, harness or route changed inside a tool.
-  var entered = -1, stageShown = -1, shownKey = '';
+  var entered = -1, stageShown = -1, shownKey = '', shownPhone = null;
   function pageKey() { var st = get(), s = st && STEPS[st.step]; return location.href + '|' + (st ? st.step + ':' + onStep(s) : ''); }
   function watch() {
     var st = get(), s = st && STEPS[st.step];
@@ -450,7 +474,8 @@
       var ok = false; try { ok = s.advance(); } catch (e) { /* page not ready */ }
       if (ok) { st.step++; set(st); card(); return; }
     }
-    if (!st.min && pageKey() !== shownKey) card();
+    // Turning a phone (or resizing a window) across the phone width redraws the card as a sheet or not.
+    if (!st.min && (pageKey() !== shownKey || phone() !== shownPhone)) card();
   }
   // Contents: the steps under the tool each runs in (a heading where the tool changes); a click jumps there.
   function toc(now) {
@@ -487,14 +512,17 @@
     else if (entered !== st.step) { entered = st.step; if (s.enter) { try { s.enter(); } catch (e) { /* page not ready */ } } }
     var atStep = onStep(s);
     shownKey = pageKey();
-    var at = atStep && s.stages ? stageAt(s) : -1;
+    var stages = stagesOf(s), ph = shownPhone = phone();
+    var at = atStep && stages ? stageAt(s) : -1;
     stageShown = at;
-    var tryHtml = !atStep ? '' : s.stages
+    var text = ph && s.phoneText || s.text, tryText = ph && s.phoneTry || s.try;
+    var tryHtml = !atStep ? '' : stages
       ? '<ol class="t-stages">' + s.stages.map(function (x, i) { return '<li class="' + (i < at ? 'done' : i === at ? 'now' : '') + '">' + (i < at ? '<b>✓</b> ' : '') + marks(x.text) + '</li>'; }).join('') + '</ol>' +
         (at >= s.stages.length && s.done ? '<p class="t-try">' + marks(s.done) + '</p>' : '')
-      : '<p class="t-try">' + marks(s.try) + '</p>';
+      : tryText ? '<p class="t-try">' + marks(tryText) + '</p>' : '';
     if (!el) { el = document.createElement('div'); el.id = 'tour'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Demo tour'); document.body.appendChild(el); }
-    el.className = 'tour' + (st.min ? ' min' : '');
+    // On a phone the sheet peeks (title and two lines) until it's opened; each step starts folded.
+    el.className = 'tour' + (st.min ? ' min' : '') + (ph ? ' sheet' : '') + (ph && !st.min && !st.open && !st.contents ? ' peek' : '');
     if (st.min) { el.innerHTML = '<b>Tour</b> · ' + (st.step + 1) + ' of ' + STEPS.length + ' ▴'; el.onclick = function () { st.min = false; set(st); card(); }; return; }
     el.onclick = null;
     // Loom's own guide (loom/assets/guide.js, window.LoomGuide) takes over from the Loom step.
@@ -502,16 +530,16 @@
     // Loom's How it works card opens on a first visit over the Add palette, where the step's
     // From a board is; close it as Loom's guide does (LM.app.guide.help).
     if (guide) { try { window.LM.app.guide.help(false); } catch (e) { /* Loom not ready */ } }
-    el.innerHTML = '<div class="t-top"><span>Demo tour · ' + (st.step + 1) + ' of ' + STEPS.length + '</span>' +
+    el.innerHTML = (ph ? '<div class="t-grab" data-t="grow"></div>' : '') + '<div class="t-top"><span>Demo tour · ' + (st.step + 1) + ' of ' + STEPS.length + '</span>' +
       '<button class="t-x' + (st.contents ? ' on' : '') + '" data-t="contents" title="Contents" aria-label="Contents" aria-expanded="' + !!st.contents + '">☰</button>' +
       '<button class="t-x" data-t="min" title="Shrink the tour">▾</button><button class="t-x" data-t="end" title="End the tour">✕</button></div>' +
       (st.contents ? toc(st.step)
-        : '<h3>' + esc(s.title) + '</h3>' +
-          (atStep ? paras(s.text) + tryHtml
+        : '<h3 data-t="grow">' + esc(s.title) + '</h3>' +
+          (atStep ? '<div class="t-body" data-t="grow">' + paras(text) + tryHtml + '</div>'
             : '<p>This step is on ' + esc(s.place && s.tool === here ? s.place : NAMES[s.tool] || s.tool) + '.</p>') +
-          (guide ? '<p><button class="t-b" data-t="guide">Open Loom’s guide</button></p>' : '')) +
+          (guide ? '<p class="t-guide"><button class="t-b" data-t="guide">Open Loom’s guide</button></p>' : '')) +
       '<div class="t-dots">' + STEPS.map(function (x, i) { return '<i class="' + (i <= st.step ? 'on' : '') + '"></i>'; }).join('') + '</div>' +
-      '<div class="t-act">' + (st.step > 0 ? '<button class="t-b" data-t="back">Back</button>' : '') +
+      '<div class="t-act">' + (ph && !st.contents ? '<button class="t-b t-more" data-t="grow">' + (st.open ? 'Less' : 'More') + '</button>' : '') + (st.step > 0 ? '<button class="t-b" data-t="back">Back</button>' : '') +
       (atStep ? (last ? '<button class="t-b p" data-t="end">Finish</button>' : '<button class="t-b p" data-t="next">Next</button>')
         : '<button class="t-b" data-t="here">Go there</button>' + (last ? '' : '<button class="t-b p" data-t="next">Next</button>')) + '</div>';
     el.querySelectorAll('[data-t]').forEach(function (b) {
@@ -521,6 +549,7 @@
         if (t === 'end') { set(null); card(); }
         else if (t === 'min') { st.min = true; set(st); card(); }
         else if (t === 'contents') { st.contents = !st.contents; set(st); card(); }
+        else if (t === 'grow') { if (ph) { st.open = !st.open; set(st); card(); } }
         else if (t === 'to') go(+b.getAttribute('data-i'));
         else if (t === 'here') go(st.step);
         else if (t === 'back') go(st.step - 1);

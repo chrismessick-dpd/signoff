@@ -9,9 +9,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Dovetail Signoff</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23004952'/%3E%3Csvg x='10' y='6' width='12' height='20' viewBox='0 0 59.21 98.68'%3E%3Cpath d='M0 0h18.19v41.88H0zM0 56.79h18.19v41.88H0zM18.2 41.89h1.59v14.91H18.2zM19.79 0v41.89l24.96-6.63v28.16L19.79 56.79v41.89l39.42-10.47V10.47z' fill='%23fff'/%3E%3C/svg%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/suite.css?v=82bb5b10a8cf">
-<link rel="stylesheet" href="assets/hub.css?v=82bb5b10a8cf">
-<script src="assets/hub.js?v=82bb5b10a8cf"></script>
+<link rel="stylesheet" href="assets/suite.css?v=b199510ebdc9">
+<link rel="stylesheet" href="assets/hub.css?v=b199510ebdc9">
+<script src="assets/hub.js?v=b199510ebdc9"></script>
 </head>
 <body>
 <div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Every tool shows the same made-up product, a Smart Thermostat for Acme Climate, so you can follow it from one tool to the next. Nothing here is real project data.</div>
@@ -407,12 +407,11 @@
 
       <!-- The Dovetail Signoff summary sheet. Check counts are hand-copied, like the cards above. -->
       <section class="about" aria-labelledby="about-title">
-        <h2 class="section-title" id="about-title">About Signoff</h2>
         <div class="card about-sheet">
           <div class="about-hero">
-            <h3>Dovetail Signoff</h3>
+            <h3 id="about-title">Dovetail Signoff tool suite</h3>
             <p class="lede">The design review tools Dovetail engineers use on every project. Each review becomes a structured, traceable record: what was checked, what was found, who resolved it, and whether the design meets its requirements.</p>
-            <div class="facts"><span><b>930</b> electrical checks</span><span><b>845</b> mechanical checks</span><span><b>33</b> fabrication DFM rules</span></div>
+            <div class="facts"><span><b>930</b> electrical checks</span><span><b>845</b> mechanical checks</span><span><b>196</b> firmware checks</span><span><b>33</b> fabrication DFM rules</span></div>
           </div>
 
           <div class="about-part">
@@ -516,7 +515,7 @@
                 <tr><td>Fabrication DFM</td><td>Trace width and spacing, annular ring, drill size and aspect ratio, hole spacing, copper to edge, slivers, solder mask dams, silkscreen on pads, via-in-pad, BGA pads, outline corners, copper balance</td></tr>
               </tbody>
             </table></div>
-            <p class="note"><b>Rules for your board house.</b> Start from typical limits (Prototype, Standard or Advanced HDI-lite, each with documented sources), or set the limits to a specific fab's published capabilities. Change a limit and the board is re-checked straight away; click any finding and the board view zooms to it. Two revisions of a package can also be compared side by side.</p>
+            <p class="note"><b>Rules for your board house.</b> Start from typical limits (Prototype, Standard, Advanced HDI-lite, HDI with laser microvias, or Flex HDI, each with documented sources), or set the limits to a specific fab's published capabilities. Change a limit and the board is re-checked straight away; click any finding and the board view zooms to it. Two revisions of a package can also be compared side by side.</p>
           </div>
 
           <div class="about-part" id="about-partcheck">
@@ -553,8 +552,8 @@
     </div>
   </main>
 </div>
-<script src="assets/people.js?v=82bb5b10a8cf"></script>
-<script src="assets/tour.js?v=82bb5b10a8cf"></script>
-<script src="assets/mark.js?v=82bb5b10a8cf"></script>
+<script src="assets/people.js?v=b199510ebdc9"></script>
+<script src="assets/tour.js?v=b199510ebdc9"></script>
+<script src="assets/mark.js?v=b199510ebdc9"></script>
 </body>
 </html>

@@ -239,6 +239,11 @@ scroll the page, even when the tile is below the fold (`still`).
   4. Click P3's pin 1 (AC_N), then lead 1 on P2. Do the same for pin 2.
   5. Select P1, the end you didn't use, and press {Delete}.
 - **When done:** That's a harness. {Drawing} shows its sheet, ready for a tech.
+- **On a phone,** no stages. **Card:** On a computer, this step has you build the thermostat's mains
+  leads: from the Main PCBA's terminal block J1, read from the package Fabcheck checked with its net
+  names, to two flying leads for the electrical box. **Try:** On a phone, Loom shows harnesses and their
+  drawings and edits what's on them, but drawing a new one needs a bigger screen. {Next} goes on to the
+  firmware.
 
 ### 21. The firmware review
 
@@ -308,6 +313,13 @@ step 21.
 - **Fabcheck runs on Overview.** A run link with no check or place (`#/overview?run=…`,
   `#/findings?run=…`) stays on that view; links from Signoff EE, which carry a check or a place, go to
   the board. The start page's demo-board buttons open their board by its fixed run, the same way.
+- **On a phone** (600 px wide or less; Chris, 2026-11-08: there it's a tour to watch, not to build in),
+  the card is a bottom sheet across the foot of the screen. It peeks, about a fifth of the screen with
+  the title, two lines and Back and Next, until **More** (or a tap on its text) opens it; each step
+  starts folded. It never moves to dodge the ring. The hub's steps scroll the picked tool's name and
+  description into view. A step can say what a phone shows instead (`phoneText`, `phoneTry`), and a
+  step's stages are a computer's only: step 20 explains the build instead of running it. Turning the
+  phone across that width redraws the card.
 - **Contents.** The ☰ in the card's top line swaps the card's text for every step, under the tool it
   runs in; a click jumps to that step (as Loom's guide does). It stays open, as `contents` in the
   state, until it's closed or a step is picked.
