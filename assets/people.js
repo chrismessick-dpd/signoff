@@ -122,7 +122,7 @@
     embedded: EMBEDDED,
     // A host that isn't one of the review tools above (PL) passes a label: its tab comes first, here only.
     register: function (id, o) {
-      host = { id: id, draw: o.draw, changed: o.changed };
+      host = { id: id, draw: o.draw, changed: o.changed, own: !!o.label };
       if (o.label && !known(id)) TOOLS.unshift({ id: id, label: o.label, sub: o.sub || '' });
     },
     open: open,
@@ -131,9 +131,10 @@
     pane: hostPane
   };
 
-  // The hub and PL: ?page=people opens the sheet. The review tools do it from app.js.
+  // The hub and PL (a host with its own tab): ?page=people opens the sheet. The review tools do it
+  // from app.js.
   if (!EMBEDDED && /[?&]page=people\b/.test(location.search)) {
-    var start = function () { if (!host && !/[?&]demo\b/.test(location.search)) open(); };
+    var start = function () { if ((!host || host.own) && !/[?&]demo\b/.test(location.search)) open(); };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 0); });
     else setTimeout(start, 0);
   }
