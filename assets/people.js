@@ -6,7 +6,9 @@
      - every other tab is the other tool's page in an iframe, index.html?page=people&embed=1,
        which shows only People (app.js, EMBED).
    A tool never frames itself: two copies of one tool in one tab would write one roster over the
-   other. The hub and PL register nothing, so all three tabs are frames there.
+   other. The hub registers nothing, so all three tabs are frames there. Signoff PL registers a tab of
+   its own (label given to register), which is drawn first and only in PL: PL's People & access across
+   every tool's people list (2026-11-08).
 
    Hosts: any element with data-people-open opens the sheet (the hub and PL sidebars); the
    engine's data-act="people" calls SignoffPeople.open(). ?page=people opens it on load (the
@@ -118,7 +120,11 @@
   window.SignoffPeople = {
     tools: TOOLS,
     embedded: EMBEDDED,
-    register: function (id, o) { host = { id: id, draw: o.draw, changed: o.changed }; },
+    // A host that isn't one of the review tools above (PL) passes a label: its tab comes first, here only.
+    register: function (id, o) {
+      host = { id: id, draw: o.draw, changed: o.changed };
+      if (o.label && !known(id)) TOOLS.unshift({ id: id, label: o.label, sub: o.sub || '' });
+    },
     open: open,
     close: close,
     isOpen: function () { return !!wrap; },
