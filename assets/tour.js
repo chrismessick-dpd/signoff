@@ -35,9 +35,41 @@
     { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Signoff EE',
       at: function () { return hubPicked('ee'); }, fix: function () { hubPick('ee'); }, enter: function () { hubPick('ee'); }, place: 'the hub, with Signoff EE picked',
       text: 'Signoff EE follows a board through its whole life, from requirements and schematic to layout, fab release, and bring-up. Each board is set up with its requirements and the checklists its design type needs. It works with Fabcheck: every fab package Fabcheck checks can send its errors and warnings to the board’s review as issues, and every run is kept, so DFM checks repeat with each revision and their issues are tracked to closure.',
-      try: '{Next} opens the Main PCBA, the Smart Thermostat’s main board, in Signoff EE.',
+      try: 'The tour comes back to the Smart Thermostat’s Main PCBA in Signoff EE. First, the other tools: {Next} picks Signoff ME.',
       spot: ['.pk-tile[data-pick="ee"]'] },
-    // 3–4: the Main PCBA's review in Signoff EE.
+    // 3–7: the other tools, each picked on the hub's stage, so the visitor sees the whole suite before
+    // any one tool (Chris, 2026-11-08).
+    { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Signoff ME',
+      at: function () { return hubPicked('me'); }, fix: function () { hubPick('me'); }, enter: function () { hubPick('me'); }, place: 'the hub, with Signoff ME picked',
+      text: 'Signoff ME reviews a mechanical part or product from concept to production validation: part design and DFM, tolerancing, materials, the enclosure, drawings, and validation testing. Like a board in Signoff EE, each part is set up with its requirements and the checklists it needs, and its requirements flow down from the product’s.',
+      try: 'In the demo, the Smart Thermostat’s Enclosure and Wall Bracket are reviewed here. {Next} picks Signoff FW.',
+      spot: ['.pk-tile[data-pick="me"]'] },
+    { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Signoff FW',
+      at: function () { return hubPicked('fw'); }, fix: function () { hubPick('fw'); }, enter: function () { hubPick('fw'); }, place: 'the hub, with Signoff FW picked',
+      text: 'Signoff FW reviews one firmware image from architecture to factory programming and field updates: hardware interfaces, memory and faults, concurrency, power, communications, security, and release. It works the same way as Signoff EE and ME, with requirements and checklists picked for the product.',
+      try: 'The demo reviews the Smart Thermostat’s firmware. {Next} picks Fabcheck.',
+      spot: ['.pk-tile[data-pick="fw"]'] },
+    { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Fabcheck',
+      at: function () { return hubPicked('fabcheck'); }, fix: function () { hubPick('fabcheck'); }, enter: function () { hubPick('fabcheck'); }, place: 'the hub, with Fabcheck picked',
+      text: 'Fabcheck checks a PCB fab and assembly package (Gerbers, drill files, pick-and-place, BOM, or ODB++) the way a board house would, before it’s sent, and shows exactly where on the board each problem is. It runs in the browser, so the files never leave the computer, and it sends what it finds to the board’s review in Signoff EE.',
+      try: 'Later in the tour you run the Main PCBA’s package through it. {Next} picks Loom.',
+      spot: ['.pk-tile[data-pick="fabcheck"]'] },
+    { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Loom',
+      at: function () { return hubPicked('loom'); }, fix: function () { hubPick('loom'); }, enter: function () { hubPick('loom'); }, place: 'the hub, with Loom picked',
+      text: 'Loom draws the harnesses that join the boards and parts: connectors, wires, twisted pairs, shields, cables, and bundles in one wiring diagram, with the connector faces, wire list, and BOM on the sheet a tech builds from. Board connectors come from a Signoff EE board’s fab package, with their pins and net names.',
+      try: 'Signed in, harnesses sync with Loom’s private data repo, and Signoff PL places them in the product. {Next} picks Partcheck.',
+      spot: ['.pk-tile[data-pick="loom"]'] },
+    { tool: 'signoff', url: '../signoff/index.html?demo', title: 'Partcheck',
+      at: function () { return hubPicked('partcheck'); }, fix: function () { hubPick('partcheck'); }, enter: function () { hubPick('partcheck'); }, place: 'the hub, with Partcheck picked',
+      text: 'Partcheck is Fabcheck’s mechanical counterpart. It checks that a part’s STEP model, drawing, flat pattern, and BOM agree before they go to the shop, and shows every part in 3D with its mass, draft, and wall thickness. Like Fabcheck, it runs in the browser, and its findings give evidence for checks in Signoff ME.',
+      try: '{Next} opens Signoff PL, where all of these come together as one product.',
+      spot: ['.pk-tile[data-pick="partcheck"]'] },
+    // 8: the whole product in Signoff PL, before any one tool's detail (Chris, 2026-11-08: it was the last step).
+    { tool: 'signoff_pl', url: '../signoff_pl/index.html?demo', title: 'The whole product',
+      text: 'Signoff PL is the project lead’s view. The Smart Thermostat is a tree of Parts: the two boards, the firmware, the enclosure and the wall bracket, each linked to its review, plus purchased Parts. Rings show how much of each review is done, and the colored numbers are open issues.',
+      try: 'Open the {Requirements} tab: the product’s ESD requirement, REQ-002, is failing with the firmware’s under it. (Clicking a Part first shows only that Part’s.) {Next} goes into one of these Parts: the Main PCBA’s review in Signoff EE.',
+      spot: ['[data-view="reqs"]:not(.on)'] },
+    // 9–10: the Main PCBA's review in Signoff EE.
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'A board’s design review',
       at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('overview'); }, place: 'the Main PCBA in Signoff EE',
       text: 'This is the Main PCBA’s review. Signoff EE reviews a board against checklists, from schematic and layout to fab release and bring-up. Each board picks the checklists it needs, and its profile (mains, RF, certification…) sets aside the checks that don’t apply, so the list fits the design.',
@@ -49,7 +81,7 @@
       try: 'Click one of the Fabcheck comments to open its issue: {Open in Fabcheck} in its panel opens that finding in Fabcheck. {Next} goes to Fabcheck to run the Main PCBA’s package yourself.',
       // The board picture in EE's header opens Fabcheck too (.head-pic-img); ring the issue panel's button.
       spot: ['[data-act="open-fabcheck"]:not(.head-pic-img)', ['.section-title', 'Recent discussion', 'group']] },
-    // 5–9: Fabcheck. The start page, where the visitor starts the Main PCBA's run (its button opens the
+    // 11–15: Fabcheck. The start page, where the visitor starts the Main PCBA's run (its button opens the
     // board by its fixed run, rdemo1042b, as the links do; pcb_dfm 'sample'), then that run.
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo', title: 'Check a fab package',
       at: function () { return !/run=/.test(location.hash) && !fabRun(); }, fix: function () { location.href = location.pathname + location.search; },
@@ -87,7 +119,7 @@
       text: '{Send to Signoff EE}, at the foot of {Overview}, turns the run’s errors and warnings into issues on the Main PCBA’s Fabrication & Release checklist and keeps the run with the review. Sending again updates the same issues and keeps their status in Signoff.',
       try: 'Check that the project is {Main PCBA}, click {Send to Signoff EE}, then {Open in Signoff EE}.',
       spot: ['.filters:has([data-act="signoff-send"])', '[data-act="signoff-send"]'] },
-    // 10–11: back in the Main PCBA's review.
+    // 16–17: back in the Main PCBA's review.
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Fabcheck’s issues in the review',
       at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('findings'); }, place: 'the Main PCBA in Signoff EE',
       text: 'The run’s errors and warnings are issues on the Main PCBA’s {Fab & Release} checklist now, listed with every other issue under {Findings}. D2’s error came over with Fabcheck’s details and a link back to the finding.',
@@ -98,13 +130,13 @@
       enter: function () { eeView('revisions'); setTimeout(eeExpandRun, 150); },
       text: 'The {Revisions} tab lists the Main PCBA’s Fabcheck runs. A run that went to the fab is tagged as a revision, here B.1, with its status, fab house, date and order, so everyone knows which package was built. In a real review, each run’s fab package can be downloaded here.',
       try: 'B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects every comment tagged @revnotes.' },
-    // 12: the firmware's review, on its Overview.
+    // 18: the firmware's review, on its Overview.
     { tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3', title: 'The firmware review',
       at: function () { return eeShows('thermostat-firmware'); }, enter: function () { eeView('overview'); }, place: 'the Thermostat Firmware in Signoff FW',
       text: 'Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and checklists picked for the product, from architecture and hardware interfaces to memory, concurrency, power, communications and security. Its profile tags set aside the checks that don’t apply.',
       try: 'Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel} leaves it as it was.',
       spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
-    // 13–14: Loom. It opens on its demo harness, an example for another made-up product, with the menu
+    // 19–20: Loom. It opens on its demo harness, an example for another made-up product, with the menu
     // and the parts pane folded away and the diagram fitted, so it's big enough to click (Chris). A
     // selection brings the parts pane back (loom/assets/app.js, unfoldForSelection).
     { tool: 'loom', url: '../loom/index.html?demo&project=hdemo1', title: 'Harness drawings',
@@ -149,23 +181,19 @@
       // so the canvas fits whenever the harness gains or loses one.
       refit: true,
       done: 'That’s a harness. {Drawing} shows its sheet, ready for a tech.' },
-    // 15–17: the enclosure, its package, and the whole product.
+    // 21–22: the enclosure and its package.
     { tool: 'me_design_review', url: '../me_design_review/index.html?demo&project=mdemo5', title: 'The enclosure’s review',
       at: function () { return eeShows('enclosure'); }, fix: function () { eeOpen('enclosure'); }, enter: function () { eeView('overview'); }, place: 'the Enclosure in Signoff ME',
       text: 'Signoff ME reviews the Enclosure the same way, with mechanical checklists: part design and DFM, tolerancing, materials, drawings. Its requirements flow down from the product’s: look for ↑ on the {Requirements} tab.',
       try: 'Open {Findings} to see every issue in one list.' },
     { tool: 'partcheck', url: '../partcheck/index.html?demo', title: 'The package that goes to the molder',
       text: 'Partcheck checks that the models, drawings and BOM agree before they’re sent out. Here the back cover’s drawing and the BOM name different plastics, and the light pipe has no files.',
-      try: 'In {Findings}, each chip opens the Signoff ME check it gives evidence for.' },
+      try: 'In {Findings}, each chip opens the Signoff ME check it gives evidence for. That’s the tour: explore anything, and {Reset demo} in a tool’s banner starts it over.' },
     // Hidden for now (Chris, 2026-11-08): to come back later.
     { skip: true, tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3&req=q3-1', title: 'The firmware, and a failing requirement',
       at: function () { return eeShows('thermostat-firmware'); }, place: 'the Thermostat Firmware in Signoff FW',
       text: 'Signoff FW reviews the firmware. This requirement flows down from the product’s ESD requirement, and it’s failing: at ±8 kV the touch controller stopped responding until the power was cycled.',
       try: 'Its panel is open: scroll it down to {Traced checks} for the checks it traces to, with the open issue.' },
-    { tool: 'signoff_pl', url: '../signoff_pl/index.html?demo', title: 'The whole product',
-      text: 'Signoff PL is the project lead’s view. The Smart Thermostat is a tree of Parts: the two boards, the firmware, the enclosure and the wall bracket, each linked to its review, plus purchased Parts. Rings show how much of each review is done, and the colored numbers are open issues. The failing firmware requirement shows on the product’s ESD requirement, next to the boards’ ESD issues.',
-      try: 'Open the {Requirements} tab: the product’s ESD requirement, REQ-002, is failing with the firmware’s under it. (Clicking a Part first shows only that Part’s.) That’s the tour: explore anything, and {Reset demo} in a tool’s banner starts it over.',
-      spot: ['[data-view="reqs"]:not(.on)'] }
   ];
   var STEPS = ALL.filter(function (s) { return !s.skip; });
 
@@ -269,6 +297,12 @@
     '.tour button.t-b,.tour-intro button.t-b{border-radius:8px;padding:6px 12px;font:inherit;font-weight:600;cursor:pointer;border:1px solid var(--hair-2,rgba(0,0,0,.14));background:transparent;color:var(--text,#1d1d1f)}' +
     '.tour button.t-b.p,.tour-intro button.t-b.p{background:var(--accent,#00727f);border-color:transparent;color:#fff}' +
     '.tour.min{width:auto;padding:8px 12px;cursor:pointer}' +
+    // Contents: every step by tool, to jump to (as Loom's guide has).
+    '.tour .t-x.on{color:var(--accent,#00727f)}.tour .t-toc{margin:0 0 4px}' +
+    '.tour .t-ch{margin:8px 0 2px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3,#86868b);font-weight:600}.tour .t-ch:first-child{margin-top:0}' +
+    '.tour .t-li{display:block;width:100%;text-align:left;border:0;background:none;font:inherit;color:var(--text,#1d1d1f);padding:3px 8px;border-radius:6px;cursor:pointer}' +
+    '.tour .t-li:hover{background:var(--accent-soft,rgba(0,114,127,.1))}.tour .t-li.on{background:var(--accent-soft,rgba(0,114,127,.1));color:var(--accent,#00727f);font-weight:600}' +
+    '.tour .t-li span{color:var(--text-3,#86868b);margin-right:6px;font-variant-numeric:tabular-nums}' +
     // When the ring would sit under the card, the card moves to the bottom right (placeCard).
     '.tour.side{left:auto;right:16px}.tour.top{left:auto;right:16px;bottom:auto;top:72px}' +
     '.tour ol.t-stages{margin:0 0 8px;padding-left:20px}.tour ol.t-stages li{margin:0 0 4px;color:var(--text-3,#86868b)}' +
@@ -407,6 +441,15 @@
     }
     if (!st.min && pageKey() !== shownKey) card();
   }
+  // Contents: the steps under the tool each runs in (a heading where the tool changes); a click jumps there.
+  function toc(now) {
+    var out = '', was = null;
+    STEPS.forEach(function (x, i) {
+      if (x.tool !== was) { was = x.tool; out += '<div class="t-ch">' + esc(x.tool === 'signoff' ? 'The hub' : NAMES[x.tool] || x.tool) + '</div>'; }
+      out += '<button class="t-li' + (i === now ? ' on' : '') + '" data-t="to" data-i="' + i + '"><span>' + (i + 1) + '</span>' + esc(x.title) + '</button>';
+    });
+    return '<div class="t-toc">' + out + '</div>';
+  }
   function card() {
     var st = get(), el = document.getElementById('tour');
     spot();
@@ -445,11 +488,13 @@
     // From a board is; close it as Loom's guide does (LM.app.guide.help).
     if (guide) { try { window.LM.app.guide.help(false); } catch (e) { /* Loom not ready */ } }
     el.innerHTML = '<div class="t-top"><span>Demo tour · ' + (st.step + 1) + ' of ' + STEPS.length + '</span>' +
+      '<button class="t-x' + (st.contents ? ' on' : '') + '" data-t="contents" title="Contents" aria-label="Contents" aria-expanded="' + !!st.contents + '">☰</button>' +
       '<button class="t-x" data-t="min" title="Shrink the tour">▾</button><button class="t-x" data-t="end" title="End the tour">✕</button></div>' +
-      '<h3>' + esc(s.title) + '</h3>' +
-      (atStep ? '<p>' + marks(s.text) + '</p>' + tryHtml
-        : '<p>This step is on ' + esc(s.place && s.tool === here ? s.place : NAMES[s.tool] || s.tool) + '.</p>') +
-      (guide ? '<p><button class="t-b" data-t="guide">Open Loom’s guide</button></p>' : '') +
+      (st.contents ? toc(st.step)
+        : '<h3>' + esc(s.title) + '</h3>' +
+          (atStep ? '<p>' + marks(s.text) + '</p>' + tryHtml
+            : '<p>This step is on ' + esc(s.place && s.tool === here ? s.place : NAMES[s.tool] || s.tool) + '.</p>') +
+          (guide ? '<p><button class="t-b" data-t="guide">Open Loom’s guide</button></p>' : '')) +
       '<div class="t-dots">' + STEPS.map(function (x, i) { return '<i class="' + (i <= st.step ? 'on' : '') + '"></i>'; }).join('') + '</div>' +
       '<div class="t-act">' + (st.step > 0 ? '<button class="t-b" data-t="back">Back</button>' : '') +
       (atStep ? (last ? '<button class="t-b p" data-t="end">Finish</button>' : '<button class="t-b p" data-t="next">Next</button>')
@@ -460,6 +505,8 @@
         var t = b.getAttribute('data-t');
         if (t === 'end') { set(null); card(); }
         else if (t === 'min') { st.min = true; set(st); card(); }
+        else if (t === 'contents') { st.contents = !st.contents; set(st); card(); }
+        else if (t === 'to') go(+b.getAttribute('data-i'));
         else if (t === 'here') go(st.step);
         else if (t === 'back') go(st.step - 1);
         else if (t === 'next') go(st.step + 1);

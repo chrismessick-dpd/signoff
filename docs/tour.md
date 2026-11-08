@@ -37,9 +37,65 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   design type needs. It works with Fabcheck: every fab package Fabcheck checks can send its errors and
   warnings to the board's review as issues, and every run is kept, so DFM checks repeat with each
   revision and their issues are tracked to closure.
-- **Try:** {Next} opens the Main PCBA, the Smart Thermostat's main board, in Signoff EE.
+- **Try:** The tour comes back to the Smart Thermostat's Main PCBA in Signoff EE. First, the other
+  tools: {Next} picks Signoff ME.
 
-### 3. A board's design review
+Steps 3 to 7 pick each other tool on the hub's stage the same way, so the visitor sees the whole suite,
+then the whole product (step 8), before any one tool's detail (Chris, 2026-11-08). Each rings its tile.
+
+### 3. Signoff ME
+
+- **Card:** Signoff ME reviews a mechanical part or product from concept to production validation:
+  part design and DFM, tolerancing, materials, the enclosure, drawings, and validation testing. Like a
+  board in Signoff EE, each part is set up with its requirements and the checklists it needs, and its
+  requirements flow down from the product's.
+- **Try:** In the demo, the Smart Thermostat's Enclosure and Wall Bracket are reviewed here. {Next}
+  picks Signoff FW.
+
+### 4. Signoff FW
+
+- **Card:** Signoff FW reviews one firmware image from architecture to factory programming and field
+  updates: hardware interfaces, memory and faults, concurrency, power, communications, security, and
+  release. It works the same way as Signoff EE and ME, with requirements and checklists picked for the
+  product.
+- **Try:** The demo reviews the Smart Thermostat's firmware. {Next} picks Fabcheck.
+
+### 5. Fabcheck
+
+- **Card:** Fabcheck checks a PCB fab and assembly package (Gerbers, drill files, pick-and-place, BOM,
+  or ODB++) the way a board house would, before it's sent, and shows exactly where on the board each
+  problem is. It runs in the browser, so the files never leave the computer, and it sends what it
+  finds to the board's review in Signoff EE.
+- **Try:** Later in the tour you run the Main PCBA's package through it. {Next} picks Loom.
+
+### 6. Loom
+
+- **Card:** Loom draws the harnesses that join the boards and parts: connectors, wires, twisted pairs,
+  shields, cables, and bundles in one wiring diagram, with the connector faces, wire list, and BOM on
+  the sheet a tech builds from. Board connectors come from a Signoff EE board's fab package, with
+  their pins and net names.
+- **Try:** Signed in, harnesses sync with Loom's private data repo, and Signoff PL places them in the
+  product. {Next} picks Partcheck.
+
+### 7. Partcheck
+
+- **Card:** Partcheck is Fabcheck's mechanical counterpart. It checks that a part's STEP model,
+  drawing, flat pattern, and BOM agree before they go to the shop, and shows every part in 3D with its
+  mass, draft, and wall thickness. Like Fabcheck, it runs in the browser, and its findings give
+  evidence for checks in Signoff ME.
+- **Try:** {Next} opens Signoff PL, where all of these come together as one product.
+
+### 8. The whole product
+
+- **Page:** Signoff PL, `?demo`. **Rings:** the {Requirements} tab until it's open.
+- **Card:** Signoff PL is the project lead's view. The Smart Thermostat is a tree of Parts: the two
+  boards, the firmware, the enclosure and the wall bracket, each linked to its review, plus purchased
+  Parts. Rings show how much of each review is done, and the colored numbers are open issues.
+- **Try:** Open the {Requirements} tab: the product's ESD requirement, REQ-002, is failing with the
+  firmware's under it. (Clicking a Part first shows only that Part's.) {Next} goes into one of these
+  Parts: the Main PCBA's review in Signoff EE.
+
+### 9. A board's design review
 
 - **Page:** Signoff EE, `?demo&project=pdemo7`, the Main PCBA's Overview.
 - **On arrival:** the Overview tab. **Rings:** {Edit profile}, then the sheet's Checklists.
@@ -50,7 +106,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
 - **Try:** Click {Edit profile} to see every checklist that can be turned on for the Main PCBA, and its
   profile tags. {Cancel} leaves it as it was.
 
-### 4. Reviewing together
+### 10. Reviewing together
 
 - **Page:** the Main PCBA's Overview. **Rings:** an issue panel's {Open in Fabcheck} when one is open,
   else the Recent discussion section.
@@ -60,14 +116,14 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   Fabcheck raised.
 - **Try:** Click one of the Fabcheck comments to open its issue: {Open in Fabcheck} in its panel opens
   that finding in Fabcheck. {Next} goes to Fabcheck to run the Main PCBA's package yourself.
-- **Side path:** Open in Fabcheck lands on Fabcheck's Board tab, so the tour moves on to step 8.
+- **Side path:** Open in Fabcheck lands on Fabcheck's Board tab, so the tour moves on to step 14.
 
-### 5. Check a fab package
+### 11. Check a fab package
 
 - **Page:** Fabcheck's start page, `pcb_dfm/index.html?demo`, with no package open.
 - **Rings:** the {Main PCBA (DT-1042 rev B)} button, pulsing, for the visitor to press.
 - **Behavior:** the button opens the board by its fixed run (`#/overview?run=rdemo1042b&project=pdemo7`,
-  as the demo links do), and once that run is going the tour moves on to step 6 by itself. It always
+  as the demo links do), and once that run is going the tour moves on to step 12 by itself. It always
   loads the package and runs its checks live, even when this browser keeps that run (Fabcheck's
   `state.liveRun`; Chris, 2026-11-08).
 - **Card:** Fabcheck is Dovetail's DFM check for fab packages. It reads a package in the browser,
@@ -77,7 +133,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   come from fab houses' published capabilities and can be copied and tailored to a particular fab.
 - **Try:** Click {Main PCBA (DT-1042 rev B)} to check the Main PCBA's package.
 
-### 6. The fab package, checked
+### 12. The fab package, checked
 
 - **Page:** Fabcheck, the Main PCBA's run on Overview (`#/overview?run=rdemo1042b&project=pdemo7`). The
   run plays on the inspection stage and the page stays on Overview when it finishes.
@@ -90,7 +146,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   run, you can click and slide along the status bar to view individual checks and the limits they
   are using. {Next} goes to the findings.
 
-### 7. Findings
+### 13. Findings
 
 - **Page:** Fabcheck's Findings tab for the run (`#/findings?run=…`), scrolled to **Build & assembly**.
 - **Rings:** the D2 error at the top of Build & assembly ("D2: pin 1 is 180° off from the other 2
@@ -100,7 +156,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   {Build & assembly} is an error: D2 sits 180° from the other two SOD-123 diodes.
 - **Try:** Click the D2 error: its details and a preview of the spot on the board open on the right.
 
-### 8. Errors in the CAM viewer
+### 14. Errors in the CAM viewer
 
 - **Page:** Fabcheck's Board tab for the run. **Rings:** the first error in the rail. The card keeps
   clear of the layers list.
@@ -111,7 +167,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   board flies to it and turns on its layers. Then play: zoom and pan, show and hide layers on the left,
   flip to {Bottom}, and switch {Realistic} on for the board as built.
 
-### 9. Send a run to Signoff EE
+### 15. Send a run to Signoff EE
 
 - **Page:** the run's Overview, scrolled to its foot. **Rings:** the Project picker and
   {Send to Signoff EE} row; the card moves to the top right, off it.
@@ -122,7 +178,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   again updates the same issues and keeps their status in Signoff.
 - **Try:** Check that the project is {Main PCBA}, click {Send to Signoff EE}, then {Open in Signoff EE}.
 
-### 10. Fabcheck's issues in the review
+### 16. Fabcheck's issues in the review
 
 - **Page:** Signoff EE, the Main PCBA's Findings tab. **Rings:** the "Fabcheck: D2: pin 1…" issue.
 - **Card:** The run's errors and warnings are issues on the Main PCBA's {Fab & Release} checklist now,
@@ -131,7 +187,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
 - **Try:** Click the D2 issue to open it, then change its status or resolution, or leave a comment on
   any issue: everyone on the board sees it.
 
-### 11. Revisions
+### 17. Revisions
 
 - **Page:** the Main PCBA's Revisions tab, with its run (tagged B.1) expanded. Nothing rings.
 - **Card:** The {Revisions} tab lists the Main PCBA's Fabcheck runs. A run that went to the fab is
@@ -140,7 +196,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
 - **Try:** B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects
   every comment tagged @revnotes.
 
-### 12. The firmware review
+### 18. The firmware review
 
 - **Page:** Signoff FW, `?demo&project=fdemo3`, the Thermostat Firmware's Overview.
 - **Rings:** {Edit profile}, then the sheet's Checklists.
@@ -150,7 +206,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
 - **Try:** Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel}
   leaves it as it was.
 
-### 13. Harness drawings
+### 19. Harness drawings
 
 - **Page:** Loom, `?demo&project=hdemo1`, the demo harness (an example for a made-up Zone Controller,
   not the thermostat). The menu and the parts pane fold away and the diagram fits the canvas; a
@@ -163,7 +219,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
 - **Try:** Click a connector, a wire or a cable: its Properties open on the right. Loom's own guide
   walks through every feature on this harness.
 
-### 14. Build the thermostat's harness
+### 20. Build the thermostat's harness
 
 - **Page:** Loom, with the menu and the panes back out.
 - **Card:** Now one of your own, next to the example: the thermostat's mains leads, from the Main
@@ -179,7 +235,7 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   5. Select P1, the end you didn't use, and press {Delete}.
 - **When done:** That's a harness. {Drawing} shows its sheet, ready for a tech.
 
-### 15. The enclosure's review
+### 21. The enclosure's review
 
 - **Page:** Signoff ME, `?demo&project=mdemo5`, the Enclosure's Overview.
 - **Card:** Signoff ME reviews the Enclosure the same way, with mechanical checklists: part design and
@@ -187,29 +243,19 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   the {Requirements} tab.
 - **Try:** Open {Findings} to see every issue in one list.
 
-### 16. The package that goes to the molder
+### 22. The package that goes to the molder
 
 - **Page:** Partcheck, `?demo`.
 - **Card:** Partcheck checks that the models, drawings and BOM agree before they're sent out. Here the
   back cover's drawing and the BOM name different plastics, and the light pipe has no files.
 - **Try:** In {Findings}, each chip opens the Signoff ME check it gives evidence for. (The back cover's
-  chip opens `pd-cad-8`, an open issue in Signoff ME.)
-
-### 17. The whole product
-
-- **Page:** Signoff PL, `?demo`. **Rings:** the {Requirements} tab until it's open.
-- **Card:** Signoff PL is the project lead's view. The Smart Thermostat is a tree of Parts: the two
-  boards, the firmware, the enclosure and the wall bracket, each linked to its review, plus purchased
-  Parts. Rings show how much of each review is done, and the colored numbers are open issues. The
-  failing firmware requirement shows on the product's ESD requirement, next to the boards' ESD issues.
-- **Try:** Open the {Requirements} tab: the product's ESD requirement, REQ-002, is failing with the
-  firmware's under it. (Clicking a Part first shows only that Part's.) That's the tour: explore
-  anything, and {Reset demo} in a tool's banner starts it over.
+  chip opens `pd-cad-8`, an open issue in Signoff ME.) That's the tour: explore anything, and
+  {Reset demo} in a tool's banner starts it over.
 
 ### Hidden: The firmware, and a failing requirement
 
 Kept in `tour.js` with `skip: true`, to add back later (Chris, 2026-11-08). It would sit between steps
-12 and 13 or before step 17.
+18 and 19.
 
 - **Page:** Signoff FW, `?demo&project=fdemo3&req=q3-1`, with REQ-002's panel open.
 - **Card:** Signoff FW reviews the firmware. This requirement flows down from the product's ESD
@@ -235,18 +281,21 @@ Kept in `tour.js` with `skip: true`, to add back later (Chris, 2026-11-08). It w
 - **On arrival** (`enter`), a step sets its page up: a tab (EE's Findings or Revisions, FW's Overview),
   the hub's tile, Loom's panels. It runs once per arrival at the step's tool, before the page is
   checked.
-- **Moving on by itself.** `advance` (step 5: the run is going) moves to the next step on the same page.
-  `landing` (step 8) catches the visitor arriving at Fabcheck another way: when the next step isn't
+- **Moving on by itself.** `advance` (step 11: the run is going) moves to the next step on the same page.
+  `landing` (step 14) catches the visitor arriving at Fabcheck another way: when the next step isn't
   the page they landed on, a later Fabcheck step that is takes over.
 - **The ring** (`spot`) goes round the first candidate shown on the page, so a step can point at the
   next thing to click as the visitor goes. A target off screen is scrolled into view and kept there for
   a moment, since some tools redraw just after arriving.
 - **The card** sits at the bottom left, or the bottom right or top right when its corner would cover the
-  ring or what the step asks it to keep clear of (`avoid`: Fabcheck's layers list on step 8). A long
+  ring or what the step asks it to keep clear of (`avoid`: Fabcheck's layers list on step 14). A long
   card scrolls.
 - **Fabcheck runs on Overview.** A run link with no check or place (`#/overview?run=…`,
   `#/findings?run=…`) stays on that view; links from Signoff EE, which carry a check or a place, go to
   the board. The start page's demo-board buttons open their board by its fixed run, the same way.
+- **Contents.** The ☰ in the card's top line swaps the card's text for every step, under the tool it
+  runs in; a click jumps to that step (as Loom's guide does). It stays open, as `contents` in the
+  state, until it's closed or a step is picked.
 - **The theme** is the suite's, under `signoff.v1.settings` in every tool, demo included, so the tour
   doesn't flip between light and dark as it moves from tool to tool.
 
@@ -258,5 +307,5 @@ Kept in `tour.js` with `skip: true`, to add back later (Chris, 2026-11-08). It w
    tool's `config.js` or `demo.js`).
 3. Run `python tools/stamp_version.py` in the hub.
 4. Walk the whole tour in a browser over http (preview `signoff-suite-alt`, port 8774), including the
-   side paths: Open in Fabcheck from step 4, Back across tools, a reload on a Fabcheck step, and
+   side paths: Open in Fabcheck from step 10, Back across tools, a reload on a Fabcheck step, and
    switching board or harness mid-step.
