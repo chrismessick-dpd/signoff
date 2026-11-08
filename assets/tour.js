@@ -18,7 +18,7 @@
   // revision). `group` rings a heading together with the card under it.
   // The steps, in order. signoff/docs/tour.md is the reference for them (Chris, 2026-11-08): keep the two
   // in step. Fields:
-  //   at(): the page shows what the step is about (the tools switch boards, packages and harnesses without
+  //   at(): the page shows what the step is about (the tools switch boards, packages, and harnesses without
   //     a reload, so the URL alone can't tell); place names it for the card when it doesn't, and fix() puts
   //     it right in the page. enter(): sets the page up once on arrival (a tab, a tile, folded panels).
   //   landing(): arriving at this tool another way (Signoff EE's Open in Fabcheck), the page is already
@@ -77,7 +77,7 @@
       spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Reviewing together',
       at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, enter: function () { eeView('overview'); }, place: 'the Main PCBA in Signoff EE',
-      text: 'Everyone on the board works in the same review: checks are marked {Pass}, {Issue} or {N/A}, issues get a severity, a resolution and a comment thread, and @revnotes in a comment lists it for the next revision. {Recent discussion} collects the latest comments, including the issues Fabcheck raised.',
+      text: 'Everyone on the board works in the same review: checks are marked {Pass}, {Issue}, or {N/A}, issues get a severity, a resolution, and a comment thread, and @revnotes in a comment lists it for the next revision. {Recent discussion} collects the latest comments, including the issues Fabcheck raised.',
       try: 'Click one of the Fabcheck comments to open its issue: {Open in Fabcheck} in its panel opens that finding in Fabcheck. {Next} opens the board’s {Fab & Release} checklist.',
       // The board picture in EE's header opens Fabcheck too (.head-pic-img); ring the issue panel's button.
       spot: ['[data-act="open-fabcheck"]:not(.head-pic-img)', ['.section-title', 'Recent discussion', 'group']] },
@@ -100,8 +100,8 @@
     // (a link with no place or check keeps its view; pcb_dfm applyLink).
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/overview?run=rdemo1042b&project=pdemo7', title: 'The fab package, checked',
       at: function () { return fabRun() === 'rdemo1042b'; }, place: 'the Main PCBA’s package in Fabcheck',
-      text: 'Fabcheck reads the Gerbers, drill files, pick-and-place and BOM and checks them the way a board house and an assembler would, under the fab’s rules. Watch the stage light each layer of the Main PCBA as its checks run and pin what they find.',
-      try: 'When the run finishes, the {Checks} cards sum up each kind of check, with its errors, warnings and info. To watch it again, click {Run checks again}. After a check has been run, you can click and slide along the status bar to view individual checks and the limits they are using. {Next} goes to the findings.',
+      text: 'Fabcheck reads the Gerbers, drill files, pick-and-place, and BOM and checks them the way a board house and an assembler would, under the fab’s rules. Watch the stage light each layer of the Main PCBA as its checks run and pin what they find.',
+      try: 'When the run finishes, the {Checks} cards sum up each kind of check, with its errors, warnings, and info. To watch it again, click {Run checks again}. After a check has been run, you can click and slide along the status bar to view individual checks and the limits they are using. {Next} goes to the findings.',
       // The stage while the run plays; once it's done, Run checks again (disabled during a run).
       spot: ['.ov-actions [data-act="rerun"]:not(:disabled)', '#stage', '.stage'] },
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/findings?run=rdemo1042b&project=pdemo7', title: 'Findings',
@@ -135,15 +135,15 @@
     { tool: 'ee_design_review', url: '../ee_design_review/index.html?demo&project=pdemo7', title: 'Revisions',
       at: function () { return eeShows('main-pcba'); }, fix: function () { eeOpen('main-pcba'); }, place: 'the Main PCBA in Signoff EE',
       enter: function () { eeView('revisions'); setTimeout(eeExpandRun, 150); },
-      text: 'The {Revisions} tab lists the Main PCBA’s Fabcheck runs. A run that went to the fab is tagged as a revision, here B.1, with its status, fab house, date and order, so everyone knows which package was built. In a real review, each run’s fab package can be downloaded here.',
+      text: 'The {Revisions} tab lists the Main PCBA’s Fabcheck runs. A run that went to the fab is tagged as a revision, here B.1, with its status, fab house, date, and order, so everyone knows which package was built. In a real review, each run’s fab package can be downloaded here.',
       try: 'B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects every comment tagged @revnotes.' },
     // 19–20: Loom. It opens on its demo harness, an example for another made-up product, with the menu
     // and the parts pane folded away and the diagram fitted, so it's big enough to click (Chris). A
     // selection brings the parts pane back (loom/assets/app.js, unfoldForSelection).
     { tool: 'loom', url: '../loom/index.html?demo&project=hdemo1', title: 'Harness drawings',
-      text: 'Loom draws any cable harness, from a two-wire pigtail to a full cable set: connectors, wires, splices, twisted pairs, shields, cables and bundles. From that one picture it makes the package a tech builds from: the wiring diagram, connector faces, wire list and BOM. This example harness, for another made-up product, has a bit of everything.',
-      try: 'Click a connector, a wire or a cable: its Properties open on the right. Loom’s own guide walks through every feature on this harness.',
-      phoneTry: 'Tap a connector, a wire or a cable: its Properties open in a sheet. Loom’s own guide walks through every feature on this harness.',
+      text: 'Loom draws any cable harness, from a two-wire pigtail to a full cable set: connectors, wires, splices, twisted pairs, shields, cables, and bundles. From that one picture it makes the package a tech builds from: the wiring diagram, connector faces, wire list, and BOM. This example harness, for another made-up product, has a bit of everything.',
+      try: 'Click a connector, a wire, or a cable: its Properties open on the right. Loom’s own guide walks through every feature on this harness.',
+      phoneTry: 'Tap a connector, a wire, or a cable: its Properties open in a sheet. Loom’s own guide walks through every feature on this harness.',
       guide: true,
       at: function () { var h = loomH(); return !!h && h.id === 'hdemo1'; }, fix: function () { var g = loomGuide(); if (g) g.demo(); }, place: 'Loom’s demo harness',
       enter: function () { var g = loomGuide(); if (g) { g.demo(); if (g.focus) g.focus(); } } },
@@ -164,7 +164,7 @@
         { text: 'Click {+} beside Harnesses in the menu. A new harness starts with two ends, P1 and P2.',
           done: function (h) { return !!h && h.id !== 'hdemo1'; },
           spot: function () { return ['.sidebar [data-act="new"]']; } },
-        { text: 'Click {From a board}, pick the Main PCBA and {Add} J1. It arrives as P3, with its nets AC_N and AC_L as pin labels.',
+        { text: 'Click {From a board}, pick the Main PCBA, and {Add} J1. It arrives as P3, with its nets AC_N and AC_L as pin labels.',
           done: function (h) { return !!loomJ1(h); },
           // The board picker is a modal (.lm-modal), which findSpot looks inside while it's open.
           spot: function () { return ['[data-act="bm-add"][data-ref="J1"]', ['[data-act="bm-board"]', 'Main PCBA'], '#parts-pane [data-act="from-board"]', '[data-act="fold-parts"]']; } },
@@ -189,7 +189,7 @@
     // 21: the firmware's review, on its Overview.
     { tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3', title: 'The firmware review',
       at: function () { return eeShows('thermostat-firmware'); }, enter: function () { eeView('overview'); }, place: 'the Thermostat Firmware in Signoff FW',
-      text: 'Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and checklists picked for the product, from architecture and hardware interfaces to memory, concurrency, power, communications and security. Its profile tags set aside the checks that don’t apply.',
+      text: 'Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and checklists picked for the product, from architecture and hardware interfaces to memory, concurrency, power, communications, and security. Its profile tags set aside the checks that don’t apply.',
       try: 'Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel} leaves it as it was.',
       spot: ['[data-act="edit-project"]', '.sheet #f-checklists'] },
     // 22–23: the enclosure and its package.
@@ -198,7 +198,7 @@
       text: 'Signoff ME reviews the Enclosure the same way, with mechanical checklists: part design and DFM, tolerancing, materials, drawings. Its requirements flow down from the product’s: look for ↑ on the {Requirements} tab.',
       try: 'Open {Findings} to see every issue in one list.' },
     { tool: 'partcheck', url: '../partcheck/index.html?demo', title: 'The package that goes to the molder',
-      text: 'Partcheck checks that the models, drawings and BOM agree before they’re sent out. Here the back cover’s drawing and the BOM name different plastics, and the light pipe has no files.',
+      text: 'Partcheck checks that the models, drawings, and BOM agree before they’re sent out. Here the back cover’s drawing and the BOM name different plastics, and the light pipe has no files.',
       try: 'In {Findings}, each chip opens the Signoff ME check it gives evidence for. That’s the tour: explore anything, and {Reset demo} in a tool’s banner starts it over.' },
     // Hidden for now (Chris, 2026-11-08): to come back later.
     { skip: true, tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3&req=q3-1', title: 'The firmware, and a failing requirement',
@@ -291,7 +291,7 @@
     for (var i = 0; i < s.stages.length; i++) { var ok = false; try { ok = s.stages[i].done(h); } catch (e) { /* page not ready */ } if (!ok) return i; }
     return s.stages.length;
   }
-  // What a step rings now: its stage's spot, its spot function's or its spot list.
+  // What a step rings now: its stage's spot, its spot function's, or its spot list.
   function spotList(s) {
     var l = null;
     try {
@@ -371,7 +371,7 @@
     var s = STEPS[step], tool = s.tool === folder();
     var same = tool && Array.from(want.searchParams.keys()).every(function (k) { return here.searchParams.get(k) === want.searchParams.get(k); }) &&
       (!want.hash || want.hash === here.hash);
-    // The right tool showing something else (another board, package or harness): put it right in the
+    // The right tool showing something else (another board, package, or harness): put it right in the
     // page when the step can, else open the step's page again (Chris: the tour got stuck after
     // clicking around, since the address still matched).
     if (tool && !onStep(s) && s.fix) { try { s.fix(); } catch (e) { /* page not ready */ } card(); }
@@ -463,7 +463,7 @@
 
   // entered: the step whose enter() last ran on this page; stageShown: the stage the card shows;
   // shownKey: the page the card was drawn for (pageKey), which watch() compares twice a second, so
-  // the card follows a board, package, harness or route changed inside a tool.
+  // the card follows a board, package, harness, or route changed inside a tool.
   var entered = -1, stageShown = -1, shownKey = '', shownPhone = null;
   function pageKey() { var st = get(), s = st && STEPS[st.step]; return location.href + '|' + (st ? st.step + ':' + onStep(s) : ''); }
   function watch() {

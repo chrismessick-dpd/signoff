@@ -11,7 +11,7 @@ Agreed with Chris on 2026-11-08. The tour follows the **Main PCBA** (Signoff EE 
 ## The steps
 
 Each step lists its page, what the tour does on arrival, what it rings, and the card's text. In the
-card text, `{…}` is a button, tab or field, drawn as a chip.
+card text, `{…}` is a button, tab, or field, drawn as a chip.
 
 ### 1. Dovetail Signoff
 
@@ -113,8 +113,8 @@ scroll the page, even when the tile is below the fold (`still`).
 
 - **Page:** the Main PCBA's Overview. **Rings:** an issue panel's {Open in Fabcheck} when one is open,
   else the Recent discussion section.
-- **Card:** Everyone on the board works in the same review: checks are marked {Pass}, {Issue} or
-  {N/A}, issues get a severity, a resolution and a comment thread, and @revnotes in a comment lists it
+- **Card:** Everyone on the board works in the same review: checks are marked {Pass}, {Issue}, or
+  {N/A}, issues get a severity, a resolution, and a comment thread, and @revnotes in a comment lists it
   for the next revision. {Recent discussion} collects the latest comments, including the issues
   Fabcheck raised.
 - **Try:** Click one of the Fabcheck comments to open its issue: {Open in Fabcheck} in its panel opens
@@ -154,11 +154,11 @@ scroll the page, even when the tile is below the fold (`still`).
 - **Page:** Fabcheck, the Main PCBA's run on Overview (`#/overview?run=rdemo1042b&project=pdemo7`). The
   run plays on the inspection stage and the page stays on Overview when it finishes.
 - **Rings:** the stage while the run plays, then {Run checks again} (disabled during a run) once it's done.
-- **Card:** Fabcheck reads the Gerbers, drill files, pick-and-place and BOM and checks them the way a
+- **Card:** Fabcheck reads the Gerbers, drill files, pick-and-place, and BOM and checks them the way a
   board house and an assembler would, under the fab's rules. Watch the stage light each layer of the
   Main PCBA as its checks run and pin what they find.
 - **Try:** When the run finishes, the {Checks} cards sum up each kind of check, with its errors,
-  warnings and info. To watch it again, click {Run checks again}. After a check has been
+  warnings, and info. To watch it again, click {Run checks again}. After a check has been
   run, you can click and slide along the status bar to view individual checks and the limits they
   are using. {Next} goes to the findings.
 
@@ -207,7 +207,7 @@ scroll the page, even when the tile is below the fold (`still`).
 
 - **Page:** the Main PCBA's Revisions tab, with its run (tagged B.1) expanded. Nothing rings.
 - **Card:** The {Revisions} tab lists the Main PCBA's Fabcheck runs. A run that went to the fab is
-  tagged as a revision, here B.1, with its status, fab house, date and order, so everyone knows which
+  tagged as a revision, here B.1, with its status, fab house, date, and order, so everyone knows which
   package was built. In a real review, each run's fab package can be downloaded here.
 - **Try:** B.1 is open, with the issues its run raised. Below it, {Next revision updates} collects
   every comment tagged @revnotes.
@@ -219,10 +219,10 @@ scroll the page, even when the tile is below the fold (`still`).
   selection brings the parts pane back with its Properties. An {Open Loom's guide} button starts
   Loom's own guide, which hides the tour's card while it runs.
 - **Card:** Loom draws any cable harness, from a two-wire pigtail to a full cable set: connectors,
-  wires, splices, twisted pairs, shields, cables and bundles. From that one picture it makes the
-  package a tech builds from: the wiring diagram, connector faces, wire list and BOM. This example
+  wires, splices, twisted pairs, shields, cables, and bundles. From that one picture it makes the
+  package a tech builds from: the wiring diagram, connector faces, wire list, and BOM. This example
   harness, for another made-up product, has a bit of everything.
-- **Try:** Click a connector, a wire or a cable: its Properties open on the right. Loom's own guide
+- **Try:** Click a connector, a wire, or a cable: its Properties open on the right. Loom's own guide
   walks through every feature on this harness.
 
 ### 20. Build the thermostat's harness
@@ -234,7 +234,7 @@ scroll the page, even when the tile is below the fold (`still`).
 - **Stages,** each ticked off from the harness as it is, ringing what to do next; the canvas refits as
   ends and wires are added:
   1. Click {+} beside Harnesses in the menu. A new harness starts with two ends, P1 and P2.
-  2. Click {From a board}, pick the Main PCBA and {Add} J1. It arrives as P3, with its nets AC_N and
+  2. Click {From a board}, pick the Main PCBA, and {Add} J1. It arrives as P3, with its nets AC_N and
      AC_L as pin labels.
   3. Select P2 and set its {Family} to {Flying leads} and {Leads} to 2: the leads to the electrical box.
   4. Click P3's pin 1 (AC_N), then lead 1 on P2. Do the same for pin 2.
@@ -252,7 +252,7 @@ scroll the page, even when the tile is below the fold (`still`).
 - **Rings:** {Edit profile}, then the sheet's Checklists.
 - **Card:** Signoff FW reviews firmware with the same setup as Signoff EE: requirements, and
   checklists picked for the product, from architecture and hardware interfaces to memory, concurrency,
-  power, communications and security. Its profile tags set aside the checks that don't apply.
+  power, communications, and security. Its profile tags set aside the checks that don't apply.
 - **Try:** Click {Edit profile} to see the checklists and profile tags this firmware uses. {Cancel}
   leaves it as it was.
 
@@ -267,7 +267,7 @@ scroll the page, even when the tile is below the fold (`still`).
 ### 23. The package that goes to the molder
 
 - **Page:** Partcheck, `?demo`.
-- **Card:** Partcheck checks that the models, drawings and BOM agree before they're sent out. Here the
+- **Card:** Partcheck checks that the models, drawings, and BOM agree before they're sent out. Here the
   back cover's drawing and the BOM name different plastics, and the light pipe has no files.
 - **Try:** In {Findings}, each chip opens the Signoff ME check it gives evidence for. (The back cover's
   chip opens `pd-cad-8`, an open issue in Signoff ME.) That's the tour: explore anything, and
@@ -292,11 +292,11 @@ step 21.
   ten minutes after a push a page can run a cached copy with other steps. A page whose copy differs
   from the one that wrote the state fetches `tour.js` afresh and reloads, once, then finds the step by
   its title.
-- **Following the page.** The tools switch boards, packages and harnesses without changing the address,
-  so each step says what it's about (`at`): the board open in Signoff EE, ME or FW's sidebar (by slug:
+- **Following the page.** The tools switch boards, packages, and harnesses without changing the address,
+  so each step says what it's about (`at`): the board open in Signoff EE, ME, or FW's sidebar (by slug:
   `main-pcba`, `enclosure`, `thermostat-firmware`), Fabcheck's open run, Loom's harness, or the hub's
   picked tile. The card checks twice a second. When the page doesn't match, it says where the step is
-  ("This step is on the Main PCBA in Signoff EE") with **Go there**, and Go there, Next and Back put it
+  ("This step is on the Main PCBA in Signoff EE") with **Go there**, and Go there, Next, and Back put it
   right in the page (`fix`: click the board, pick the tile, open the demo harness) or open the step's
   page again.
 - **On arrival** (`enter`), a step sets its page up: a tab (EE's Findings or Revisions, FW's Overview),
@@ -316,7 +316,7 @@ step 21.
   the board. The start page's demo-board buttons open their board by its fixed run, the same way.
 - **On a phone** (600 px wide or less; Chris, 2026-11-08: there it's a tour to watch, not to build in),
   the card is a bottom sheet across the foot of the screen. It peeks, about a fifth of the screen with
-  the title, two lines and Back and Next, until **More** (or a tap on its text) opens it; each step
+  the title, two lines, and Back and Next, until **More** (or a tap on its text) opens it; each step
   starts folded. It never moves to dodge the ring. The hub's steps scroll the picked tool's name and
   description into view. A step can say what a phone shows instead (`phoneText`, `phoneTry`), and a
   step's stages are a computer's only: step 20 explains the build instead of running it. Turning the

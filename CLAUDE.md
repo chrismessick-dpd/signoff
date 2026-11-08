@@ -2,8 +2,10 @@
 
 This repo is the landing page for the suite: one static page, `index.html`, plus `assets/hub.js`
 and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee_design_review`,
-`me_design_review`, `fw_design_review` (a prototype), `signoff_pl`, `pcb_dfm`, `partcheck` (a prototype) and `loom` (a prototype; only the hub links to it so far). When the suite folder is checked out, read
+`me_design_review`, `fw_design_review` (a prototype), `signoff_pl`, `pcb_dfm`, `partcheck` (a prototype), and `loom` (a prototype; only the hub links to it so far). When the suite folder is checked out, read
 `../CLAUDE.md` first. This repo is public.
+
+**Serial comma** (Chris, 2026-11-08): use the Oxford comma in every list of three or more, in UI text, docs, demo data, checklists, and commit messages: "A, B, and C". Never change check ids or data keys to fit it.
 
 - **`docs/guide.md` is the suite-wide guide.** It covers:
   - the folder and repo map
@@ -16,8 +18,8 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   Keep it current when a tool is added or the engine flow changes.
 - **`assets/suite.css`** is copied from `ee_design_review/assets/styles.css` by
   `python tools/sync_suite_css.py`. Never edit it here.
-- **People & access** (FTEs only) opens `assets/people.js`'s sheet over the hub, with the EE, ME
-  and FW People pages framed (see `../CLAUDE.md`). EE, ME, FW and PL load the same file. `hub.js` copies the
+- **People & access** (FTEs only) opens `assets/people.js`'s sheet over the hub, with the EE, ME,
+  and FW People pages framed (see `../CLAUDE.md`). EE, ME, FW, and PL load the same file. `hub.js` copies the
   engine's `model.tokenTag`; keep it identical.
 - **Tool picker.** The page opens with a gallery of the seven tools (`.pk-tile`) over a stage
   (`.pk-panel`, one per tool) that previews the selected one. A plain click selects; a click on

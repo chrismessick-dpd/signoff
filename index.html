@@ -9,9 +9,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Dovetail Signoff</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23004952'/%3E%3Csvg x='10' y='6' width='12' height='20' viewBox='0 0 59.21 98.68'%3E%3Cpath d='M0 0h18.19v41.88H0zM0 56.79h18.19v41.88H0zM18.2 41.89h1.59v14.91H18.2zM19.79 0v41.89l24.96-6.63v28.16L19.79 56.79v41.89l39.42-10.47V10.47z' fill='%23fff'/%3E%3C/svg%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/suite.css?v=de16659866ba">
-<link rel="stylesheet" href="assets/hub.css?v=de16659866ba">
-<script src="assets/hub.js?v=de16659866ba"></script>
+<link rel="stylesheet" href="assets/suite.css?v=7e7d385b09d0">
+<link rel="stylesheet" href="assets/hub.css?v=7e7d385b09d0">
+<script src="assets/hub.js?v=7e7d385b09d0"></script>
 </head>
 <body>
 <div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Every tool shows the same made-up product, a Smart Thermostat for Acme Climate, so you can follow it from one tool to the next. Nothing here is real project data.</div>
@@ -70,7 +70,7 @@
         </a>
       </div>
     </nav>
-    <button type="button" class="side-link" id="people-link" data-people-open title="People and access in Signoff EE, ME and FW" hidden>
+    <button type="button" class="side-link" id="people-link" data-people-open title="People and access in Signoff EE, ME, and FW" hidden>
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7" r="2.8"/><path d="M2.5 16.5c.6-2.8 2.6-4.3 5-4.3s4.4 1.5 5 4.3"/><circle cx="14" cy="7.8" r="2.2"/><path d="M13.6 12.3c2 .1 3.4 1.4 3.9 3.7"/></svg>
       People &amp; access
     </button>
@@ -189,7 +189,7 @@
             <path d="M207.5 20l4.5 4.5 8.5-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </symbol>
 
-          <!-- Fabcheck: the same board as CAD, copper, drills and silkscreen, with findings marked where they are -->
+          <!-- Fabcheck: the same board as CAD, copper, drills, and silkscreen, with findings marked where they are -->
           <symbol id="art-fabcheck" viewBox="0 0 240 150">
             <rect class="a-shadow" x="36" y="26" width="176" height="114" rx="8"/>
             <rect x="30" y="18" width="176" height="114" rx="8" fill="url(#g-fab)" stroke="#2c4a3a"/>
@@ -254,7 +254,7 @@
             <div class="pk-panel-body">
               <div class="pk-eyebrow">Projects · Project lead</div>
               <h2 class="pk-title">Signoff PL</h2>
-              <p class="pk-desc">The whole product as assemblies and Parts, each linked to its EE or ME review, with progress and open issues rolled up. Map, gallery and exploded views, a BOM, and builds from EVT to PVT.</p>
+              <p class="pk-desc">The whole product as assemblies and Parts, each linked to its EE or ME review, with progress and open issues rolled up. Map, gallery, and exploded views, a BOM, and builds from EVT to PVT.</p>
               <div class="chips"><span class="chip">Structure map</span><span class="chip">BOM</span><span class="chip">Issues</span><span class="chip">3D models</span></div>
               <p class="pk-note">For Dovetail project leads.</p>
               <div class="pk-acts">
@@ -330,7 +330,7 @@
             <div class="pk-panel-body">
               <div class="pk-eyebrow">Dovetail tools · Mechanical fabrication</div>
               <h2 class="pk-title">Partcheck <span class="pk-proto">Prototype</span></h2>
-              <p class="pk-desc">Checks that a part's STEP model, drawing, flat pattern and BOM agree before they go to the shop. Every part in 3D, with its mass, draft and wall thickness.</p>
+              <p class="pk-desc">Checks that a part's STEP model, drawing, flat pattern, and BOM agree before they go to the shop. Every part in 3D, with its mass, draft, and wall thickness.</p>
               <div class="chips"><span class="chip">STEP</span><span class="chip">Drawing PDF</span><span class="chip">DXF</span><span class="chip">BOM</span><span class="chip">STL · OBJ · GLB</span></div>
               <p class="pk-note">Files never leave the computer.</p>
               <div class="pk-acts">
@@ -419,9 +419,9 @@
             <ol class="steps">
               <li><div><h4>Describe the design</h4><p>Pick the checklists and describe the product: battery-powered, mains, RF, high-speed, injection molded, sealed, handheld… Checks for features the design doesn't have are set aside, so the review fits the product instead of a generic list.</p></div></li>
               <li><div><h4>Review every check</h4><p>Each check carries guidance on what to look for. Reviewers mark it <span class="marks"><span class="pill pass">Pass</span><span class="pill issue">Issue</span><span class="pill na">N/A</span></span> and note what they found.</p></div></li>
-              <li><div><h4>Track issues to closure</h4><p>Every issue has a severity, an owner, a reference to the design, a discussion, and an outcome: open, fixed or waived. Nothing is left in someone's inbox.</p></div></li>
-              <li><div><h4>Trace requirements</h4><p>List what the product must do, how each requirement will be verified (inspection, analysis, demonstration or test), and which checks show it's met. A requirement whose checks have open issues is flagged.</p></div></li>
-              <li><div><h4>Sign off</h4><p>The review report collects the summary, every finding and the requirements compliance matrix, with sign-off lines for reviewer and approver.</p></div></li>
+              <li><div><h4>Track issues to closure</h4><p>Every issue has a severity, an owner, a reference to the design, a discussion, and an outcome: open, fixed, or waived. Nothing is left in someone's inbox.</p></div></li>
+              <li><div><h4>Trace requirements</h4><p>List what the product must do, how each requirement will be verified (inspection, analysis, demonstration, or test), and which checks show it's met. A requirement whose checks have open issues is flagged.</p></div></li>
+              <li><div><h4>Sign off</h4><p>The review report collects the summary, every finding, and the requirements compliance matrix, with sign-off lines for reviewer and approver.</p></div></li>
             </ol>
             <div class="shared">
               <div class="shared-item"><span class="shared-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="6.5" r="2.6"/><path d="M2.5 16.5a5 5 0 0 1 10 0"/><circle cx="14" cy="7.5" r="2.2"/><path d="M13 11.9a4.3 4.3 0 0 1 4.6 4.6"/></svg></span><div><h4>Built for real collaboration</h4><p>Several engineers can review the same design at once. Their work merges record by record, so no one overwrites anyone.</p></div></div>
@@ -440,8 +440,8 @@
             <div class="table-wrap"><table>
               <thead><tr><th>Checklist</th><th>Covers</th></tr></thead>
               <tbody>
-                <tr><td>Schematic</td><td>Power, grounding, decoupling, component ratings, protection, clocks and reset, MCU/FPGA, battery, motor and mains circuits</td></tr>
-                <tr><td>Interfaces</td><td>29 interfaces including USB, Ethernet, CAN, I2C, SPI, DDR, PCIe, RF, sensors and audio</td></tr>
+                <tr><td>Schematic</td><td>Power, grounding, decoupling, component ratings, protection, clocks and reset, MCU/FPGA, battery, motor, and mains circuits</td></tr>
+                <tr><td>Interfaces</td><td>29 interfaces including USB, Ethernet, CAN, I2C, SPI, DDR, PCIe, RF, sensors, and audio</td></tr>
                 <tr><td>PCB Layout</td><td>Stackup, placement, routing, high-speed and RF, creepage, thermal, EMC, manufacturability, test access</td></tr>
                 <tr><td>Assembly &amp; BOM</td><td>BOM quality, footprints, stencil, soldering, inspection</td></tr>
                 <tr><td>Fab &amp; Release</td><td>Fab package, drawing, drill, solder mask, panelization, release control</td></tr>
@@ -460,8 +460,8 @@
               <thead><tr><th>Checklist</th><th>Covers</th></tr></thead>
               <tbody>
                 <tr><td>Concept</td><td>Requirements and use cases, envelope, loads, regulatory scope, cost targets, risks</td></tr>
-                <tr><td>Part DFM</td><td>Injection molding, machining, sheet metal, casting and additive, by process</td></tr>
-                <tr><td>Tolerancing</td><td>GD&amp;T, datums, fits and tolerance stack-ups</td></tr>
+                <tr><td>Part DFM</td><td>Injection molding, machining, sheet metal, casting, and additive, by process</td></tr>
+                <tr><td>Tolerancing</td><td>GD&amp;T, datums, fits, and tolerance stack-ups</td></tr>
                 <tr><td>Assembly</td><td>Design for assembly, fastening, assembly sequence, serviceability</td></tr>
                 <tr><td>Materials</td><td>Selection, grades, finishes, compatibility</td></tr>
                 <tr><td>Analysis</td><td>FEA and hand calculations: load cases, modeling, results, thermal</td></tr>
@@ -501,7 +501,7 @@
               <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6"><rect x="1.5" y="1.5" width="15" height="15" rx="2.5"/><circle cx="6" cy="6" r="1.4" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="#fff" stroke="none"/><path d="M7.2 6H10a2 2 0 0 1 2 2v2.8" stroke-linecap="round"/></svg></div>
               <div><div class="about-eyebrow">Fabrication</div><h3>Fabcheck</h3></div>
             </div>
-            <p>Fabcheck checks a PCB fabrication and assembly package the way a board house and an assembler would, before you send it. It reads the Gerbers, drill files, pick-and-place, BOM, IPC-356 netlist and ODB++, then shows what's wrong and exactly where on the board.</p>
+            <p>Fabcheck checks a PCB fabrication and assembly package the way a board house and an assembler would, before you send it. It reads the Gerbers, drill files, pick-and-place, BOM, IPC-356 netlist, and ODB++, then shows what's wrong and exactly where on the board.</p>
             <div class="privacy">
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="12" height="8.5" rx="2"/><path d="M6.8 9V6.5a3.2 3.2 0 016.4 0V9" stroke-linecap="round"/></svg>
               <span><b>Files never leave the computer.</b> Every package is processed inside the browser; nothing is uploaded.</span>
@@ -523,7 +523,7 @@
               <div class="tool-icon" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/><path d="M12.5 13.5l1.6 1.6 2.9-3" stroke-linecap="round"/></svg></div>
               <div><div class="about-eyebrow">Mechanical fabrication · prototype</div><h3>Partcheck</h3></div>
             </div>
-            <p>Partcheck opens the package that goes to a molder, machine shop or sheet-metal shop (STEP models, drawing PDFs, DXF flat patterns and a BOM) and checks that the files agree before it's sent. Every part is shown in 3D with its mass and size.</p>
+            <p>Partcheck opens the package that goes to a molder, machine shop, or sheet-metal shop (STEP models, drawing PDFs, DXF flat patterns, and a BOM) and checks that the files agree before it's sent. Every part is shown in 3D with its mass and size.</p>
             <div class="privacy">
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="12" height="8.5" rx="2"/><path d="M6.8 9V6.5a3.2 3.2 0 016.4 0V9" stroke-linecap="round"/></svg>
               <span><b>Files never leave the computer.</b> Packages are read inside the browser; nothing is uploaded.</span>
@@ -532,7 +532,7 @@
               <thead><tr><th>Area</th><th>Examples</th></tr></thead>
               <tbody>
                 <tr><td>Package</td><td>A model and a drawing for every part, a flat pattern for sheet metal, BOM lines with files</td></tr>
-                <tr><td>Consistency</td><td>Revisions and part numbers across file names, STEP, title block, revision table, DXF and BOM; material on the drawing against the BOM; mass on the drawing against the model</td></tr>
+                <tr><td>Consistency</td><td>Revisions and part numbers across file names, STEP, title block, revision table, DXF, and BOM; material on the drawing against the BOM; mass on the drawing against the model</td></tr>
                 <tr><td>Drawings</td><td>Material, finish, tolerance block, GD&amp;T standard, units, sign-offs</td></tr>
                 <tr><td>Model</td><td>One closed solid, stray surface bodies, units, through-holes, mass from the material</td></tr>
                 <tr><td>Views</td><td>Draft for a pull direction and wall thickness, as color maps for an engineer to read</td></tr>
@@ -552,8 +552,8 @@
     </div>
   </main>
 </div>
-<script src="assets/people.js?v=de16659866ba"></script>
-<script src="assets/tour.js?v=de16659866ba"></script>
-<script src="assets/mark.js?v=de16659866ba"></script>
+<script src="assets/people.js?v=7e7d385b09d0"></script>
+<script src="assets/tour.js?v=7e7d385b09d0"></script>
+<script src="assets/mark.js?v=7e7d385b09d0"></script>
 </body>
 </html>

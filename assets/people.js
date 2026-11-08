@@ -2,7 +2,7 @@
    Loaded with a plain script tag (the CSP forbids inline scripts) by the hub, Signoff EE, ME, FW
    and PL. It opens a sheet over the page you're on, with one tab per review tool. Each tool keeps
    its own People list (users.json in its data repo), so each tab is that tool's own People page:
-     - a review tool (EE, ME or FW) draws its own tab natively, through SignoffPeople.register;
+     - a review tool (EE, ME, or FW) draws its own tab natively, through SignoffPeople.register;
      - every other tab is the other tool's page in an iframe, index.html?page=people&embed=1,
        which shows only People (app.js, EMBED).
    A tool never frames itself: two copies of one tool in one tab would write one roster over the
@@ -115,7 +115,7 @@
     open();
   });
   // Registered before the tools' own handlers (this script loads first), so Escape closes the
-  // sheet before anything under it reacts. A person sheet, menu or busy card on top goes first.
+  // sheet before anything under it reacts. A person sheet, menu, or busy card on top goes first.
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape' || !wrap) return;
     if (document.getElementById('sheet') || document.getElementById('menu') || document.getElementById('busy-wrap')) return;

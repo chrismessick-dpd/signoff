@@ -6,7 +6,7 @@ The landing page for Dovetail's design review tools. It is one static page (`ind
 
 | Card | Link | What it is |
 |---|---|---|
-| **Signoff EE** | `../ee_design_review/index.html` | Electrical reviews: schematic, layout, assembly, fab and bring-up |
+| **Signoff EE** | `../ee_design_review/index.html` | Electrical reviews: schematic, layout, assembly, fab, and bring-up |
 | **Signoff ME** | `../me_design_review/index.html` | Mechanical design reviews |
 | **Signoff FW** (prototype) | `../fw_design_review/index.html` | Firmware design reviews |
 | **Signoff PL** | `../signoff_pl/index.html` | Project lead: the whole product as assemblies and Parts linked to EE/ME/FW reviews (FTEs) |
@@ -49,7 +49,7 @@ Then open http://localhost:8790/signoff/index.html.
 `index.html?demo` (or `#demo`) is the customer-facing version:
 - A demo banner shows at the top.
 - Every tool link points to that tool's `index.html?demo`. The demos are one made-up product, a
-  Smart Thermostat, across Signoff EE, ME and PL.
+  Smart Thermostat, across Signoff EE, ME, and PL.
 - Anything marked `data-internal` is hidden (nothing is today; Fabcheck is public).
 
 ## Shared look and theme

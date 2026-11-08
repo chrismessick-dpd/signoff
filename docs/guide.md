@@ -16,10 +16,10 @@ design meets its requirements.
 | **Signoff EE** | Electrical reviews: schematic, interfaces, layout, assembly, fabrication, bring-up (930 checks) |
 | **Signoff ME** | Mechanical reviews: concept, part DFM, tolerancing, assembly, materials, analysis, enclosure, drawings, validation (845 checks) |
 | **Signoff FW** (prototype) | Firmware reviews: architecture, hardware interface, memory and faults, concurrency, power, comms, security, updates, code quality, testing, release (196 checks) |
-| **Signoff PL** | Project lead: the whole product as assemblies and Parts, each linked to its EE, ME or FW review, with progress and open issues rolled up (FTEs) |
+| **Signoff PL** | Project lead: the whole product as assemblies and Parts, each linked to its EE, ME, or FW review, with progress and open issues rolled up (FTEs) |
 | **Fabcheck** | Checking a PCB fab package before release; files never leave the browser |
 | **Partcheck** (prototype) | Checking a mechanical fab package (STEP, drawings, DXF, BOM) before it goes to a vendor, with 3D previews; files never leave the browser |
-| **Loom** (prototype) | Drawing a harness: connector tables, cables and wires as a wiring diagram, with a wire list and BOM; board connectors from a Signoff EE board's fab package |
+| **Loom** (prototype) | Drawing a harness: connector tables, cables, and wires as a wiring diagram, with a wire list and BOM; board connectors from a Signoff EE board's fab package |
 
 What they share:
 
@@ -89,11 +89,11 @@ Things to know about hosting:
 - **Reviews stay private.** The data repos and every `review-…` repo remain private. The pages
   only read and write them through GitHub's API with each person's own token.
 - **One origin.** All the sites share `chrismessick-dpd.github.io`, so they share one browser
-  storage: the sign-in token, your name and light/dark carry across. Any other Pages site
+  storage: the sign-in token, your name, and light/dark carry across. Any other Pages site
   published from this account would share that storage too, so don't publish untrusted pages
   from it.
 - **Contractors** can be sent the Signoff EE or ME link instead of a zip. Like everyone, they get
-  the sidebar links to the hub, the other Signoff tool and Fabcheck. The Signoff PL link is for FTEs
+  the sidebar links to the hub, the other Signoff tool, and Fabcheck. The Signoff PL link is for FTEs
   only and is hidden from them.
 - **Public means public.** The repos' code, checklists, docs (including the FTE sections) and
   commit history, with author name and email, are visible to anyone. Never commit client data,
@@ -108,11 +108,11 @@ GitHub grants access per repository, so access follows repos:
 
 | Person | Gets |
 | --- | --- |
-| FTE | Every suite repo: tool and data repos (EE, ME, FW, PL), hub, Fabcheck, and every shared project repo. Add them in Signoff EE's, ME's and FW's People pages; that also invites them to Signoff PL's repos (`repos.suite`). |
+| FTE | Every suite repo: tool and data repos (EE, ME, FW, PL), hub, Fabcheck, and every shared project repo. Add them in Signoff EE's, ME's, and FW's People pages; that also invites them to Signoff PL's repos (`repos.suite`). |
 | Contractor | Only the `review-…` repo of each project they're added to. They never see the data repos or other projects. |
 
-Every tool's sidebar has a **People & access** link for FTEs. In Signoff EE, ME and FW it's their
-own page; Signoff PL, Fabcheck and the hub open Signoff EE's.
+Every tool's sidebar has a **People & access** link for FTEs. In Signoff EE, ME, and FW it's their
+own page; Signoff PL, Fabcheck, and the hub open Signoff EE's.
 
 Adding a contractor to a project moves the project into its own repo and sends the GitHub
 invitations. Removing them revokes access, and their copy disappears at their next sync.
@@ -130,7 +130,7 @@ account name is a setting, so the move is cheap.
 
 **A new FTE**
 1. They create a GitHub account and send you their username.
-2. Add them as an FTE in Signoff EE's, ME's and FW's People pages, and confirm the invitations.
+2. Add them as an FTE in Signoff EE's, ME's, and FW's People pages, and confirm the invitations.
 3. They clone or download the tool folders, open Signoff, paste a token in Settings, and
    accept the invitations from the sidebar.
 
@@ -148,10 +148,10 @@ account name is a setting, so the move is cheap.
   - `python tools/sync_vendor.py` copies `model.js`, `github.js` and the stylesheet into Fabcheck
     and into Signoff PL;
   - `python tools/sync_suite_css.py` copies the stylesheet into the hub.
-- **Project summaries.** Signoff EE, ME and FW write a `summary` block into every project file at sync;
+- **Project summaries.** Signoff EE, ME, and FW write a `summary` block into every project file at sync;
   Signoff PL reads only that. Its format is in Signoff EE's README (*The project summary*).
 - **The demo suite** is one made-up product (see *Try it* above). Demo projects have fixed ids and
-  their own findings in each tool's `assets/config.js`. If you change an EE, ME or FW demo, bump
+  their own findings in each tool's `assets/config.js`. If you change an EE, ME, or FW demo, bump
   `VERSION` in the engine's `demo.js` and regenerate Signoff PL's snapshot
   (`signoff_pl/tools/demo_designs.html`); PL's tests fail while it is stale.
 - **Each tool:** run its build or stamp script, then its tests (`tests/test.html` over http), then
