@@ -67,7 +67,9 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
 - **Page:** Fabcheck's start page, `pcb_dfm/index.html?demo`, with no package open.
 - **Rings:** the {Main PCBA (DT-1042 rev B)} button, pulsing, for the visitor to press.
 - **Behavior:** the button opens the board by its fixed run (`#/overview?run=rdemo1042b&project=pdemo7`,
-  as the demo links do), and once that run is going the tour moves on to step 6 by itself.
+  as the demo links do), and once that run is going the tour moves on to step 6 by itself. It always
+  loads the package and runs its checks live, even when this browser keeps that run (Fabcheck's
+  `state.liveRun`; Chris, 2026-11-08).
 - **Card:** Fabcheck is Dovetail's DFM check for fab packages. It reads a package in the browser,
   nothing uploaded, and checks that its contents agree and its board data is clean: parts,
   descriptions, and footprints across the BOM, pick-and-place data, and Gerbers. It renders the Gerber
@@ -79,12 +81,12 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
 
 - **Page:** Fabcheck, the Main PCBA's run on Overview (`#/overview?run=rdemo1042b&project=pdemo7`). The
   run plays on the inspection stage and the page stays on Overview when it finishes.
-- **Rings:** the stage.
+- **Rings:** the stage while the run plays, then {Run checks again} (disabled during a run) once it's done.
 - **Card:** Fabcheck reads the Gerbers, drill files, pick-and-place and BOM and checks them the way a
   board house and an assembler would, under the fab's rules. Watch the stage light each layer of the
   Main PCBA as its checks run and pin what they find.
 - **Try:** When the run finishes, the {Checks} cards sum up each kind of check, with its errors,
-  warnings and info. {Next} goes to the findings.
+  warnings and info. To watch it again, click {Run checks again}. {Next} goes to the findings.
 
 ### 7. Findings
 
