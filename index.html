@@ -9,9 +9,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Dovetail Signoff</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23004952'/%3E%3Csvg x='10' y='6' width='12' height='20' viewBox='0 0 59.21 98.68'%3E%3Cpath d='M0 0h18.19v41.88H0zM0 56.79h18.19v41.88H0zM18.2 41.89h1.59v14.91H18.2zM19.79 0v41.89l24.96-6.63v28.16L19.79 56.79v41.89l39.42-10.47V10.47z' fill='%23fff'/%3E%3C/svg%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/suite.css?v=a30bcccb15ff">
-<link rel="stylesheet" href="assets/hub.css?v=a30bcccb15ff">
-<script src="assets/hub.js?v=a30bcccb15ff"></script>
+<link rel="stylesheet" href="assets/suite.css?v=ea4a03fc268d">
+<link rel="stylesheet" href="assets/hub.css?v=ea4a03fc268d">
+<script src="assets/hub.js?v=ea4a03fc268d"></script>
 </head>
 <body>
 <div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Every tool shows the same made-up product, a Smart Thermostat for Acme Climate, so you can follow it from one tool to the next. Nothing here is real project data.</div>
@@ -97,7 +97,8 @@
         </div>
       </div>
 
-      <!-- The tool picker: a tile selects a tool and the stage below previews it; a second click on
+      <!-- The tool picker: the stage previews the selected tool, and the tiles under it, in two boxes
+           (design tracking and review, then tools), select one; a second click on
            the selected tile (or a double-click, or Enter) opens it. Without JS the tiles are plain
            links. Each tile and Open button needs data-tool. The art is drawn once as symbols. -->
       <svg class="art-defs" aria-hidden="true" focusable="false">
@@ -237,46 +238,8 @@
       </svg>
 
       <section class="picker" id="picker" aria-label="Signoff tools">
-        <nav class="pk-tiles" aria-label="Choose a tool">
-          <a class="pk-tile" href="../signoff_pl/index.html" data-tool="pl" data-pick="pl">
-            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-pl"/></svg></span>
-            <span class="pk-cat">Projects</span>
-            <span class="pk-name">Signoff PL</span>
-          </a>
-          <a class="pk-tile" href="../ee_design_review/index.html" data-tool="ee" data-pick="ee">
-            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-ee"/></svg></span>
-            <span class="pk-cat">Reviews</span>
-            <span class="pk-name">Signoff EE</span>
-          </a>
-          <a class="pk-tile" href="../me_design_review/index.html" data-tool="me" data-pick="me">
-            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-me"/></svg></span>
-            <span class="pk-cat">Reviews</span>
-            <span class="pk-name">Signoff ME</span>
-          </a>
-          <a class="pk-tile" href="../fw_design_review/index.html" data-tool="fw" data-pick="fw">
-            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fw"/></svg></span>
-            <span class="pk-cat">Reviews</span>
-            <span class="pk-name">Signoff FW <span class="pk-proto">Prototype</span></span>
-          </a>
-          <a class="pk-tile" href="../pcb_dfm/index.html" data-tool="fabcheck" data-pick="fabcheck">
-            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fabcheck"/></svg></span>
-            <span class="pk-cat">Dovetail tools</span>
-            <span class="pk-name">Fabcheck</span>
-          </a>
-          <a class="pk-tile" href="../partcheck/index.html" data-tool="partcheck" data-pick="partcheck">
-            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-partcheck"/></svg></span>
-            <span class="pk-cat">Dovetail tools</span>
-            <span class="pk-name">Partcheck <span class="pk-proto">Prototype</span></span>
-          </a>
-          <a class="pk-tile" href="../loom/index.html" data-tool="loom" data-pick="loom">
-            <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-loom"/></svg></span>
-            <span class="pk-cat">Dovetail tools</span>
-            <span class="pk-name">Loom <span class="pk-proto">Prototype</span></span>
-          </a>
-        </nav>
-
         <div class="pk-stage card" aria-live="polite">
-          <article class="pk-panel" data-panel="pl" hidden>
+          <article class="pk-panel" data-panel="pl">
             <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-pl"/></svg></div>
             <div class="pk-panel-body">
               <div class="pk-eyebrow">Projects · Project lead</div>
@@ -291,7 +254,7 @@
             </div>
           </article>
           <!-- Check counts on the panels are hand-copied from Signoff EE's and ME's templates; update them when they change. -->
-          <article class="pk-panel" data-panel="ee">
+          <article class="pk-panel" data-panel="ee" hidden>
             <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-ee"/></svg></div>
             <div class="pk-panel-body">
               <div class="pk-eyebrow">Reviews · Electrical</div>
@@ -381,6 +344,54 @@
               </div>
             </div>
           </article>
+        </div>
+
+        <div class="pk-groups">
+          <nav class="pk-group" aria-labelledby="pk-g-review">
+            <h2 class="pk-group-title" id="pk-g-review">Design Tracking and Review</h2>
+            <div class="pk-tiles">
+            <a class="pk-tile" href="../signoff_pl/index.html" data-tool="pl" data-pick="pl">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-pl"/></svg></span>
+              <span class="pk-cat">Projects</span>
+              <span class="pk-name">Signoff PL</span>
+            </a>
+            <a class="pk-tile" href="../ee_design_review/index.html" data-tool="ee" data-pick="ee">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-ee"/></svg></span>
+              <span class="pk-cat">Electrical</span>
+              <span class="pk-name">Signoff EE</span>
+            </a>
+            <a class="pk-tile" href="../me_design_review/index.html" data-tool="me" data-pick="me">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-me"/></svg></span>
+              <span class="pk-cat">Mechanical</span>
+              <span class="pk-name">Signoff ME</span>
+            </a>
+            <a class="pk-tile" href="../fw_design_review/index.html" data-tool="fw" data-pick="fw">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fw"/></svg></span>
+              <span class="pk-cat">Firmware</span>
+              <span class="pk-name">Signoff FW <span class="pk-proto">Prototype</span></span>
+            </a>
+            </div>
+          </nav>
+          <nav class="pk-group" aria-labelledby="pk-g-tools">
+            <h2 class="pk-group-title" id="pk-g-tools">Tools</h2>
+            <div class="pk-tiles">
+            <a class="pk-tile" href="../pcb_dfm/index.html" data-tool="fabcheck" data-pick="fabcheck">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fabcheck"/></svg></span>
+              <span class="pk-cat">Fabrication</span>
+              <span class="pk-name">Fabcheck</span>
+            </a>
+            <a class="pk-tile" href="../loom/index.html" data-tool="loom" data-pick="loom">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-loom"/></svg></span>
+              <span class="pk-cat">Harnesses</span>
+              <span class="pk-name">Loom <span class="pk-proto">Prototype</span></span>
+            </a>
+            <a class="pk-tile" href="../partcheck/index.html" data-tool="partcheck" data-pick="partcheck">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-partcheck"/></svg></span>
+              <span class="pk-cat">Mechanical fabrication</span>
+              <span class="pk-name">Partcheck <span class="pk-proto">Prototype</span></span>
+            </a>
+            </div>
+          </nav>
         </div>
       </section>
 
@@ -532,7 +543,7 @@
     </div>
   </main>
 </div>
-<script src="assets/tour.js?v=a30bcccb15ff"></script>
-<script src="assets/mark.js?v=a30bcccb15ff"></script>
+<script src="assets/tour.js?v=ea4a03fc268d"></script>
+<script src="assets/mark.js?v=ea4a03fc268d"></script>
 </body>
 </html>

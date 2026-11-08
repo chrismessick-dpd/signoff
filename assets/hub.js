@@ -152,7 +152,7 @@
     }
     if (tiles.length) {
       var saved = readUi().pick;
-      pick(tiles.some(function (t) { return t.getAttribute('data-pick') === saved; }) ? saved : 'ee');
+      pick(tiles.some(function (t) { return t.getAttribute('data-pick') === saved; }) ? saved : 'pl');
       document.getElementById('picker').addEventListener('click', function (e) {
         var tile = e.target.closest('.pk-tile');
         if (!tile || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
