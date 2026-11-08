@@ -91,8 +91,9 @@ scroll the page, even when the tile is below the fold (`still`).
 
 - **Page:** Signoff PL, `?demo`. **Rings:** the {Requirements} tab until it's open.
 - **Card:** Signoff PL is the project lead's view. The Smart Thermostat is a tree of Parts: the two
-  boards, the firmware, the enclosure and the wall bracket, each linked to its review, plus purchased
-  Parts. Rings show how much of each review is done, and the colored numbers are open issues.
+  boards, the firmware, the enclosure's front and back covers, and the wall bracket, each linked to its
+  review, plus purchased Parts. Rings show how much of each review is done, and the colored numbers are
+  open issues. {Exploded} shows them in 3D, stacked as they assemble.
 - **Try:** Open the {Requirements} tab: the product's ESD requirement, REQ-002, is failing with the
   firmware's under it. (Clicking a Part first shows only that Part's.) {Next} goes into one of these
   Parts: the Main PCBA's review in Signoff EE.

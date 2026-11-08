@@ -66,7 +66,7 @@
       spot: ['.pk-tile[data-pick="partcheck"]'] },
     // 8: the whole product in Signoff PL, before any one tool's detail (Chris, 2026-11-08: it was the last step).
     { tool: 'signoff_pl', url: '../signoff_pl/index.html?demo', title: 'The whole product',
-      text: 'Signoff PL is the project lead’s view. The Smart Thermostat is a tree of Parts: the two boards, the firmware, the enclosure and the wall bracket, each linked to its review, plus purchased Parts. Rings show how much of each review is done, and the colored numbers are open issues.',
+      text: 'Signoff PL is the project lead’s view. The Smart Thermostat is a tree of Parts: the two boards, the firmware, the enclosure’s front and back covers, and the wall bracket, each linked to its review, plus purchased Parts. Rings show how much of each review is done, and the colored numbers are open issues. {Exploded} shows them in 3D, stacked as they assemble.',
       try: 'Open the {Requirements} tab: the product’s ESD requirement, REQ-002, is failing with the firmware’s under it. (Clicking a Part first shows only that Part’s.) {Next} goes into one of these Parts: the Main PCBA’s review in Signoff EE.',
       spot: ['[data-view="reqs"]:not(.on)'] },
     // 9–11: the Main PCBA's review in Signoff EE.
