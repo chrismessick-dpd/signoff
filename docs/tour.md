@@ -86,7 +86,9 @@ card text, `{…}` is a button, tab or field, drawn as a chip.
   board house and an assembler would, under the fab's rules. Watch the stage light each layer of the
   Main PCBA as its checks run and pin what they find.
 - **Try:** When the run finishes, the {Checks} cards sum up each kind of check, with its errors,
-  warnings and info. To watch it again, click {Run checks again}. {Next} goes to the findings.
+  warnings and info. To watch it again, click {Run checks again}. After a check has been
+  run, you can click and slide along the status bar to view individual checks and the limits they
+  are using. {Next} goes to the findings.
 
 ### 7. Findings
 

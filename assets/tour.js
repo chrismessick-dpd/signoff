@@ -62,7 +62,7 @@
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/overview?run=rdemo1042b&project=pdemo7', title: 'The fab package, checked',
       at: function () { return fabRun() === 'rdemo1042b'; }, place: 'the Main PCBA’s package in Fabcheck',
       text: 'Fabcheck reads the Gerbers, drill files, pick-and-place and BOM and checks them the way a board house and an assembler would, under the fab’s rules. Watch the stage light each layer of the Main PCBA as its checks run and pin what they find.',
-      try: 'When the run finishes, the {Checks} cards sum up each kind of check, with its errors, warnings and info. To watch it again, click {Run checks again}. {Next} goes to the findings.',
+      try: 'When the run finishes, the {Checks} cards sum up each kind of check, with its errors, warnings and info. To watch it again, click {Run checks again}. After a check has been run, you can click and slide along the status bar to view individual checks and the limits they are using. {Next} goes to the findings.',
       // The stage while the run plays; once it's done, Run checks again (disabled during a run).
       spot: ['.ov-actions [data-act="rerun"]:not(:disabled)', '#stage', '.stage'] },
     { tool: 'pcb_dfm', url: '../pcb_dfm/index.html?demo#/findings?run=rdemo1042b&project=pdemo7', title: 'Findings',
