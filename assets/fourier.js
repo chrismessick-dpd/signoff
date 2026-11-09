@@ -14,7 +14,7 @@
 // Options (as data-* attributes in kebab case, e.g. data-curve-mode="split"; lists comma-separated):
 //   mode       '2d'        the view it opens on: '1d', '2d', or '3d'
 //   modes      '1d,2d,3d'  the views its toggle offers (a single view hides the toggle)
-//   series     true        the series strip starts shown (the arrow at the bottom right hides it)
+//   series     false       the series strip starts hidden (the arrow at the bottom right shows it)
 //   build      true        add terms each turn; with every term in, hold two turns and start over
 //   playing    true        false (and reduced motion) shows each finished curve, still
 //   wave       'square'    1D: square, saw, triangle, pulse, or rect
@@ -24,7 +24,8 @@
 //   layout     'side'      2D: 'side' (circles left, picture right) or 'center'
 //   shapeTurn  10          2D: seconds a turn
 //   curve      'dovetail'  3D: dovetail, trefoil, tennis, torus, or cube
-//   curveMode  'tilted'    3D: 'tilted' (pairs of circles in tilted planes) or 'split' (floor + wall)
+//   curveMode  'split'     3D: 'split' (floor + wall: x and y from circles on the floor, z from circles on
+//                          the wall) or 'tilted' (pairs of circles in tilted planes)
 //   curveTurn  10          3D: seconds a turn
 //   spin       true        3D: the view turns slowly
 //   logoView   false       3D: the Dovetail seen from where the logo's perspective puts the eye
@@ -700,7 +701,7 @@
     const M = 512, K = 100, P = 600, SEG = 48, MAXC = 300, FLOOR = -1.6, WALL = 2.0;
     const cv = canvasEl('sfx-turn', 'Circles in 3D trace a closed space curve; drag to turn it');
     const st = {
-      curve: CURVES[o.curve] ? o.curve : 'dovetail', mode: o.curveMode === 'split' ? 'split' : 'tilted',
+      curve: CURVES[o.curve] ? o.curve : 'dovetail', mode: o.curveMode === 'tilted' ? 'tilted' : 'split',
       pts: [], base: [0, 0, 0], circles: [], X: [], Y: [], Z: [], k: 1, prevK: 0, t: 0, hold: 0,
       turn: +o.curveTurn > 0 ? +o.curveTurn : 10, build: o.build !== false, spin: o.spin !== false,
       cum: 0, runs: [],   // the trail, as in 2D
@@ -1118,10 +1119,11 @@
 
   // ---------- the panel ----------
   const DEFAULTS = {
-    mode: '2d', modes: ['1d', '2d', '3d'], series: true, build: true, playing: true,
+    // floor + wall and a hidden series by default (Chris, 2026-11-08)
+    mode: '2d', modes: ['1d', '2d', '3d'], series: false, build: true, playing: true,
     wave: 'square', waveTurn: 4,
     shape: 'dovetail', outline: null, layout: 'side', shapeTurn: 10,
-    curve: 'dovetail', curveMode: 'tilted', curveTurn: 10, spin: true, logoView: false,
+    curve: 'dovetail', curveMode: 'split', curveTurn: 10, spin: true, logoView: false,
     threeUrl: '',
   };
   const VIEWS = { '1d': ['1D', 'The 1D wave'], '2d': ['2D', 'The 2D outline'], '3d': ['3D', 'The 3D curve'] };
@@ -1169,7 +1171,7 @@
       fold.title = show ? 'Hide the series' : 'Show the series';
       strip.hidden = !show;
     }
-    if (o.series === false) showStrip(false);
+    showStrip(o.series === true);
     function press(m) { for (const b of modesEl.querySelectorAll('button')) b.setAttribute('aria-pressed', String(b.dataset.mode === m)); }
 
     function makeView(m) {
