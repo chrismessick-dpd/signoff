@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Fourier Panel Lab</title>
+<link rel="stylesheet" href="../assets/suite.css">
+<style>
+  body { background: var(--bg); color: var(--text); margin: 0; font-family: var(--sans); }
+  .lab { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .lab h1 { font: 600 26px/1.2 var(--display); letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lab h2 { font: 600 12px/1 var(--display); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin: 0 0 12px; }
+  .lede, .note { color: var(--text-2); margin: 0; max-width: 72ch; line-height: 1.5; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .row button { font: 600 13px/1 var(--sans); color: var(--text); background: var(--bg-elev); border: 1px solid var(--hair-2);
+    border-radius: 8px; padding: 8px 11px; cursor: pointer; }
+  .row button[aria-pressed="true"] { color: var(--bg-elev); background: var(--text); }
+  .wide { max-width: 720px; }
+  .narrow { max-width: 460px; }
+  pre { margin: 0; padding: 12px 14px; background: var(--bg-elev); border: 1px solid var(--hair); border-radius: 10px;
+    font: 12px/1.6 var(--mono); overflow-x: auto; }
+</style>
+</head>
+<body>
+<main class="lab">
+  <header>
+    <h1>Fourier panel</h1>
+    <p class="lede">The Fourier Epicycles artifact's Tool view as a panel any Signoff tool can drop in: <code>assets/fourier.js</code>. No tool uses it yet. This page has the tools' CSP and the suite's styles, so what works here works there.</p>
+  </header>
+
+  <section>
+    <h2>Theme</h2>
+    <div class="row" id="theme" role="group" aria-label="Theme">
+      <button data-theme="light" aria-pressed="false">Light</button>
+      <button data-theme="dark" aria-pressed="false">Dark</button>
+      <button data-theme="auto" aria-pressed="true">Auto</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Defaults</h2>
+    <div class="wide" data-signoff-fourier></div>
+  </section>
+
+  <section>
+    <h2>With options</h2>
+    <p class="note">2D and 3D only, opening on 3D, the trefoil knot as floor and wall circles, a centered heart, and the series hidden to start. It's a second panel on the page, too.</p>
+    <div class="row" style="margin: 10px 0">
+      <button id="toggleB">Destroy this panel</button>
+    </div>
+    <div class="narrow" id="panelB" data-signoff-fourier data-mode="3d" data-modes="2d,3d" data-curve="trefoil" data-curve-mode="split" data-shape="heart" data-layout="center" data-series="false"></div>
+  </section>
+
+  <section>
+    <h2>Embed</h2>
+    <pre>&lt;script src="../signoff/assets/fourier.js"&gt;&lt;/script&gt;
+&lt;div data-signoff-fourier data-mode="2d"&gt;&lt;/div&gt;
+
+// or, from a tool's own script:
+const panel = SignoffFourier.mount(el, { mode: '3d', curve: 'torus' });
+panel.setMode('1d'); panel.reset(); panel.destroy();</pre>
+    <p class="note" style="margin-top: 10px">Every option is listed at the top of <code>assets/fourier.js</code>. 3D loads <code>assets/vendor/three.min.js</code> (three.js r128) the first time a panel shows it.</p>
+  </section>
+</main>
+<script src="../assets/fourier.js"></script>
+<script src="fourier-lab.js"></script>
+</body>
+</html>
