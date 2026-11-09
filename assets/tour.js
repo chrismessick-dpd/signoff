@@ -365,7 +365,9 @@
     // the Fourier panel (t-fx), which takes what's left. Small screens get nearly all of it.
     '.tour-end-scrim{position:fixed;inset:0;z-index:74;background:rgba(0,0,0,.28)}' +
     '.tour.final{left:16.67vw;right:auto;top:16.67vh;bottom:auto;width:66.67vw;height:66.67vh;max-width:none;display:flex;flex-direction:column;padding:20px 24px}' +
-    '.tour.final h3{font-size:22px;margin-bottom:8px}.tour.final .t-body{max-width:80ch}.tour.final .t-body p{font-size:14px;line-height:1.5}' +
+    // Its text runs the card's full width, centered, so it takes as few lines as it can and leaves the
+    // panel the most room (Chris).
+    '.tour.final h3{font-size:22px;margin-bottom:8px;text-align:center}.tour.final .t-body{text-align:center}.tour.final .t-body p{font-size:14px;line-height:1.5}' +
     '.tour.final .t-toc{overflow:auto;flex:1;min-height:0}' +
     '.tour .t-fx{flex:1;min-height:0;display:flex;justify-content:center;align-items:flex-start;margin-top:4px}.tour .t-fxh{width:100%;max-width:100%}' +
     '@media (max-width:900px),(max-height:620px){.tour.final{left:12px;top:12px;width:calc(100vw - 24px);height:calc(100vh - 24px);padding:16px}}' +

@@ -276,7 +276,8 @@ scroll the page, even when the tile is below the fold (`still`).
 
 - **Page:** whatever page the visitor is on (`anywhere`, `tool: '*'`): Next, Back, and Contents never
   open another page for it, and Contents lists it under *The end*.
-- **Layout** (`final`): centered over the dimmed page, two thirds of the screen wide and high (nearly
+- **Layout** (`final`): centered over the dimmed page, two thirds of the screen wide and high, its title
+  and text centered across the full width so they take few lines (nearly
   all of it below 900 px wide or 620 px high, phones included; never a bottom sheet). Under the text is
   the Fourier panel (`assets/fourier.js`, loaded on first use) with its defaults, as the first panel of
   `lab/fourier.html`: 2D, the dovetail outline, the series hidden. The panel is narrowed until it fits
