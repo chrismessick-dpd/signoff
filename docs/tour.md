@@ -287,8 +287,7 @@ scroll the page, even when the tile is below the fold (`still`).
   behaves as it does on a real project. The demo's data just stays in this browser, kept apart from the
   private repositories where real project data lives.
 - **Try:** {Reset demo} in a tool's banner puts the demo back as it started, and {Take the tour} in the
-  hub's sidebar starts the tour again. Meanwhile, draw on the panel below: circles turning on circles
-  redraw whatever outline you give them.
+  hub's sidebar starts the tour again. Meanwhile, doodle on the Fourier transform below.
 
 ### Hidden: The firmware, and a failing requirement
 

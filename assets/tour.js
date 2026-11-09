@@ -204,7 +204,7 @@
     // with the Fourier panel (assets/fourier.js, its defaults) under the text (Chris, 2026-11-08).
     { tool: '*', anywhere: true, final: true, title: 'You’re set',
       text: 'You can leave the tour now and explore any page in the suite. Every tool is interactive and behaves as it does on a real project. The demo’s data just stays in this browser, kept apart from the private repositories where real project data lives.',
-      try: '{Reset demo} in a tool’s banner puts the demo back as it started, and {Take the tour} in the hub’s sidebar starts the tour again. Meanwhile, draw on the panel below: circles turning on circles redraw whatever outline you give them.' },
+      try: '{Reset demo} in a tool’s banner puts the demo back as it started, and {Take the tour} in the hub’s sidebar starts the tour again. Meanwhile, doodle on the Fourier transform below.' },
     // Hidden for now (Chris, 2026-11-08): to come back later.
     { skip: true, tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3&req=q3-1', title: 'The firmware, and a failing requirement',
       at: function () { return eeShows('thermostat-firmware'); }, place: 'the Thermostat Firmware in Signoff FW',
