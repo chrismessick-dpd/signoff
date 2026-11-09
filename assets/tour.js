@@ -350,7 +350,7 @@
     '.tour-spot{position:fixed;z-index:74;pointer-events:none;border:2px solid var(--accent,#00727f);border-radius:12px;box-sizing:border-box;' +
     'box-shadow:0 0 0 4px var(--accent-soft,rgba(0,114,127,.18));animation:tour-spot 1.8s ease-in-out infinite}' +
     '@keyframes tour-spot{50%{box-shadow:0 0 0 9px var(--accent-soft,rgba(0,114,127,.1))}}' +
-    // While Loom's guide or the review tools' Description guide runs (.lm-guide-on, .sg-guide-on), it has the floor.
+    // While Loom's guide or the review tools' Scribe guide runs (.lm-guide-on, .sg-guide-on), it has the floor.
     '.lm-guide-on .tour,.lm-guide-on .tour-spot,.sg-guide-on .tour,.sg-guide-on .tour-spot{display:none}' +
     // The phone's bottom sheet (phone()): full width at the foot of the screen, folded to a peek.
     '.tour .t-grab,.tour .t-more{display:none}' +
