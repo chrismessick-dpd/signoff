@@ -270,8 +270,24 @@ scroll the page, even when the tile is below the fold (`still`).
 - **Card:** Partcheck checks that the models, drawings, and BOM agree before they're sent out. Here the
   back cover's drawing and the BOM name different plastics, and the light pipe has no files.
 - **Try:** In {Findings}, each chip opens the Signoff ME check it gives evidence for. (The back cover's
-  chip opens `pd-cad-8`, an open issue in Signoff ME.) That's the tour: explore anything, and
-  {Reset demo} in a tool's banner starts it over.
+  chip opens `pd-cad-8`, an open issue in Signoff ME.) {Next} wraps up.
+
+### 24. You're set
+
+- **Page:** whatever page the visitor is on (`anywhere`, `tool: '*'`): Next, Back, and Contents never
+  open another page for it, and Contents lists it under *The end*.
+- **Layout** (`final`): centered over the dimmed page, two thirds of the screen wide and high (nearly
+  all of it below 900 px wide or 620 px high, phones included; never a bottom sheet). Under the text is
+  the Fourier panel (`assets/fourier.js`, loaded on first use) with its defaults, as the first panel of
+  `lab/fourier.html`: 2D, the dovetail outline, the series hidden. The panel is narrowed until it fits
+  the space under the text (its height follows its width), keeps turning through the card's redraws,
+  and is destroyed when the card leaves the step.
+- **Card:** You can leave the tour now and explore any page in the suite. Every tool is interactive and
+  behaves as it does on a real project. The demo's data just stays in this browser, kept apart from the
+  private repositories where real project data lives.
+- **Try:** {Reset demo} in a tool's banner puts the demo back as it started, and {Take the tour} in the
+  hub's sidebar starts the tour again. Meanwhile, draw on the panel below: circles turning on circles
+  redraw whatever outline you give them.
 
 ### Hidden: The firmware, and a failing requirement
 

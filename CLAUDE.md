@@ -31,8 +31,9 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   steps (Chris, 2026-11-08). Change a step there and in `tour.js` together.
 - **The Fourier panel** (`assets/fourier.js`, 2026-11-08): the Fourier Epicycles artifact's Tool view as a
   panel for the tools. It draws the 1D wave, the 2D outline, or the 3D curve. Its controls are Reset, the
-  1D/2D/3D toggle, and the arrow that hides the series strip; the drag hints show from 420 px wide up. No tool
-  loads it yet (Chris: don't add it to any tool). Embed it with
+  1D/2D/3D toggle, and the arrow that hides the series strip; the drag hints show from 420 px wide up. No tool's
+  own pages load it (Chris: don't add it to any tool); the demo tour's last step, *You're set*, loads it on
+  first use and shows one with its defaults (Chris, 2026-11-08). Embed it with
   `<script src="../signoff/assets/fourier.js">` and `<div data-signoff-fourier>`, or call
   `SignoffFourier.mount(el, opts)` from a tool's script; the options are listed at the top of the file.
   - 3D loads `assets/vendor/three.min.js` the first time a panel shows it, and never over a page's own

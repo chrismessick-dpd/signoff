@@ -199,7 +199,12 @@
       try: 'Open {Findings} to see every issue in one list.' },
     { tool: 'partcheck', url: '../partcheck/index.html?demo', title: 'The package that goes to the molder',
       text: 'Partcheck checks that the models, drawings, and BOM agree before they’re sent out. Here the back cover’s drawing and the BOM name different plastics, and the light pipe has no files.',
-      try: 'In {Findings}, each chip opens the Signoff ME check it gives evidence for. That’s the tour: explore anything, and {Reset demo} in a tool’s banner starts it over.' },
+      try: 'In {Findings}, each chip opens the Signoff ME check it gives evidence for. {Next} wraps up.' },
+    // 24: the end, over whatever page the visitor is on (anywhere), centered at two thirds of the screen
+    // with the Fourier panel (assets/fourier.js, its defaults) under the text (Chris, 2026-11-08).
+    { tool: '*', anywhere: true, final: true, title: 'You’re set',
+      text: 'You can leave the tour now and explore any page in the suite. Every tool is interactive and behaves as it does on a real project. The demo’s data just stays in this browser, kept apart from the private repositories where real project data lives.',
+      try: '{Reset demo} in a tool’s banner puts the demo back as it started, and {Take the tour} in the hub’s sidebar starts the tour again. Meanwhile, draw on the panel below: circles turning on circles redraw whatever outline you give them.' },
     // Hidden for now (Chris, 2026-11-08): to come back later.
     { skip: true, tool: 'fw_design_review', url: '../fw_design_review/index.html?demo&project=fdemo3&req=q3-1', title: 'The firmware, and a failing requirement',
       at: function () { return eeShows('thermostat-firmware'); }, place: 'the Thermostat Firmware in Signoff FW',
@@ -263,7 +268,7 @@
     } catch (err) { return ''; }
   }
   // Is this page the step's? Its tool, and what it shows (at), when the step says.
-  function onStep(s) { if (!s || s.tool !== folder()) return false; if (!s.at) return true; try { return !!s.at(); } catch (e) { return false; } }
+  function onStep(s) { if (s && s.anywhere) return true; if (!s || s.tool !== folder()) return false; if (!s.at) return true; try { return !!s.at(); } catch (e) { return false; } }
   // Loom's page (loom/assets/app.js, LM.app), for the Loom steps: its guide hooks and the open harness.
   function loomGuide() { try { return window.LM.app.guide; } catch (e) { return null; } }
   function loomH() { try { return window.LM.app.H(); } catch (e) { return null; } }
@@ -356,6 +361,14 @@
     '.tour.sheet.peek .t-body>:not(:first-child),.tour.sheet.peek .t-dots,.tour.sheet.peek .t-guide{display:none}' +
     '.tour.sheet.peek .t-body>:first-child{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px}' +
     '.tour.sheet.peek h3{margin-bottom:2px}.tour.min{left:auto;right:12px;bottom:12px}}' +
+    // The last step (final): centered over a dimmed page, two thirds of the screen each way, its text over
+    // the Fourier panel (t-fx), which takes what's left. Small screens get nearly all of it.
+    '.tour-end-scrim{position:fixed;inset:0;z-index:74;background:rgba(0,0,0,.28)}' +
+    '.tour.final{left:16.67vw;right:auto;top:16.67vh;bottom:auto;width:66.67vw;height:66.67vh;max-width:none;display:flex;flex-direction:column;padding:20px 24px}' +
+    '.tour.final h3{font-size:22px;margin-bottom:8px}.tour.final .t-body{max-width:80ch}.tour.final .t-body p{font-size:14px;line-height:1.5}' +
+    '.tour.final .t-toc{overflow:auto;flex:1;min-height:0}' +
+    '.tour .t-fx{flex:1;min-height:0;display:flex;justify-content:center;align-items:flex-start;margin-top:4px}.tour .t-fxh{width:100%;max-width:100%}' +
+    '@media (max-width:900px),(max-height:620px){.tour.final{left:12px;top:12px;width:calc(100vw - 24px);height:calc(100vh - 24px);padding:16px}}' +
     '@media (prefers-reduced-motion:reduce){.tour-link,.tour-spot{animation:none}}';
 
   function style() { if (document.getElementById('tour-css')) return; var s = document.createElement('style'); s.id = 'tour-css'; s.textContent = css; document.head.appendChild(s); }
@@ -367,6 +380,7 @@
   // here.
   function go(step) {
     set({ step: step });
+    if (STEPS[step].anywhere) { card(); return; }
     var want = new URL(href(step), location.href), here = new URL(location.href);
     var s = STEPS[step], tool = s.tool === folder();
     var same = tool && Array.from(want.searchParams.keys()).every(function (k) { return here.searchParams.get(k) === want.searchParams.get(k); }) &&
@@ -481,7 +495,7 @@
   function toc(now) {
     var out = '', was = null;
     STEPS.forEach(function (x, i) {
-      if (x.tool !== was) { was = x.tool; out += '<div class="t-ch">' + esc(x.tool === 'signoff' ? 'The hub' : NAMES[x.tool] || x.tool) + '</div>'; }
+      if (x.tool !== was) { was = x.tool; out += '<div class="t-ch">' + esc(x.tool === 'signoff' ? 'The hub' : x.anywhere ? 'The end' : NAMES[x.tool] || x.tool) + '</div>'; }
       out += '<button class="t-li' + (i === now ? ' on' : '') + '" data-t="to" data-i="' + i + '"><span>' + (i + 1) + '</span>' + esc(x.title) + '</button>';
     });
     return '<div class="t-toc">' + out + '</div>';
@@ -489,14 +503,14 @@
   function card() {
     var st = get(), el = document.getElementById('tour');
     spot();
-    if (!st) { if (el) el.remove(); return; }
+    if (!st) { if (el) el.remove(); dropFx(); endScrim(false); return; }
     // Arriving at the next step's tool another way (Open in Fabcheck, a sidebar link): move on.
     var here = folder();
     // One more step of the same tool may sit between (Open in Fabcheck from Reviewing together passes
     // the Fab & Release step).
     var nx = st.step + 1;
     if (STEPS[nx] && STEPS[nx].tool === STEPS[st.step].tool && STEPS[nx + 1] && STEPS[nx + 1].tool === here) nx++;
-    if (STEPS[st.step].tool !== here && STEPS[nx] && STEPS[nx].tool === here) {
+    if (!STEPS[st.step].anywhere && STEPS[st.step].tool !== here && STEPS[nx] && STEPS[nx].tool === here) {
       st.step = nx;
       // When the next step isn't this page (Open in Fabcheck lands on the board, not the start page), a
       // later step of this tool that is (landing) takes over.
@@ -522,7 +536,11 @@
       : tryText ? '<p class="t-try">' + marks(tryText) + '</p>' : '';
     if (!el) { el = document.createElement('div'); el.id = 'tour'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Demo tour'); document.body.appendChild(el); }
     // On a phone the sheet peeks (title and two lines) until it's opened; each step starts folded.
-    el.className = 'tour' + (st.min ? ' min' : '') + (ph ? ' sheet' : '') + (ph && !st.min && !st.open && !st.contents ? ' peek' : '');
+    // The last step (final) is a centered panel, on a phone too.
+    var fin = !!s.final && !st.min;
+    el.className = 'tour' + (st.min ? ' min' : '') + (fin ? ' final' : ph ? ' sheet' : '') + (ph && !fin && !st.min && !st.open && !st.contents ? ' peek' : '');
+    endScrim(fin);
+    if (!fin || st.contents) dropFx();
     if (st.min) { el.innerHTML = '<b>Tour</b> · ' + (st.step + 1) + ' of ' + STEPS.length + ' ▴'; el.onclick = function () { st.min = false; set(st); card(); }; return; }
     el.onclick = null;
     // Loom's own guide (loom/assets/guide.js, window.LoomGuide) takes over from the Loom step.
@@ -537,9 +555,10 @@
         : '<h3 data-t="grow">' + esc(s.title) + '</h3>' +
           (atStep ? '<div class="t-body" data-t="grow">' + paras(text) + tryHtml + '</div>'
             : '<p>This step is on ' + esc(s.place && s.tool === here ? s.place : NAMES[s.tool] || s.tool) + '.</p>') +
-          (guide ? '<p class="t-guide"><button class="t-b" data-t="guide">Open Loom’s guide</button></p>' : '')) +
+          (guide ? '<p class="t-guide"><button class="t-b" data-t="guide">Open Loom’s guide</button></p>' : '') +
+          (fin ? '<div class="t-fx"></div>' : '')) +
       '<div class="t-dots">' + STEPS.map(function (x, i) { return '<i class="' + (i <= st.step ? 'on' : '') + '"></i>'; }).join('') + '</div>' +
-      '<div class="t-act">' + (ph && !st.contents ? '<button class="t-b t-more" data-t="grow">' + (st.open ? 'Less' : 'More') + '</button>' : '') + (st.step > 0 ? '<button class="t-b" data-t="back">Back</button>' : '') +
+      '<div class="t-act">' + (ph && !fin && !st.contents ? '<button class="t-b t-more" data-t="grow">' + (st.open ? 'Less' : 'More') + '</button>' : '') + (st.step > 0 ? '<button class="t-b" data-t="back">Back</button>' : '') +
       (atStep ? (last ? '<button class="t-b p" data-t="end">Finish</button>' : '<button class="t-b p" data-t="next">Next</button>')
         : '<button class="t-b" data-t="here">Go there</button>' + (last ? '' : '<button class="t-b p" data-t="next">Next</button>')) + '</div>';
     el.querySelectorAll('[data-t]').forEach(function (b) {
@@ -557,6 +576,58 @@
         else if (t === 'guide') window.LoomGuide.start();
       });
     });
+    if (fin && !st.contents) mountFx(el.querySelector('.t-fx'));
+  }
+
+  // The last step's Fourier panel (assets/fourier.js beside this file, loaded on first use), with its
+  // defaults, as lab/fourier.html's first panel. Its host outlives card()'s redraws, so the panel keeps
+  // turning; it's destroyed (releasing its canvases) when the card leaves the step. The panel's height
+  // follows its width, so fitFx narrows the host until the panel fits the space under the text.
+  var fxHost = null, fxRO = null, fxLoad = null;
+  function loadFourier(then) {
+    if (window.SignoffFourier) { then(); return; }
+    if (!fxLoad) {
+      fxLoad = [];
+      var sc = document.createElement('script');
+      sc.src = SRC ? new URL('fourier.js', SRC).href : (folder() === 'signoff' ? 'assets/fourier.js' : '../signoff/assets/fourier.js');
+      sc.onload = function () { var l = fxLoad; fxLoad = null; l.forEach(function (f) { f(); }); };
+      document.head.appendChild(sc);
+    }
+    fxLoad.push(then);
+  }
+  function mountFx(slot) {
+    if (!slot) return;
+    if (!fxHost) { fxHost = document.createElement('div'); fxHost.className = 't-fxh'; }
+    slot.appendChild(fxHost);
+    var host = fxHost;
+    loadFourier(function () {
+      if (host !== fxHost || !host.isConnected) return;
+      if (!host.signoffFourier) { try { window.SignoffFourier.mount(host, {}); } catch (e) { return; } }
+      if (!fxRO && window.ResizeObserver) fxRO = new ResizeObserver(function () { fitFx(); });
+      if (fxRO) { fxRO.disconnect(); fxRO.observe(host.parentNode); fxRO.observe(host); }
+      // and once its canvas has a size, in case the observer waits for a frame (a background tab)
+      fitFx(); setTimeout(fitFx, 60); setTimeout(fitFx, 400);
+    });
+  }
+  function fitFx() {
+    var h = fxHost, slot = h && h.parentNode;
+    if (!slot || !slot.classList) return;
+    var cv = Array.prototype.filter.call(h.querySelectorAll('canvas'), function (c) { return c.offsetHeight > 0; })[0];
+    if (!cv || !h.offsetWidth) return;
+    // the drawing's shape from its pixels (set with its size), which a stale layout can't throw off
+    var ratio = cv.height / cv.width, extra = h.offsetHeight - cv.offsetHeight;
+    var want = Math.max(200, Math.min(slot.clientWidth, Math.floor((slot.clientHeight - extra) / ratio)));
+    if (Math.abs(want - h.offsetWidth) > 2) h.style.width = want + 'px';
+  }
+  function dropFx() {
+    if (fxRO) fxRO.disconnect();
+    if (fxHost) { try { if (fxHost.signoffFourier) fxHost.signoffFourier.destroy(); } catch (e) { /* gone */ } fxHost.remove(); fxHost = null; }
+  }
+  // Behind the last step: the page dimmed, as under the intro.
+  function endScrim(on) {
+    var sc = document.getElementById('tour-end-scrim');
+    if (on && !sc) { sc = document.createElement('div'); sc.id = 'tour-end-scrim'; sc.className = 'tour-end-scrim'; document.body.appendChild(sc); }
+    else if (!on && sc) sc.remove();
   }
 
   // The intro: what the demo is and where the tour goes, then Start.
@@ -566,7 +637,7 @@
     scrim.className = 'tour-scrim';
     scrim.innerHTML = '<div class="tour-intro" role="dialog" aria-modal="true" aria-label="Demo tour"><h2>A 15- to 20-minute tour of the demo</h2>' +
       '<p>Every tool in this demo shows the same made-up product, a Smart Thermostat for Acme Climate, part way through its first engineering build. The tour follows it from tool to tool:</p>' +
-      '<ol>' + STEPS.map(function (s) { return '<li><b>' + esc(s.title) + '</b> <span>· ' + esc(NAMES[s.tool]) + '</span></li>'; }).join('') + '</ol>' +
+      '<ol>' + STEPS.map(function (s) { return '<li><b>' + esc(s.title) + '</b>' + (NAMES[s.tool] ? ' <span>· ' + esc(NAMES[s.tool]) + '</span>' : '') + '</li>'; }).join('') + '</ol>' +
       '<p>Nothing you change leaves this browser. You can leave the tour at any step and look around.</p>' +
       '<div class="t-act"><button class="t-b" data-t="close">Not now</button><button class="t-b p" data-t="start">Start the tour</button></div></div>';
     document.body.appendChild(scrim);
