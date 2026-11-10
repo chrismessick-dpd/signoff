@@ -9,9 +9,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Dovetail Signoff</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23004952'/%3E%3Csvg x='10' y='6' width='12' height='20' viewBox='0 0 59.21 98.68'%3E%3Cpath d='M0 0h18.19v41.88H0zM0 56.79h18.19v41.88H0zM18.2 41.89h1.59v14.91H18.2zM19.79 0v41.89l24.96-6.63v28.16L19.79 56.79v41.89l39.42-10.47V10.47z' fill='%23fff'/%3E%3C/svg%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/suite.css?v=d610dddfa368">
-<link rel="stylesheet" href="assets/hub.css?v=d610dddfa368">
-<script src="assets/hub.js?v=d610dddfa368"></script>
+<link rel="stylesheet" href="assets/suite.css?v=d17e6a5d0a7e">
+<link rel="stylesheet" href="assets/hub.css?v=d17e6a5d0a7e">
+<script src="assets/hub.js?v=d17e6a5d0a7e"></script>
 </head>
 <body>
 <div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Every tool shows the same made-up product, a Smart Thermostat for Acme Climate, so you can follow it from one tool to the next. Nothing here is real project data.</div>
@@ -67,6 +67,10 @@
         <a class="side-link" href="../loom/index.html" data-tool="loom" title="Loom: harness drawings">
           <span class="tool-mark"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"><path d="M2.5 6.5h3.5c3 0 3 7 6 7h5.5M2.5 13.5h3.5c3 0 3-7 6-7h5.5"/></svg></span>
           <span>Loom<small>Harness drawings</small></span>
+        </a>
+        <a class="side-link" href="../flasher/index.html" data-tool="flasher" title="Flasher: firmware flasher (prototype)">
+          <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="11" height="11" rx="2"/><path d="M9.8 5.8L7.4 9.2h3.2L8.2 12.4"/></svg></span>
+          <span>Flasher<small>Firmware flasher</small></span>
         </a>
       </div>
     </nav>
@@ -244,6 +248,21 @@
             <rect x="104" y="46" width="32" height="66" rx="2" fill="var(--art-iso-t)" fill-opacity=".35" stroke="var(--art-edge)" stroke-opacity=".6" stroke-dasharray="4 3"/>
             <rect x="104" y="46" width="32" height="10" fill="#00727f" fill-opacity=".85"/>
           </symbol>
+
+          <!-- Flasher: a board on a USB cable, its chip lit, and a progress bar filling (made up) -->
+          <symbol id="art-flasher" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="120" cy="128" rx="96" ry="7"/>
+            <path d="M24 100c22 0 30-14 52-14h22" fill="none" stroke="var(--art-edge)" stroke-opacity=".55" stroke-width="7" stroke-linecap="round"/>
+            <path d="M24 100c22 0 30-14 52-14h22" fill="none" stroke="#8e8e93" stroke-width="4" stroke-linecap="round"/>
+            <rect x="96" y="80" width="12" height="12" rx="2" fill="var(--art-iso-t)" stroke="var(--art-edge)" stroke-opacity=".6"/>
+            <rect x="106" y="54" width="112" height="64" rx="5" fill="#0f5c3a" fill-opacity=".85" stroke="var(--art-edge)" stroke-opacity=".55"/>
+            <path d="M118 66h18M118 106h30M200 66v40" stroke="#ffd60a" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/>
+            <rect x="148" y="68" width="34" height="34" rx="3" fill="#1d1d1f" stroke="var(--art-edge)" stroke-opacity=".6"/>
+            <path d="M144 74h4M144 82h4M144 90h4M144 98h4M182 74h4M182 82h4M182 90h4M182 98h4" stroke="var(--art-edge)" stroke-opacity=".7" stroke-width="2"/>
+            <path d="M167.5 75l-6 9.5h7l-4.5 9.5" fill="none" stroke="#3fc1cf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="106" y="28" width="112" height="8" rx="4" fill="var(--art-iso-t)" stroke="var(--art-edge)" stroke-opacity=".5"/>
+            <rect x="106" y="28" width="74" height="8" rx="4" fill="#00727f" fill-opacity=".9"/>
+          </symbol>
         </defs>
       </svg>
 
@@ -354,6 +373,20 @@
               </div>
             </div>
           </article>
+          <article class="pk-panel" data-panel="flasher" hidden>
+            <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-flasher"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Dovetail tools · Firmware</div>
+              <h2 class="pk-title">Flasher <span class="pk-proto">Prototype</span></h2>
+              <p class="pk-desc">Puts prebuilt firmware on a board from Chrome or Edge, with no Arduino IDE: pick the firmware, plug the board in by USB, and flash. It restarts a running board into its USB bootloader, then erases, writes, reads the whole image back, and starts it.</p>
+              <div class="chips"><span class="chip">STM32 USB DFU</span><span class="chip">Verify by read-back</span><span class="chip">Serial console</span><span class="chip">Chrome · Edge</span></div>
+              <p class="pk-note">Signed in, the firmware list comes from Flasher’s private data repo.</p>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../flasher/index.html" data-tool="flasher">Open Flasher<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../flasher/index.html?demo" data-internal>Try the demo</a>
+              </div>
+            </div>
+          </article>
         </div>
 
         <div class="pk-groups">
@@ -399,6 +432,11 @@
               <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-partcheck"/></svg></span>
               <span class="pk-cat">Mechanical fabrication</span>
               <span class="pk-name">Partcheck <span class="pk-proto">Prototype</span></span>
+            </a>
+            <a class="pk-tile" href="../flasher/index.html" data-tool="flasher" data-pick="flasher">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-flasher"/></svg></span>
+              <span class="pk-cat">Firmware</span>
+              <span class="pk-name">Flasher <span class="pk-proto">Prototype</span></span>
             </a>
             </div>
           </nav>
@@ -552,8 +590,8 @@
     </div>
   </main>
 </div>
-<script src="assets/people.js?v=d610dddfa368"></script>
-<script src="assets/tour.js?v=d610dddfa368"></script>
-<script src="assets/mark.js?v=d610dddfa368"></script>
+<script src="assets/people.js?v=d17e6a5d0a7e"></script>
+<script src="assets/tour.js?v=d17e6a5d0a7e"></script>
+<script src="assets/mark.js?v=d17e6a5d0a7e"></script>
 </body>
 </html>

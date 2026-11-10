@@ -90,10 +90,12 @@
 .picker { container-type: inline-size; display: flex; flex-direction: column; gap: 16px; }
 /* Two boxes under the stage: design tracking and review (4 tiles), then tools (3). Each box's tiles
    share its width equally, and the boxes are sized so every tile is about the same width. */
-.pk-groups { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 3fr); gap: 14px; }
+/* Four tiles in each group: side by side when the page is wide enough for their names, else one group per row. */
+.pk-groups { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 1440px) { .pk-groups { grid-template-columns: minmax(0, 1fr); } }
 .pk-group { border: 1px solid var(--hair); border-radius: 18px; padding: 12px 14px 14px; min-width: 0; }
 .pk-group-title { margin: 0 4px 10px; font: 600 11px/1.4 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
-.pk-tiles { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 12px; }
+.pk-tiles { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 10px; }
 .pk-tile { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 8px 8px 12px; color: var(--text); text-decoration: none;
   background: var(--bg-elev); border: 1px solid var(--hair); border-radius: 16px; box-shadow: var(--shadow-sm);
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s; }
@@ -105,6 +107,7 @@
 .pk-art svg { display: block; width: 100%; height: 100%; transition: transform 0.35s var(--ease); }
 .pk-tile:hover .pk-art svg, .pk-tile.sel .pk-art svg { transform: scale(1.05); }
 .pk-cat, .pk-name { padding: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pk-name { white-space: normal; }   /* a Prototype badge drops to a second line rather than being cut */
 /* A name with its Prototype badge may wrap, so no tile cuts it off. */
 .pk-name { white-space: normal; overflow-wrap: anywhere; }
 .pk-proto { white-space: nowrap; }

@@ -20,6 +20,7 @@ design meets its requirements.
 | **Fabcheck** | Checking a PCB fab package before release; files never leave the browser |
 | **Partcheck** (prototype) | Checking a mechanical fab package (STEP, drawings, DXF, BOM) before it goes to a vendor, with 3D previews; files never leave the browser |
 | **Loom** (prototype) | Drawing a harness: connector tables, cables, and wires as a wiring diagram, with a wire list and BOM; board connectors from a Signoff EE board's fab package |
+| **Flasher** (prototype) | Putting prebuilt firmware on an STM32 board from Chrome or Edge over USB, with no Arduino IDE; every image is read back and verified |
 
 What they share:
 
@@ -52,6 +53,7 @@ C:\Dovetail\tools\              each folder is its own GitHub repo (chrismessick
   pcb_dfm\            Fabcheck
   partcheck\          Partcheck, mechanical package check (prototype)
   loom\               Loom, harness drawings (prototype)
+  flasher\            Flasher, firmware flasher (prototype)   data: flasher_data
   signoff_pl\         Signoff PL, project lead (FTEs)         data: signoff_pl_data
 ```
 
@@ -80,6 +82,7 @@ The tool repos are public and served by GitHub Pages from `main`:
 | Signoff PL | https://chrismessick-dpd.github.io/signoff_pl/ |
 | Partcheck (prototype) | https://chrismessick-dpd.github.io/partcheck/ |
 | Loom (prototype) | https://chrismessick-dpd.github.io/loom/ |
+| Flasher (prototype) | https://chrismessick-dpd.github.io/flasher/ |
 
 Things to know about hosting:
 

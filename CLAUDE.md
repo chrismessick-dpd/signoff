@@ -2,7 +2,7 @@
 
 This repo is the landing page for the suite: one static page, `index.html`, plus `assets/hub.js`
 and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee_design_review`,
-`me_design_review`, `fw_design_review` (a prototype), `signoff_pl`, `pcb_dfm`, `partcheck` (a prototype), and `loom` (a prototype; only the hub links to it so far). When the suite folder is checked out, read
+`me_design_review`, `fw_design_review` (a prototype), `signoff_pl`, `pcb_dfm`, `partcheck` (a prototype), `loom` (a prototype; only the hub links to it so far), and `flasher` (a prototype firmware flasher, 2026-11-10; only the hub links to it). When the suite folder is checked out, read
 `../CLAUDE.md` first. This repo is public.
 
 **Serial comma** (Chris, 2026-11-08): use the Oxford comma in every list of three or more, in UI text, docs, demo data, checklists, and commit messages: "A, B, and C". Never change check ids or data keys to fit it.
