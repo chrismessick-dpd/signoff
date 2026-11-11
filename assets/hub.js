@@ -48,9 +48,18 @@
   // Whether this browser's token is an FTE's, as Signoff EE last found at sync: EE records the
   // token's fingerprint (`tokenTag`, the engine's model.tokenTag) and whether that token could
   // open its data repo (`dataAccess`). The hub makes no request of its own.
+  function signedInLogin(token) {
+    if (!/^ghu_/.test(token)) return '';
+    try {
+      if (typeof localStorage === 'undefined' || !localStorage.getItem('signoff.auth')) return '';
+      return String(localStorage.getItem('signoff.login') || '');
+    } catch (e) { return ''; }
+  }
   function tokenTag(token) {
     var h = 0x811c9dc5;
     token = String(token || '');
+    var login = signedInLogin(token);
+    if (login) token = 'signin:' + login.toLowerCase();
     for (var i = 0; i < token.length; i++) { h ^= token.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
     return ('0000000' + h.toString(16)).slice(-8);
   }

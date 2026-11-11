@@ -16,8 +16,10 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
   - the demo suite
 
   Keep it current when a tool is added or the engine flow changes.
-- **`assets/suite.css`** is copied from `ee_design_review/assets/styles.css` by
-  `python tools/sync_suite_css.py`. Never edit it here.
+- **`assets/suite.css`** and **`assets/auth.js`** are copied from `ee_design_review/assets/` (`styles.css`,
+  `auth.js`) by `python tools/sync_suite_css.py`. Never edit them here.
+- **`auth.html`** is where GitHub returns after Sign in with GitHub (`assets/auth-page.js`; `docs/sign-in.md`).
+  `stamp_version.py` stamps it with `index.html`. `lab/signin.html` is the sign-in lab (localhost only).
 - **People & access** (FTEs only) opens `assets/people.js`'s sheet over the hub, with the EE, ME,
   and FW People pages framed (see `../CLAUDE.md`). EE, ME, FW, and PL load the same file. `hub.js` copies the
   engine's `model.tokenTag`; keep it identical.

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src https://api.github.com https://signoff-auth-dev.misty-dawn-b371.workers.dev; img-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Sign-in lab · Dovetail Signoff</title>
+<link rel="stylesheet" href="../assets/suite.css">
+<style>
+  body { margin: 0; }
+  main { max-width: 52rem; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  h2 { font-size: 1.05rem; margin: 28px 0 6px; }
+  .lede { margin: 0 0 16px; opacity: .8; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 8px 0; }
+  dt { opacity: .7; }
+  dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .out { white-space: pre-wrap; font: 13px/1.5 ui-monospace, Consolas, monospace; padding: 10px 12px; border-radius: 8px;
+         background: color-mix(in srgb, currentColor 6%, transparent); min-height: 1.5em; margin: 6px 0 0; }
+  .note { font-size: .9rem; opacity: .8; margin: 4px 0; }
+  .step { font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sign-in lab</h1>
+  <p class="lede">Tries Sign in with GitHub against the dev GitHub App and the dev Worker. Localhost only.
+    It never shows a token; it shows only what kind of token is stored.</p>
+
+  <h2>Status</h2>
+  <dl id="status"></dl>
+  <div class="row">
+    <button class="btn primary" id="signin">Sign in with GitHub</button>
+    <button class="btn" id="signout">Sign out</button>
+  </div>
+  <p class="note">Signing in replaces the token stored for <b id="origin"></b>, which every tool on this
+    address shares.</p>
+
+  <h2><span class="step">1.</span> Who am I</h2>
+  <div class="row"><button class="btn" id="user">Ask GitHub</button></div>
+  <pre class="out" id="user-out"></pre>
+
+  <h2><span class="step">2.</span> Repos the token reaches</h2>
+  <p class="note">Only repos where the app is installed (chrismessick-dpd) <i>and</i> you have access. A
+    contractor account should see only what's shared with it.</p>
+  <div class="row"><button class="btn" id="repos">List repos</button></div>
+  <pre class="out" id="repos-out"></pre>
+
+  <h2><span class="step">3.</span> Invitations</h2>
+  <div class="row"><button class="btn" id="invites">List invitations</button></div>
+  <pre class="out" id="invites-out"></pre>
+
+  <h2><span class="step">4.</span> Refresh, and two tabs at once</h2>
+  <p class="note">Open this page in a second tab first. <b>Race</b> makes every open copy refresh at the
+    same moment; only one should call the Worker, and every tab should still work afterward. Every tab's
+    result shows here, in the tab you clicked.</p>
+  <div class="row">
+    <button class="btn" id="refresh">Refresh now</button>
+    <button class="btn" id="race">Race all tabs</button>
+  </div>
+  <pre class="out" id="refresh-out"></pre>
+
+  <h2><span class="step">5.</span> Create a repo, then use it at once</h2>
+  <p class="note">Creates a private, empty test repo <b>signoff-auth-spike</b> in your account, reads it
+    straight back, and offers to delete it. Nothing else is touched.</p>
+  <div class="row">
+    <button class="btn" id="perms">Show what the app is granted</button>
+  </div>
+  <pre class="out" id="perms-out"></pre>
+  <div class="row">
+    <button class="btn" id="create">Create test repo</button>
+    <button class="btn" id="delete" disabled>Delete test repo</button>
+  </div>
+  <pre class="out" id="create-out"></pre>
+
+  <h2><span class="step">6.</span> In a real tool</h2>
+  <p class="note">While signed in, open <a href="../../ee_design_review/index.html">Signoff EE</a> on this
+    address and sync. It should work with no token pasted.</p>
+</main>
+<script src="../assets/auth.js"></script>
+<script src="signin-lab.js"></script>
+</body>
+</html>
