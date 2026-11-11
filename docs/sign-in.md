@@ -1,6 +1,7 @@
 # Sign in with GitHub: plan
 
-Status (2026-11-10): built and tested locally against the dev app and dev Worker; nothing committed.
+Status (2026-11-10): built, tested against the dev app on localhost (Chris passed the run), and the
+production app and Worker set up.
 Chris chose a GitHub App from the start, built to production level. The production app isn't registered yet.
 
 ## Goal
@@ -158,17 +159,18 @@ and a real tool (EE) using the signed-in token.
    contractor.
 7. Docs: EE README (*Users and tokens*), each tool's CLAUDE.md, and the suite CLAUDE.md.
 
-## Production setup (Chris; then Claude adds the origin)
+## Production (2026-11-10)
 
-1. Register the production GitHub App, **Dovetail Signoff**, as in section 1, with the callback
-   `https://chrismessick-dpd.github.io/signoff/auth.html`. Generate a private key (GitHub needs one to
-   install) and a client secret. Install it on `chrismessick-dpd`, All repositories.
-2. Create the Worker `signoff-auth` in Cloudflare (as the dev one): `GITHUB_CLIENT_ID`,
-   `GITHUB_CLIENT_SECRET` (Secret), `ALLOWED_ORIGINS` = `https://chrismessick-dpd.github.io`,
-   `ALLOWED_REDIRECTS` = the callback above. Check its `workers.dev` address.
-3. Claude adds the origin to `APPS` in `auth.js`, the Worker to every tool's CSP, and the client id to
-   `SIGNIN_CLIENT_ID`, then syncs, vendors, stamps, and tests.
-4. Chris signs in on the hosted pages, then a second account as a contractor.
+- **App:** Dovetail Signoff, client id `Iv23li2MtbpspvneopRN`, callback
+  `https://chrismessick-dpd.github.io/signoff/auth.html`, the same permissions and options as the dev app,
+  installed on `chrismessick-dpd` (All repositories).
+- **Worker:** `https://signoff-auth.misty-dawn-b371.workers.dev`, allowing only
+  `https://chrismessick-dpd.github.io` and that callback. Checked from the command line: it refuses
+  localhost and other origins, refuses a localhost redirect, and GitHub accepts its id and secret
+  (`bad_refresh_token` for a made-up token).
+- `APPS` in `auth.js` maps the github.io origin to it, every page's CSP lists it, and `signoff.js login`
+  uses its client id. The dev app stays for localhost.
+- Next: Chris signs in on the hosted pages once pushed, then a second account as a contractor.
 
 ## Decisions for Chris
 

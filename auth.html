@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <!-- The one page that talks to the signoff-auth Worker (docs/sign-in.md). No referrer, so the
      one-time code in this page's address never leaves it. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src https://api.github.com https://signoff-auth-dev.misty-dawn-b371.workers.dev; img-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src https://api.github.com https://signoff-auth.misty-dawn-b371.workers.dev https://signoff-auth-dev.misty-dawn-b371.workers.dev; img-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
 <title>Signing in · Dovetail Signoff</title>
-<link rel="stylesheet" href="assets/suite.css?v=82a78a880d2d">
+<link rel="stylesheet" href="assets/suite.css?v=7d1ce44b7f63">
 <style>
   body { display: grid; place-items: center; min-height: 100vh; margin: 0; }
   .auth-card { max-width: 26rem; padding: 24px; text-align: center; }
@@ -23,7 +23,7 @@
   <p id="text">Finishing your GitHub sign-in.</p>
   <p id="actions" hidden><a class="btn" id="back" href="/signoff/">Back to Signoff</a></p>
 </main>
-<script src="assets/auth.js?v=82a78a880d2d"></script>
-<script src="assets/auth-page.js?v=82a78a880d2d"></script>
+<script src="assets/auth.js?v=7d1ce44b7f63"></script>
+<script src="assets/auth-page.js?v=7d1ce44b7f63"></script>
 </body>
 </html>
