@@ -9,7 +9,6 @@
 .side-link.active .tool-mark { background: rgba(255, 255, 255, 0.2); }
 .side-nav { flex: 1; overflow-y: auto; padding-top: 4px; }
 .side-nav .side-link { margin-bottom: 2px; }
-.side-org { flex: 1; min-width: 0; padding: 0 8px; font-size: 11.5px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .toolbar-title { display: block; }
 
 .chip.placeholder { background: var(--warn-soft); color: var(--warn); font-weight: 500; }

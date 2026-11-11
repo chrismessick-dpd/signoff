@@ -91,6 +91,15 @@
     function showPeople() { document.getElementById('people-link').hidden = !isFte(); }
     showPeople();
     window.addEventListener('storage', showPeople);
+    // The sidebar foot shared with the tools (assets/sidefoot.js): the sign-in pill and Settings.
+    if (window.SignoffFoot) {
+      window.SignoffFoot.mount({
+        pill: '#sync-pill', settings: '[data-foot-settings]',
+        theme: currentTheme, setTheme: function (t) { writeTheme(t); applyTheme(t); },
+        intro: 'One GitHub sign-in serves every Signoff tool in this browser.',
+        changed: showPeople
+      });
+    }
 
     if (DEMO) {
       document.querySelectorAll('[data-tool]').forEach(function (a) { a.setAttribute('href', a.getAttribute('href') + '?demo'); });
