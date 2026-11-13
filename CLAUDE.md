@@ -23,6 +23,8 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
 - **People & access** (FTEs only) opens `assets/people.js`'s sheet over the hub, with the EE, ME,
   and FW People pages framed (see `../CLAUDE.md`). EE, ME, FW, and PL load the same file. `hub.js` copies the
   engine's `model.tokenTag`; keep it identical.
+- **Tickets** (FTEs only, 2026-11-12): `assets/tickets.js` and `tickets.css`, loaded by every tool, keep
+  tickets for the developer in the private `signoff_tickets` repo. See `docs/tickets.md`.
 - **Tool picker.** The page opens with a gallery of the seven tools (`.pk-tile`) over a stage
   (`.pk-panel`, one per tool) that previews the selected one. A plain click selects; a click on
   the selected tile, a double-click or Enter opens it; modifier clicks open as links. The choice is

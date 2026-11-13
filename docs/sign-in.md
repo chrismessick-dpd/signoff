@@ -182,3 +182,22 @@ and a real tool (EE) using the signed-in token.
 4. Session-only sign-in is dropped for sign-ins (pasted tokens keep it).
 
 Chris approved 1 and 4, and Sign out not restoring a pasted token, on 2026-11-10.
+
+## Invitations (2026-11-12)
+
+Found when Chris onboarded a coworker as an FTE: a sign-in token's `GET /user/repository_invitations`
+leaves out every invitation to a private repo the person can't open yet (the app reaches only repos the
+user can already see). Tried with the test account: the list had only the six public tool repos, and
+`PATCH /user/repository_invitations/<id>` accepted a private one (`ee_design_review_data`) all the same.
+So EE's card showed only public repos, its Accept joined those, and no projects came.
+
+The fix: the Worker's `POST /invitations` looks the caller's invitations up as the app (see the
+`signoff-auth` README), and `assets/invites.js`, loaded by every tool, draws one card above the sidebar's
+list with Accept all, merging that with GitHub's own list. Tools that had their own card (EE, ME, FW, PL)
+skip it when `window.SignoffInvites` is loaded, and EE, ME, FW, PL, Loom, and Flasher sync on its
+`signoff:invites-accepted` event.
+
+Setup (Chris): in each Worker add `GITHUB_APP_ID` (the app's App ID), `GITHUB_APP_PRIVATE_KEY` (Secret: a
+private key generated on the app's page, the whole `.pem`), and `INVITE_OWNER` = `chrismessick-dpd`, then
+paste the new `worker.js` and deploy. Until then the Worker answers 501 and the card shows what GitHub's
+own list has.
