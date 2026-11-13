@@ -34,7 +34,7 @@
 
   // Keep these two lists the same as Signoff EE's signOut (ee_design_review/assets/app.js).
   var SUITE_NS = ['signoff.v1.', 'signoff-me.v1.', 'signoff-fw.v1.', 'signoff-pl.v1.', 'fabcheck.v1.'];
-  var SUITE_DBS = ['fabcheck', 'dovetail-handoff', 'dovetail-handoff-demo', 'signoff-pl-pictures', 'signoff-pl-uploads'];
+  var SUITE_DBS = ['fabcheck', 'dovetail-handoff', 'dovetail-handoff-demo', 'signoff-pl-pictures', 'signoff-pl-uploads', 'pincheck-runs'];
 
   var opts = {};
   var looking = {};   // tag -> a /user lookup under way
