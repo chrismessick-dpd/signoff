@@ -23,6 +23,9 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
 - **People & access** (FTEs only) opens `assets/people.js`'s sheet over the hub, with the EE, ME,
   and FW People pages framed (see `../CLAUDE.md`). EE, ME, FW, and PL load the same file. `hub.js` copies the
   engine's `model.tokenTag`; keep it identical.
+- **No top bar** (Chris, 2026-11-13): `#toolbar` is zero height in `hub.css`; it holds only floating round
+  buttons, the ⋯ menu (`tickets.js`) at the top right and the show-sidebar button at the top left when the
+  sidebar is hidden (the page then gets 56 px of top padding).
 - **Tickets** (FTEs only, 2026-11-12): `assets/tickets.js` and `tickets.css`, loaded by every tool, keep
   tickets for the developer in the private `signoff_tickets` repo. See `docs/tickets.md`.
 - **Tool picker.** The page opens with a gallery of the nine tools (`.pk-tile`) in two rows, design tracking and review, then tools under it (Chris, 2026-11-13), over a stage

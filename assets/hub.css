@@ -9,7 +9,19 @@
 .side-link.active .tool-mark { background: rgba(255, 255, 255, 0.2); }
 .side-nav { flex: 1; overflow-y: auto; padding-top: 4px; }
 .side-nav .side-link { margin-bottom: 2px; }
-.toolbar-title { display: block; }
+/* No top bar (Chris, 2026-11-13): the toolbar holds only floating round buttons, the ⋯ menu (tickets.js) at
+   the top right and, with the sidebar hidden, the show-sidebar button at the top left. */
+#toolbar { height: 0; padding: 0; border: 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; pointer-events: none; }
+#toolbar > * { pointer-events: auto; }
+#toolbar .toolbar-title { display: none; }
+#toolbar .icon-btn { position: absolute; top: 12px; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg-elev); border: 1px solid var(--hair); box-shadow: var(--shadow-sm); }
+#toolbar .icon-btn:hover { background: var(--bg-elev); color: var(--text); box-shadow: var(--shadow); }
+#toolbar .icon-btn svg { width: 16px; height: 16px; }
+#toolbar .menu-toggle { left: 12px; }
+#toolbar .tk-more { right: 12px; }
+/* Room for the show-sidebar button over the page's top left when it shows. */
+.app.side-collapsed .page { padding-top: 56px; }
 
 .chip.placeholder { background: var(--warn-soft); color: var(--warn); font-weight: 500; }
 
@@ -176,7 +188,7 @@ body.has-banner { display: flex; flex-direction: column; height: 100vh; height: 
 body.has-banner .app { height: auto; flex: 1; min-height: 0; }
 
 @media (max-width: 860px) {
-  .toolbar-title { opacity: 1; }
+  .page { padding-top: 56px; }
   .about-hero, .about-part { padding: 22px 18px; }
   .shared { grid-template-columns: minmax(0, 1fr); }
   .about-sheet td:first-child { white-space: normal; }
