@@ -88,9 +88,10 @@
 
 .picker { container-type: inline-size; display: flex; flex-direction: column; gap: 16px; }
 /* One group per row, design tracking and review first, then tools under it (Chris, 2026-11-13). Both rows use
-   five equal columns, so a tile is the same width in either row. */
+   five equal columns, so a tile is the same width in either row, and a row with fewer tiles spreads them
+   evenly across its width (Chris, 2026-11-13: "same size, spread out"). */
 .pk-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-.pk-groups .pk-tiles { grid-auto-columns: calc((100% - 4 * 10px) / 5); }
+.pk-groups .pk-tiles { grid-auto-columns: calc((100% - 4 * 10px) / 5); justify-content: space-between; }
 .pk-group { border: 1px solid var(--hair); border-radius: 18px; padding: 12px 14px 14px; min-width: 0; }
 .pk-group-title { margin: 0 4px 10px; font: 600 11px/1.4 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
 .pk-tiles { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 10px; }
