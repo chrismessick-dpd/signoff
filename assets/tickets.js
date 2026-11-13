@@ -43,7 +43,7 @@
   ];
   var TOOL_NAMES = {
     signoff: 'Hub', ee_design_review: 'Signoff EE', me_design_review: 'Signoff ME', fw_design_review: 'Signoff FW',
-    signoff_pl: 'Signoff PL', pcb_dfm: 'Fabcheck', loom: 'Loom', partcheck: 'Partcheck', flasher: 'Flasher'
+    signoff_pl: 'Signoff PL', pcb_dfm: 'Fabcheck', loom: 'Loom', partcheck: 'Partcheck', flasher: 'Flasher', pincheck: 'Pincheck'
   };
 
   var ICON = {

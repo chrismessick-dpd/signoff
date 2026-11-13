@@ -18,6 +18,7 @@ design meets its requirements.
 | **Signoff FW** (prototype) | Firmware reviews: architecture, hardware interface, memory and faults, concurrency, power, comms, security, updates, code quality, testing, release (196 checks) |
 | **Signoff PL** | Project lead: the whole product as assemblies and Parts, each linked to its EE, ME, or FW review, with progress and open issues rolled up (FTEs) |
 | **Fabcheck** | Checking a PCB fab package before release; files never leave the browser |
+| **Pincheck** (prototype) | Checking a schematic against a library of part files (supply ranges, I/O levels, pin functions, required parts); files never leave the browser |
 | **Partcheck** (prototype) | Checking a mechanical fab package (STEP, drawings, DXF, BOM) before it goes to a vendor, with 3D previews; files never leave the browser |
 | **Loom** (prototype) | Drawing a harness: connector tables, cables, and wires as a wiring diagram, with a wire list and BOM; board connectors from a Signoff EE board's fab package |
 | **Flasher** (prototype) | Putting prebuilt firmware on an STM32 board from Chrome or Edge over USB, with no Arduino IDE; every image is read back and verified |
@@ -51,6 +52,7 @@ C:\Dovetail\tools\              each folder is its own GitHub repo (chrismessick
   me_design_review\   Signoff ME (engine copied from EE)      data: me_design_review_data
   fw_design_review\   Signoff FW (engine copied from EE)      data: fw_design_review_data
   pcb_dfm\            Fabcheck
+  pincheck\           Pincheck, schematic check (prototype)   data: pincheck_data
   partcheck\          Partcheck, mechanical package check (prototype)
   loom\               Loom, harness drawings (prototype)
   flasher\            Flasher, firmware flasher (prototype)   data: flasher_data
@@ -80,6 +82,7 @@ The tool repos are public and served by GitHub Pages from `main`:
 | Signoff FW (prototype) | https://chrismessick-dpd.github.io/fw_design_review/ |
 | Fabcheck | https://chrismessick-dpd.github.io/pcb_dfm/ |
 | Signoff PL | https://chrismessick-dpd.github.io/signoff_pl/ |
+| Pincheck (prototype) | https://chrismessick-dpd.github.io/pincheck/ |
 | Partcheck (prototype) | https://chrismessick-dpd.github.io/partcheck/ |
 | Loom (prototype) | https://chrismessick-dpd.github.io/loom/ |
 | Flasher (prototype) | https://chrismessick-dpd.github.io/flasher/ |

@@ -9,9 +9,9 @@
 <meta name="color-scheme" content="light dark">
 <title>Dovetail Signoff</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23004952'/%3E%3Csvg x='10' y='6' width='12' height='20' viewBox='0 0 59.21 98.68'%3E%3Cpath d='M0 0h18.19v41.88H0zM0 56.79h18.19v41.88H0zM18.2 41.89h1.59v14.91H18.2zM19.79 0v41.89l24.96-6.63v28.16L19.79 56.79v41.89l39.42-10.47V10.47z' fill='%23fff'/%3E%3C/svg%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/suite.css?v=fba8a15da884">
-<link rel="stylesheet" href="assets/hub.css?v=fba8a15da884">
-<script src="assets/hub.js?v=fba8a15da884"></script>
+<link rel="stylesheet" href="assets/suite.css?v=4bd2e2a801c6">
+<link rel="stylesheet" href="assets/hub.css?v=4bd2e2a801c6">
+<script src="assets/hub.js?v=4bd2e2a801c6"></script>
 </head>
 <body>
 <div id="demo-banner" class="demo-banner" hidden>You’re exploring a demo of Dovetail Signoff, Dovetail’s design review tools. Every tool shows the same made-up product, a Smart Thermostat for Acme Climate, so you can follow it from one tool to the next. Nothing here is real project data.</div>
@@ -59,6 +59,10 @@
         <a class="side-link" href="../pcb_dfm/index.html" data-tool="fabcheck" title="Fabcheck: fab package DFM checker">
           <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8"><rect x="1.5" y="1.5" width="15" height="15" rx="2.5"/><circle cx="6" cy="6" r="1.4" fill="#fff" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="#fff" stroke="none"/></svg></span>
           <span>Fabcheck<small>Fab package DFM</small></span>
+        </a>
+        <a class="side-link" href="../pincheck/index.html" data-tool="pincheck" title="Pincheck: schematic check (prototype)">
+          <span class="tool-mark"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"><rect x="6" y="5" width="8" height="10" rx="1.5"/><path d="M3 8h3M3 12h3M14 8h3M14 12h3"/></svg></span>
+          <span>Pincheck<small>Schematic check</small></span>
         </a>
         <a class="side-link" href="../partcheck/index.html" data-tool="partcheck" title="Partcheck: mechanical package check (prototype)">
           <span class="tool-mark"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M9 1.8l6.5 3.6v7.2L9 16.2l-6.5-3.6V5.4zM2.5 5.4L9 9l6.5-3.6M9 9v7.2"/><path d="M12.5 13.5l1.6 1.6 2.9-3" stroke-linecap="round"/></svg></span>
@@ -218,6 +222,25 @@
             <circle cx="126" cy="104" r="9" fill="#ffd60a" fill-opacity=".16" stroke="#ffd60a" stroke-width="2" stroke-dasharray="3 2.5"/>
           </symbol>
 
+          <!-- Pincheck: a schematic sheet, an IC with its pins wired out, one pin's net flagged and a warning on another (made up) -->
+          <symbol id="art-pincheck" viewBox="0 0 240 150">
+            <rect class="a-shadow" x="30" y="24" width="186" height="116" rx="6"/>
+            <rect x="24" y="16" width="186" height="116" rx="6" fill="#f7f4ea" stroke="#c9c2ad"/>
+            <path d="M24 120h186M170 120v12" stroke="#c9c2ad"/>
+            <rect x="176" y="124" width="26" height="3" rx="1.5" fill="#8a8370" fill-opacity=".6"/>
+            <g fill="none" stroke="#7a1c14" stroke-width="2"><rect x="92" y="34" width="50" height="72" rx="2"/></g>
+            <rect x="92" y="34" width="50" height="72" rx="2" fill="#fff6d6" fill-opacity=".7"/>
+            <g stroke="#7a1c14" stroke-width="2" stroke-linecap="round"><path d="M80 46h12M80 60h12M80 74h12M80 88h12M142 46h12M142 60h12M142 74h12M142 88h12"/></g>
+            <g fill="none" stroke="#1f6f3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M80 46H50v-12M80 60H58M80 88H44v16M154 46h36M154 74h20v22M154 88h14"/><path d="M42 104h4M40 108h8M38 112h12"/></g>
+            <g fill="#1f6f3a"><circle cx="58" cy="60" r="2.4"/><circle cx="168" cy="88" r="2.4"/></g>
+            <path d="M44 34h12" stroke="#1f6f3a" stroke-width="2" stroke-linecap="round"/>
+            <g fill="#8a8370" fill-opacity=".7"><rect x="100" y="42" width="16" height="3" rx="1.5"/><rect x="100" y="56" width="12" height="3" rx="1.5"/><rect x="100" y="70" width="14" height="3" rx="1.5"/><rect x="100" y="84" width="10" height="3" rx="1.5"/><rect x="120" y="96" width="14" height="3" rx="1.5"/></g>
+            <rect x="170" y="96" width="8" height="12" rx="1" fill="none" stroke="#1f6f3a" stroke-width="2"/>
+            <circle class="a-pulse" cx="154" cy="60" r="9"/>
+            <circle cx="154" cy="60" r="9" fill="#ff453a" fill-opacity=".18" stroke="#ff453a" stroke-width="2"/>
+            <circle cx="80" cy="74" r="8" fill="#ffd60a" fill-opacity=".16" stroke="#c9a400" stroke-width="2" stroke-dasharray="3 2.5"/>
+          </symbol>
+
           <!-- Partcheck: a bracket shaded for draft, with the pull direction -->
           <symbol id="art-partcheck" viewBox="0 0 240 150">
             <ellipse class="a-shadow" cx="114" cy="122" rx="66" ry="9"/>
@@ -350,6 +373,21 @@
               </div>
             </div>
           </article>
+          <article class="pk-panel" data-panel="pincheck" hidden>
+            <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-pincheck"/></svg></div>
+            <div class="pk-panel-body">
+              <div class="pk-eyebrow">Dovetail tools · Schematic</div>
+              <h2 class="pk-title">Pincheck <span class="pk-proto">Prototype</span></h2>
+              <p class="pk-desc">Fabcheck’s companion for the schematic. Checks every IC against what its datasheet allows, from a library of part files: supply ranges, I/O levels across domains, pins that must be connected, pin functions, required capacitors, crystal load, and I2C addresses.</p>
+              <div class="pk-stats"><div><b>23</b><span>checks</span></div><div><b>6</b><span>groups</span></div></div>
+              <div class="chips"><span class="chip">Altium SchDoc</span><span class="chip">Protel2 netlist</span><span class="chip">KiCad netlist</span><span class="chip">Part library</span></div>
+              <p class="pk-note">Files never leave the computer. Signed in, the part library syncs with Pincheck’s private data repo.</p>
+              <div class="pk-acts">
+                <a class="btn btn-primary pk-open" href="../pincheck/index.html" data-tool="pincheck">Open Pincheck<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></a>
+                <a class="btn btn-plain" href="../pincheck/index.html?demo" data-internal>Try the demo</a>
+              </div>
+            </div>
+          </article>
           <article class="pk-panel" data-panel="partcheck" hidden>
             <div class="pk-panel-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-partcheck"/></svg></div>
             <div class="pk-panel-body">
@@ -428,6 +466,11 @@
               <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-fabcheck"/></svg></span>
               <span class="pk-cat">Fabrication</span>
               <span class="pk-name">Fabcheck</span>
+            </a>
+            <a class="pk-tile" href="../pincheck/index.html" data-tool="pincheck" data-pick="pincheck">
+              <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-pincheck"/></svg></span>
+              <span class="pk-cat">Schematic</span>
+              <span class="pk-name">Pincheck <span class="pk-proto">Prototype</span></span>
             </a>
             <a class="pk-tile" href="../loom/index.html" data-tool="loom" data-pick="loom">
               <span class="pk-art"><svg viewBox="0 0 240 150" aria-hidden="true"><use href="#art-loom"/></svg></span>
@@ -596,13 +639,13 @@
     </div>
   </main>
 </div>
-<script src="assets/auth.js?v=fba8a15da884"></script>
-<script src="assets/sidefoot.js?v=fba8a15da884"></script>
-<script src="assets/people.js?v=fba8a15da884"></script>
-<script src="assets/tickets.js?v=fba8a15da884"></script>
+<script src="assets/auth.js?v=4bd2e2a801c6"></script>
+<script src="assets/sidefoot.js?v=4bd2e2a801c6"></script>
+<script src="assets/people.js?v=4bd2e2a801c6"></script>
+<script src="assets/tickets.js?v=4bd2e2a801c6"></script>
 <!-- Invitations: signoff/assets/invites.js (one card for every GitHub invitation, private repos included). -->
-<script src="assets/invites.js?v=fba8a15da884"></script>
-<script src="assets/tour.js?v=fba8a15da884"></script>
-<script src="assets/mark.js?v=fba8a15da884"></script>
+<script src="assets/invites.js?v=4bd2e2a801c6"></script>
+<script src="assets/tour.js?v=4bd2e2a801c6"></script>
+<script src="assets/mark.js?v=4bd2e2a801c6"></script>
 </body>
 </html>
