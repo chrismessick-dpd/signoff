@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>History lab · Dovetail Signoff</title>
+<link rel="stylesheet" href="../assets/suite.css">
+<style>
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); }
+  main { max-width: 72rem; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font: 700 1.4rem/1.2 var(--display); margin: 0 0 4px; }
+  .lede { margin: 0 0 16px; color: var(--text-2); max-width: 52rem; line-height: 1.45; }
+  .lede code, .note code { font: 12px var(--mono); }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 0 0 14px; }
+  .seg { display: inline-flex; background: var(--bg-sunk); border-radius: 9px; padding: 2px; gap: 2px; }
+  .seg button { border: 0; background: transparent; color: var(--text-2); font: 500 12.5px var(--sans); padding: 5px 10px; border-radius: 7px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--bg-elev); color: var(--text); box-shadow: var(--shadow-sm); font-weight: 600; }
+  .bar label { font-size: 12.5px; color: var(--text-2); display: inline-flex; gap: 6px; align-items: center; }
+  .bar select { font: 12.5px var(--sans); background: var(--bg-elev); color: var(--text); border: 1px solid var(--hair-2); border-radius: 7px; padding: 3px 6px; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--bg-elev); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; }
+  .card h2 { font: 600 14px var(--sans); margin: 0 0 2px; }
+  .card .sub { font-size: 12px; color: var(--text-3); margin: 0 0 10px; }
+  .side { position: sticky; top: 12px; }
+  @media (max-width: 900px) { .side { position: static; } }
+
+  /* Timeline: a gutter with lanes, then the block. */
+  .tl { list-style: none; margin: 0; padding: 0; }
+  .blk { display: grid; grid-template-columns: 44px minmax(0, 1fr); }
+  .gut { position: relative; }
+  .lane { position: absolute; top: 0; bottom: 0; width: 0; }
+  .lane.l0 { left: 13px; border-left: 2px solid var(--hair-2); }
+  .lane.l1 { left: 33px; border-left: 2px dashed var(--warn); }
+  .lane.l1.half-top { bottom: auto; height: 22px; }
+  .lane.l1.half-bot { top: 22px; }
+  .elbow { position: absolute; top: 21px; left: 14px; width: 20px; border-top: 2px dashed var(--warn); }
+  .node { position: absolute; top: 12px; left: 4px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+          font: 700 8.5px/1 var(--sans); letter-spacing: .02em; background: var(--bg-sunk); color: var(--text); border: 2px solid var(--bg-elev); box-shadow: 0 0 0 1px var(--hair-2); }
+  .node.on-l1 { left: 24px; background: var(--warn-hatch), var(--warn-soft); box-shadow: 0 0 0 1px var(--warn); }
+  .blk-body { padding: 6px 0 10px; min-width: 0; }
+  .blk-head { display: flex; align-items: flex-start; gap: 8px; width: 100%; text-align: left; background: transparent; border: 0; color: inherit; font: inherit; padding: 6px 8px; border-radius: 9px; cursor: pointer; }
+  .blk-head:hover { background: var(--hair); }
+  .blk.sel > .blk-body > .blk-head { background: var(--accent-soft); }
+  .chev { flex: none; width: 14px; height: 14px; margin-top: 3px; transition: transform .15s var(--ease); color: var(--text-3); }
+  .blk.open .chev { transform: rotate(90deg); }
+  .who { font-weight: 600; font-size: 13.5px; }
+  .role { font: 500 10.5px var(--sans); color: var(--text-3); border: 1px solid var(--hair-2); border-radius: 5px; padding: 1px 4px; margin-left: 4px; vertical-align: 1px; }
+  .when { font-size: 12px; color: var(--text-3); }
+  .counts { font-size: 12.5px; color: var(--text-2); margin-top: 2px; }
+  .tag { display: inline-block; font: 600 10.5px/1 var(--sans); padding: 3px 6px; border-radius: 5px; margin-left: 6px; vertical-align: 1px; }
+  .tag.conflict { color: var(--warn); background: var(--warn-hatch), var(--warn-soft); border: 1px dashed var(--warn); }
+  .tag.merge { color: var(--text-2); background: var(--na-soft); border: 1px solid var(--hair-2); }
+  .tag.del { color: var(--issue); background: var(--issue-hatch), var(--issue-soft); }
+  .rows { list-style: none; margin: 2px 0 0 22px; padding: 0; display: none; }
+  .blk.open .rows { display: block; }
+  .row { display: flex; gap: 8px; align-items: baseline; padding: 5px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+  .row:hover { background: var(--hair); }
+  .row.sel { background: var(--accent-soft); }
+  .kind { flex: none; font: 600 10.5px var(--mono); color: var(--text-3); width: 5.5em; text-transform: uppercase; letter-spacing: .03em; }
+  .row .what { min-width: 0; flex: 1; }
+  .row .det { color: var(--text-3); font-size: 12px; }
+  .row time { flex: none; color: var(--text-3); font-size: 11.5px; font-variant-numeric: tabular-nums; }
+  .day { font: 600 11px var(--sans); color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; padding: 10px 0 2px 52px; }
+
+  /* Change pane */
+  .empty { color: var(--text-3); font-size: 13px; padding: 24px 0; text-align: center; }
+  .chg { border-top: 1px solid var(--hair); padding: 10px 0; }
+  .chg:first-of-type { border-top: 0; padding-top: 2px; }
+  .chg h3 { font: 600 13.5px var(--sans); margin: 0 0 2px; }
+  .meta { font-size: 12px; color: var(--text-3); margin: 0 0 8px; }
+  .meta code { font: 11.5px var(--mono); }
+  .diff { font-size: 13px; line-height: 1.6; background: var(--bg-sunk); border-radius: 9px; padding: 8px 10px; white-space: pre-wrap; word-break: break-word; }
+  .diff ins { text-decoration: underline 2px; text-underline-offset: 2px; background: var(--pass-soft); color: inherit; border-radius: 3px; }
+  .diff del { text-decoration: line-through 2px; background: var(--issue-hatch), var(--issue-soft); color: var(--text-2); border-radius: 3px; }
+  .diff ins::before { content: "+"; font: 700 11px var(--mono); margin-right: 1px; text-decoration: none; display: inline-block; }
+  .diff del::before { content: "\2212"; font: 700 11px var(--mono); margin-right: 1px; display: inline-block; }
+  .state { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+  .state .arrow { color: var(--text-3); }
+  .acts { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .stub { font-size: 12px; color: var(--text-3); align-self: center; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--text-2); margin: 10px 0 0; }
+  .legend .diff { display: inline; padding: 1px 4px; background: transparent; }
+  .note { font-size: 12.5px; color: var(--text-2); line-height: 1.45; margin: 16px 0 0; }
+
+  /* Resolving a conflict copy */
+  .resolve { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px dashed var(--warn); background: var(--warn-hatch), var(--warn-soft); }
+  .resolve h4 { font: 600 13px var(--sans); margin: 0 0 2px; }
+  .resolve .meta { color: var(--text-2); margin: 0 0 6px; }
+  .picks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .picks label { display: flex; gap: 6px; align-items: center; font-size: 12px; cursor: pointer; }
+  .picks .diff { background: var(--bg-elev); margin-top: 3px; }
+  .pk-mode { font: 600 11px var(--sans); color: var(--text-2); text-transform: uppercase; letter-spacing: .04em; }
+  .flash { position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: var(--text); color: var(--bg);
+           padding: 8px 14px; border-radius: 9px; font-size: 13px; transition: opacity .2s var(--ease), transform .2s var(--ease); z-index: 20; }
+  .flash.on { opacity: 1; transform: translate(-50%, 0); }
+
+  /* Revert stub dialog */
+  .scrim { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: none; place-items: center; padding: 16px; z-index: 10; }
+  .scrim.on { display: grid; }
+  .dlg { background: var(--bg-elev); color: var(--text); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 18px 20px; max-width: 30rem; }
+  .dlg h2 { font: 600 16px var(--sans); margin: 0 0 8px; }
+  .dlg p { font-size: 13.5px; line-height: 1.45; margin: 0 0 10px; color: var(--text-2); }
+  .dlg .warnbox { padding: 8px 10px; border-radius: 9px; background: var(--warn-hatch), var(--warn-soft); border: 1px dashed var(--warn); color: var(--text); }
+</style>
+</head>
+<body>
+<main>
+  <h1>History lab</h1>
+  <p class="lede">A prototype of the history panel each tool would get. It shows one review, the Smart Thermostat's
+    Main PCBA, with made-up changes. A run of changes by one person folds into one block; open it to see each
+    change, or click a block or a change to view it.</p>
+  <p class="lede"><b>Conflict copies</b> (the dashed lane): when two people edit the same Scribe section from
+    the same version, the newer edit becomes the section and the older one is kept beside it as a copy, so no
+    text is lost. Nothing merges on its own. Pick the copy's block, then <b>Add checked to section</b> (choose
+    its sentences), <b>Use the copy instead</b>, or <b>Delete copy</b>. Each one deletes the copy, which ends the
+    branch. <b>Resolved by Morgan</b> shows the same branch resolved by hand. The design and the survey behind it are in
+    <code>signoff/docs/history.md</code>.</p>
+
+  <div class="bar">
+    <div class="seg" id="filter" role="group" aria-label="Show"></div>
+    <label>Fold runs within
+      <select id="window">
+        <option value="30">30 min</option>
+        <option value="120" selected>2 h</option>
+        <option value="1440">1 day</option>
+        <option value="0">Never (one block per change)</option>
+      </select>
+    </label>
+    <div class="seg" id="scenario" role="group" aria-label="Conflict copy">
+      <button data-s="open" aria-pressed="true">Copy still open</button>
+      <button data-s="resolved" aria-pressed="false">Resolved by Morgan</button>
+    </div>
+    <button class="btn" id="reset">Reset</button>
+    <div class="seg" id="theme" role="group" aria-label="Theme"></div>
+    <button class="btn" id="expand">Open all</button>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <h2>History · Main PCBA</h2>
+      <p class="sub" id="tl-sub"></p>
+      <ol class="tl" id="tl"></ol>
+    </section>
+    <aside class="card side">
+      <h2>Change</h2>
+      <p class="sub">What a block or change did. Stub: built from two versions of the review file in git.</p>
+      <div id="pane"><p class="empty">Pick a block or a change on the left.</p></div>
+      <div class="legend">
+        <span><span class="diff"><ins>added</ins></span> underlined, marked +</span>
+        <span><span class="diff"><del>removed</del></span> struck through, marked −</span>
+        <span><span class="tag conflict" style="margin:0">Conflict copy</span> dashed lane</span>
+      </div>
+    </aside>
+  </div>
+
+  <p class="note">Lab only: nothing here reads or writes GitHub. Every name, board, and change is made up for the
+    Acme Climate demo. <b>Revert</b> is a stub: it says what it would write (the older version, as a new edit
+    stamped now) and writes nothing.</p>
+</main>
+
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-labelledby="dlg-title">
+  <div class="dlg">
+    <h2 id="dlg-title">Revert</h2>
+    <div id="dlg-body"></div>
+    <div class="acts" style="justify-content:flex-end">
+      <button class="btn" id="dlg-cancel">Cancel</button>
+      <button class="btn btn-primary" id="dlg-ok" disabled title="Lab stub: writes nothing">Revert (not built)</button>
+    </div>
+  </div>
+</div>
+
+<div class="flash" id="flash" role="status" aria-live="polite"></div>
+<script src="history-lab.js"></script>
+</body>
+</html>
