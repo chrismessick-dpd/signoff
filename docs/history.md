@@ -272,6 +272,9 @@ cheaper than a log.
      the copy's tombstone. Nothing new is needed in the format, the merge, or the sync. The old text of
      both stays in git.
 5. Revert, behind a confirm, for comments, requirements, and Scribe sections first. Checks follow.
+   - **PL built 2026-11-13** (same sheet, from PL's ⋯ menu): `P.historyDiff` and `historyRows`.
+     Node rows read as words ("moved from Housing to Electronics, renamed"). PL's meta, restamped by
+     every edit, is a row only when a field changed. See `signoff_pl/CLAUDE.md`, *History*.
 6. PL (node moves read as moves), then Loom (per harness; a graph diff later).
 
 ## The lab
