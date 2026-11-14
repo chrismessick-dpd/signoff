@@ -16,7 +16,8 @@ This doc has three parts:
 3. The prototype panel, `signoff/lab/history.html`. Its script is `history-lab.js`, beside it. It
    runs on made-up Smart Thermostat data only.
 
-Status: survey and lab only. No engine or data change.
+Status: the History sheet is built in EE, ME, and FW (see *Order of work*), and so is one-step
+Resolve. No data format change.
 
 ## Survey
 
@@ -236,6 +237,29 @@ cheaper than a log.
    by sha, cached. It has a fake-GitHub test, like `sync`'s.
 3. A History panel in EE, ME, and FW (the lab's layout), for the open review, with one filter for
    Scribe only. View opens the diff.
+
+   **Built 2026-11-13 (steps 1 to 3, and Revert from step 5).**
+   - **Where it lives** (Chris): a sheet from the ⋯ menu, *History…* (`historySheet` in `app.js`).
+   - **Engine:**
+     - `model.recordDiff`, `historyRows` (newest first, each with the commit that first had it),
+       and `historyBlocks`.
+     - `GitHubStore.fileHistory` (the commits API by path, a page of 15, and the contents API at
+       each commit; blobs over 1 MB through `/git/blobs`). It's cached per repo by commit and blob
+       sha while the page is open.
+   - **What it shows:**
+     - This browser's unsynced edits come first, as *Not synced yet*.
+     - Filters: Everything, Scribe, Checks, Comments, and Requirements. *Fold runs within* 30 min,
+       2 h, 1 day, or Never.
+     - *Load older* reads the next page.
+   - **Revert:** behind a confirm, it writes the older record as a new edit, and is refused if the
+     record changed since. *Remove* tombstones a record the change added; that's only for Scribe
+     sections, comments, requirements, and added checks.
+   - **The demo** has no git, so it lists each record's latest change only.
+   - **Tried read-only against the real EE data repo** (counts only):
+     - A review with real activity: 10 versions made 271 changes, and a second read from the cache
+       made one call.
+     - A page of 250 KB versions took about 5 s the first time.
+     - Commits that only rewrite the summary add no rows.
 4. Resolving a conflict copy in one step, in place of copying text by hand and then deleting the copy
    (Chris, 2026-11-13; prototyped in the lab):
    - **Add checked to section:** the copy's sentences that the section lacks are listed. A sentence
