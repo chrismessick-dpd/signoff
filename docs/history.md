@@ -275,6 +275,10 @@ cheaper than a log.
    - **PL built 2026-11-13** (same sheet, from PL's ⋯ menu): `P.historyDiff` and `historyRows`.
      Node rows read as words ("moved from Housing to Electronics, renamed"). PL's meta, restamped by
      every edit, is a row only when a field changed. See `signoff_pl/CLAUDE.md`, *History*.
+   - **Loom built 2026-11-13** (*History* in the harness panel): one row per version (the harness is
+     one record); `LM.history.diff` names what changed by part id, and layout reads as "moved on the
+     drawing". *Restore the version before this…* is one undoable change. Systems are not done yet.
+     See `loom/CLAUDE.md`, *History*.
 6. PL (node moves read as moves), then Loom (per harness; a graph diff later).
 
 ## The lab
