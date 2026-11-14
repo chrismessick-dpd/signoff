@@ -40,6 +40,10 @@ script tag after `people.js`. It needs nothing from the tool except these hooks:
   *Tickets* item carries the same count, until you open that ticket in the sheet. The sheet lists those
   tickets first under *Updated for you*, whatever the filter (a Fixed one would otherwise hide under
   Active), each marked *Updated*.
+  - **The developer** (`DEVELOPER`, Chris, 2026-11-14) watches every ticket: one someone else opened
+    counts, marked *New*, until he opens it, and any change someone else makes after that (state,
+    comment, assignee, or title) counts as *Updated*. Seen mark `new` for a ticket with nothing by
+    anyone else in its log yet.
   - Seen marks are per login in this browser: `signoff.ticketsSeen` (`{ login: { ticketId: logId } }`,
     the id of the latest state change or comment by someone else when you opened it). It's outside
     `signoff.v1.` on purpose, so Sign out doesn't light every old change up again. A login's first read
@@ -94,8 +98,8 @@ work; let `DEMO` through in `can()` to try it locally.
 
 ## Not done
 
-- No email or other notifications. The ⋯ bubble counts updates on tickets you reported, not tickets
-  assigned to you.
+- No email or other notifications. The ⋯ bubble counts tickets you reported (and, for the developer,
+  every ticket), not tickets assigned to someone else.
 - `tickets.js` loads unstamped from `../signoff/assets/` in the tools (as `people.js` and `tour.js`
   do), so a tool can run a cached copy for a few minutes after a push.
 - Comments can't be edited or deleted.

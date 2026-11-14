@@ -377,19 +377,23 @@
   // it, kept per login in this browser (signoff.ticketsSeen, outside signoff.v1. so Sign out doesn't
   // light every old change up again). The first time a login is seen here, everything so far counts
   // as seen. Ids, not times, so nobody's clock matters.
+  // The developer (Chris, 2026-11-14) watches every ticket: one someone else opened counts as new
+  // until opened, and any change by someone else (state, comment, assignee, or title) as updated.
   var SEEN_KEY = DEMO ? 'signoff.demo.ticketsSeen' : 'signoff.ticketsSeen';
+  var NEW = 'new';   // the seen mark of a ticket with nothing in its log by anyone else yet
+  function watches(t, who) { return !!who && (t.reporter === who || who === DEVELOPER); }
   function lastNews(t, who) {
-    var log = t.log || [], i;
+    var log = t.log || [], i, dev = who === DEVELOPER;
     for (i = log.length - 1; i >= 0; i--) {
       var e = log[i];
-      if ((e.kind === 'state' || e.kind === 'comment') && e.by && e.by !== who) return e.id;
+      if (e.by && e.by !== who && (dev || e.kind === 'state' || e.kind === 'comment')) return e.id;
     }
-    return '';
+    return dev && t.reporter !== who ? NEW : '';
   }
   function unseenOf(list, who, seen) {
     if (!who || !seen) return [];
     return list.filter(function (t) {
-      if (t.reporter !== who) return false;
+      if (!watches(t, who)) return false;
       var news = lastNews(t, who);
       return !!news && seen[t.id] !== news;
     });
@@ -408,12 +412,12 @@
     var who = me();
     if (!who || seenFor(who)) return;
     var seen = {};
-    tickets.forEach(function (t) { if (t.reporter === who) seen[t.id] = lastNews(t, who); });
+    tickets.forEach(function (t) { if (watches(t, who)) seen[t.id] = lastNews(t, who); });
     saveSeen(who, seen);
   }
   function markSeen(t) {
     var who = me();
-    if (!who || t.reporter !== who) return;
+    if (!watches(t, who)) return;
     var news = lastNews(t, who), seen = seenFor(who) || {};
     if (!news || seen[t.id] === news) return;
     seen[t.id] = news;
@@ -441,7 +445,7 @@
     if (wrap && key !== unseenKey) drawList();
     unseenKey = key;
   }
-  function moreLabel() { return unseenCount ? 'More (' + unseenCount + ' of your tickets updated)' : 'More'; }
+  function moreLabel() { return unseenCount ? 'More (' + unseenCount + ' ticket' + (unseenCount === 1 ? '' : 's') + ' new or updated)' : 'More'; }
   function labelMore(bar) {
     bar.querySelectorAll('[data-act="project-menu"], #tk-more').forEach(function (b) {
       var l = moreLabel();
@@ -453,7 +457,7 @@
     if (!unseenCount) { if (c) c.remove(); return; }
     if (!c) { c = document.createElement('span'); c.className = 'tk-menu-count'; item.appendChild(c); }
     c.textContent = unseenCount;
-    c.title = unseenCount + ' of your tickets updated';
+    c.title = unseenCount + ' ticket' + (unseenCount === 1 ? '' : 's') + ' new or updated';
   }
 
   // Checked in the background: soon after the page opens, every 5 minutes, and when the tab comes
@@ -808,7 +812,7 @@
       var w = t.where || {}, c = comments(t), p = pictures(t), fresh = news.indexOf(t) >= 0;
       return '<button type="button" class="tk-row' + (t.id === selected ? ' on' : '') + (fresh ? ' tk-unseen' : '') + ' tk-r-' + esc(t.state) + '" data-id="' + esc(t.id) + '" role="option" aria-selected="' + (t.id === selected) + '">' +
         '<span class="tk-n">#' + esc(t.n) + '</span>' +
-        '<span class="tk-row-main"><span class="tk-row-title">' + (fresh ? '<span class="tk-new-mark" title="Someone changed or commented on your ticket since you last opened it">Updated</span>' : '') + esc(t.title) + '</span>' +
+        '<span class="tk-row-main"><span class="tk-row-title">' + (fresh ? (lastNews(t, me()) === NEW ? '<span class="tk-new-mark" title="A new ticket you haven’t opened yet">New</span>' : '<span class="tk-new-mark" title="Someone changed or commented on it since you last opened it">Updated</span>') : '') + esc(t.title) + '</span>' +
         '<span class="tk-row-meta">' + esc(toolName(w.tool)) + (w.unit ? ' · ' + esc(w.unit) : '') + ' · by @' + esc(t.reporter) + ' · ' + esc(relTime(t.updated || t.created)) + '</span></span>' +
         '<span class="tk-row-right">' + (p ? '<span class="cmt-count" title="' + p + ' picture' + (p === 1 ? '' : 's') + '">' + ICON.image + p + '</span>' : '') +
         (c ? '<span class="cmt-count" title="' + c + ' comment' + (c === 1 ? '' : 's') + '">' + ICON.bubble + c + '</span>' : '') +
