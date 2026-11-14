@@ -64,12 +64,14 @@ never text.
 - **The 2026-11-13 false copies.** `hist` keeps only five times. A browser that missed more than five
   edits to one section saw its stale copy as a simultaneous edit, so five copies appeared on a board
   Chris never edited. The sync session found this by replaying the real merge.
-  - **The fix** (local, not yet committed or pushed): `mergeProjects(local, remote, { since })` passes
-    `since` to `mergeSpec`.
-  - A local section stamped before `since` counts as already synced, so it can't be one side of a
-    conflict.
-  - The app takes `since` from a new localStorage key, `pulled`. The command line takes it from the
-    checkout's `pulledAt`.
+  - **The fix** (committed in EE `92ec887`, ME `90d4348`, and FW `76e3d7b`):
+    - `mergeSpec` is now a three-way merge against the version this browser last pulled
+      (`model.specBase`, localStorage `bases`). A section changed on one side only takes that side.
+      Only a section changed on both sides makes a copy. With no base, it falls back to `opts.since`,
+      then to the `hist` test.
+    - `GitHubStore.sync` takes `opts.edited(id)`. A browser with no unsynced edits to a review takes
+      GitHub's file as it is and never writes it.
+    - The command line uses its checkout's `review.json` as the base.
   - The copy's fields are unchanged, so nothing below depends on the fix.
 
 **`model.changesSince(project, since, templates)`.** This lists every record edited after a time as
