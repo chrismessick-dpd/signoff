@@ -4,6 +4,33 @@
 
 .tk-more[hidden] { display: none; }
 
+/* ── updates on your tickets: a blue bubble on the ⋯ button and on the menu's Tickets item ──
+   tickets.js puts the count on #toolbar (data-tk-unseen and --tk-unseen), which the tools never
+   redraw, so the bubble survives their ⋯ button being rebuilt. A number, not a color alone. */
+:root { --tk-news: #1f5fd6; --tk-on-news: #fff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --tk-news: #4f8ff7; --tk-on-news: #06142e; } }
+:root[data-theme="dark"] { --tk-news: #4f8ff7; --tk-on-news: #06142e; }
+/* No weight, so a tool that places its ⋯ itself (the hub's round button is absolute) keeps it. */
+:where(#toolbar [data-act="project-menu"], #tk-more) { position: relative; }
+#toolbar[data-tk-unseen] :is([data-act="project-menu"], #tk-more)::after {
+  content: var(--tk-unseen); position: absolute; top: -5px; right: -6px; min-width: 17px; height: 17px; padding: 0 4px;
+  box-sizing: border-box; border-radius: 9px; background: var(--tk-news); color: var(--tk-on-news);
+  box-shadow: 0 0 0 2px var(--bg-elev, #fff); font: 700 10.5px/17px var(--sans, system-ui, sans-serif); text-align: center;
+  pointer-events: none;   /* no pop-in: the review tools redraw their ⋯ on every render */
+}
+.tk-menu-count {
+  display: inline-block; min-width: 17px; height: 17px; padding: 0 5px; margin-left: 8px; box-sizing: border-box;
+  border-radius: 9px; background: var(--tk-news); color: var(--tk-on-news); font: 700 10.5px/17px var(--sans, system-ui, sans-serif);
+  text-align: center; vertical-align: 1px;
+}
+.tk-new-mark {
+  display: inline-block; margin-right: 7px; padding: 0 6px; border-radius: 6px; background: var(--tk-news); color: var(--tk-on-news);
+  font-size: 10.5px; font-weight: 700; line-height: 17px; vertical-align: 1px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.tk-row.tk-unseen .tk-row-title { font-weight: 650; }
+.tk-group { padding: 10px 14px 4px; font-size: 11px; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-3); }
+.tk-none { padding: 6px 14px 12px; }
+
 /* ── panels on the right: the new ticket, and a ticket in the sheet ── */
 .tk-panel {
   position: fixed; top: 12px; right: 12px; bottom: 12px; width: 420px; max-width: calc(100vw - 24px); z-index: 57;

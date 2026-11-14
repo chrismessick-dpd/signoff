@@ -35,6 +35,20 @@ script tag after `people.js`. It needs nothing from the tool except these hooks:
   tool version, the window size, the theme, and the browser. The engine adds the board or part, the
   open check, and a deep link to it (`SignoffTickets.where` in `app.js`).
 - **Deep link.** `?page=tickets` opens the sheet; `&ticket=<n>` opens that ticket.
+- **Updates on your tickets** (Chris, 2026-11-13). When someone else changes the state of a ticket you
+  reported, or comments on it, a blue bubble with a count sits on the ⋯ button, and the menu's
+  *Tickets* item carries the same count, until you open that ticket in the sheet. The sheet lists those
+  tickets first under *Updated for you*, whatever the filter (a Fixed one would otherwise hide under
+  Active), each marked *Updated*.
+  - Seen marks are per login in this browser: `signoff.ticketsSeen` (`{ login: { ticketId: logId } }`,
+    the id of the latest state change or comment by someone else when you opened it). It's outside
+    `signoff.v1.` on purpose, so Sign out doesn't light every old change up again. A login's first read
+    in a browser counts everything so far as seen. Another browser starts afresh.
+  - Checked in the background soon after the page opens, every 5 minutes, and on returning to the tab
+    (at most once a minute), never while the sheet is open. Only the branch's ref is read unless it moved.
+  - The count is put on `#toolbar` (`data-tk-unseen` and the `--tk-unseen` CSS variable) and drawn by
+    `tickets.css` on `[data-act="project-menu"]` (EE, ME, FW, and PL) or `#tk-more`, so the tools' own
+    redraws of their ⋯ never lose it, and no tool's code changed. The button's label says how many.
 - **Assign to** (Chris, 2026-11-12): the developer first, then you, then the tickets repo's
   collaborators and anyone already on a ticket, then *Someone else (a GitHub name)…*. That opens a box
   for any `@name`, checked with GitHub (`/users/<name>`) before it's used. Someone who isn't a
@@ -80,7 +94,8 @@ work; let `DEMO` through in `can()` to try it locally.
 
 ## Not done
 
-- No email or other notifications, and no count of tickets waiting on you.
+- No email or other notifications. The ⋯ bubble counts updates on tickets you reported, not tickets
+  assigned to you.
 - `tickets.js` loads unstamped from `../signoff/assets/` in the tools (as `people.js` and `tour.js`
   do), so a tool can run a cached copy for a few minutes after a push.
 - Comments can't be edited or deleted.

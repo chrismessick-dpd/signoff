@@ -168,10 +168,10 @@
   function ticketPaths(files) { return Object.keys(files).filter(function (p) { return /^tickets\/\d+-[a-z0-9]+\.json$/.test(p); }); }
   function pathOf(files, id) { return ticketPaths(files).filter(function (p) { return p.slice(-(id.length + 6)) === '-' + id + '.json'; })[0] || ''; }
 
-  var lastFiles = {};
+  var lastFiles = {}, lastCommit = '';
   function loadAll() {
     return head().then(function (h) {
-      lastFiles = h.files;
+      lastFiles = h.files; lastCommit = h.commit;
       var paths = ticketPaths(h.files), out = [], i = 0;
       // A few at a time, so a long list doesn't burst GitHub's rate limit.
       function next() {
@@ -368,6 +368,105 @@
     var i = tickets.map(function (x) { return x.id; }).indexOf(t.id);
     if (i < 0) tickets.push(t); else tickets[i] = t;
     if (DEMO) demoSave(tickets);
+    drawUnseen();
+  }
+
+  // ── what's new on your tickets (Chris, 2026-11-13) ──
+  // A ticket you reported counts as updated when someone else changed its state or commented since
+  // you last opened it in the sheet. "Seen" is the id of the latest such log entry when you opened
+  // it, kept per login in this browser (signoff.ticketsSeen, outside signoff.v1. so Sign out doesn't
+  // light every old change up again). The first time a login is seen here, everything so far counts
+  // as seen. Ids, not times, so nobody's clock matters.
+  var SEEN_KEY = DEMO ? 'signoff.demo.ticketsSeen' : 'signoff.ticketsSeen';
+  function lastNews(t, who) {
+    var log = t.log || [], i;
+    for (i = log.length - 1; i >= 0; i--) {
+      var e = log[i];
+      if ((e.kind === 'state' || e.kind === 'comment') && e.by && e.by !== who) return e.id;
+    }
+    return '';
+  }
+  function unseenOf(list, who, seen) {
+    if (!who || !seen) return [];
+    return list.filter(function (t) {
+      if (t.reporter !== who) return false;
+      var news = lastNews(t, who);
+      return !!news && seen[t.id] !== news;
+    });
+  }
+  function seenFor(who) {
+    var all = json(SEEN_KEY, {}) || {};
+    return all[who] || null;
+  }
+  function saveSeen(who, seen) {
+    var all = json(SEEN_KEY, {}) || {};
+    all[who] = seen;
+    put(SEEN_KEY, all);
+  }
+  // Called after every load: a login's first one marks everything so far as seen.
+  function baseline() {
+    var who = me();
+    if (!who || seenFor(who)) return;
+    var seen = {};
+    tickets.forEach(function (t) { if (t.reporter === who) seen[t.id] = lastNews(t, who); });
+    saveSeen(who, seen);
+  }
+  function markSeen(t) {
+    var who = me();
+    if (!who || t.reporter !== who) return;
+    var news = lastNews(t, who), seen = seenFor(who) || {};
+    if (!news || seen[t.id] === news) return;
+    seen[t.id] = news;
+    saveSeen(who, seen);
+    drawUnseen();
+  }
+  function unseen() { return loaded && can() ? unseenOf(tickets, me(), seenFor(me())) : []; }
+
+  // The count rides on #toolbar as a CSS variable, so it survives the tools redrawing their ⋯ button
+  // (EE, ME, FW, and PL rebuild #toolbar-actions on every render); tickets.css draws it on the button.
+  var unseenCount = 0, unseenKey = '';
+  function drawUnseen() {
+    var news = unseen(), n = news.length, bar = document.getElementById('toolbar');
+    var key = news.map(function (t) { return t.id; }).join(',');
+    unseenCount = n;
+    if (bar) {
+      if (n) { bar.setAttribute('data-tk-unseen', n); bar.style.setProperty('--tk-unseen', '"' + (n > 9 ? '9+' : n) + '"'); }
+      else { bar.removeAttribute('data-tk-unseen'); bar.style.removeProperty('--tk-unseen'); }
+      labelMore(bar);
+    }
+    var item = document.querySelector('#menu [data-menu="tickets"], #tk-menu [data-tk="list"]');
+    if (item) countItem(item);
+    // Redraw an open list only when the set changed: refresh() runs every 5 s, and a rebuilt list
+    // under a click would lose it.
+    if (wrap && key !== unseenKey) drawList();
+    unseenKey = key;
+  }
+  function moreLabel() { return unseenCount ? 'More (' + unseenCount + ' of your tickets updated)' : 'More'; }
+  function labelMore(bar) {
+    bar.querySelectorAll('[data-act="project-menu"], #tk-more').forEach(function (b) {
+      var l = moreLabel();
+      if (b.getAttribute('aria-label') !== l) { b.setAttribute('aria-label', l); b.title = l; }
+    });
+  }
+  function countItem(item) {
+    var c = item.querySelector('.tk-menu-count');
+    if (!unseenCount) { if (c) c.remove(); return; }
+    if (!c) { c = document.createElement('span'); c.className = 'tk-menu-count'; item.appendChild(c); }
+    c.textContent = unseenCount;
+    c.title = unseenCount + ' of your tickets updated';
+  }
+
+  // Checked in the background: soon after the page opens, every 5 minutes, and when the tab comes
+  // back. Only the branch's ref is read unless it moved. Not while the sheet is open (it has Refresh).
+  var lastCheck = 0, checking = false;
+  function check(minAge) {
+    if (checking || wrap || !can() || document.hidden) return;
+    if (lastCheck && Date.now() - lastCheck < minAge) return;
+    lastCheck = Date.now(); checking = true;
+    var p = DEMO || !loaded ? load() : gh('GET', repo('/git/ref/heads/' + BRANCH)).then(function (ref) {
+      return ref.object.sha === lastCommit ? tickets : load();   // the old list stands until the new one is in
+    });
+    p.then(function () { checking = false; baseline(); drawUnseen(); }, function () { checking = false; });
   }
   function create(t, imgs) {
     if (DEMO) {
@@ -650,7 +749,7 @@
       $('.tk-list', wrap).addEventListener('keydown', function (e) {
         if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
         e.preventDefault();
-        var ids = filtered().map(function (t) { return t.id; }), i = ids.indexOf(selected);
+        var ids = Array.prototype.map.call(wrap.querySelectorAll('.tk-row'), function (r) { return r.dataset.id; }), i = ids.indexOf(selected);
         var j = e.key === 'ArrowDown' ? Math.min(ids.length - 1, i + 1) : Math.max(0, i - 1);
         if (ids[j]) { selected = ids[j]; drawSheet(); var r = $('.tk-row.on', wrap); if (r) r.scrollIntoView({ block: 'nearest' }); }
       });
@@ -663,6 +762,7 @@
     lastError = '';
     drawSheet();
     load().then(function () {
+      baseline();
       if (n) { var t = tickets.filter(function (x) { return String(x.n) === String(n); })[0]; if (t) { selected = t.id; if (filtered().indexOf(t) < 0) filter = 'all'; } }
       drawSheet();
       return loadPeople();
@@ -688,17 +788,27 @@
     var el = $('.tk-list', wrap);
     if (!el) return;
     if (!loaded) { el.innerHTML = '<div class="tk-empty">' + (lastError ? esc(lastError) : 'Reading the tickets…') + '</div>'; return; }
-    var list = filtered();
-    if (!list.length) {
+    var list = filtered(), news = unseen();
+    // Your updated tickets show at the top whatever the filter (a Fixed one would hide under Active),
+    // and the one you opened from there stays put after it's marked seen.
+    var extra = tickets.filter(function (t) { return list.indexOf(t) < 0 && (news.indexOf(t) >= 0 || t.id === selected); })
+      .sort(function (a, b) { return (b.updated || '').localeCompare(a.updated || '') || b.n - a.n; });
+    if (!list.length && !extra.length) {
       el.innerHTML = '<div class="tk-empty"><div class="empty-art">' + ICON.ticket + '</div><p>' +
         (tickets.length ? 'No tickets here. Try another filter.' : 'No tickets yet. Open one from any tool’s ⋯ menu, or with the button above.') + '</p></div>';
       return;
     }
-    el.innerHTML = list.map(function (t) {
-      var w = t.where || {}, c = comments(t), p = pictures(t);
-      return '<button type="button" class="tk-row' + (t.id === selected ? ' on' : '') + ' tk-r-' + esc(t.state) + '" data-id="' + esc(t.id) + '" role="option" aria-selected="' + (t.id === selected) + '">' +
+    var label = FILTERS.filter(function (f) { return f.id === filter; })[0].label;
+    el.innerHTML = (extra.length ? '<div class="tk-group">Updated for you</div>' + rows(extra, news) +
+      '<div class="tk-group">' + esc(label) + (mine ? ', mine' : '') + '</div>' : '') +
+      (list.length ? rows(list, news) : '<div class="tk-quiet tk-none">No tickets here. Try another filter.</div>');
+  }
+  function rows(list, news) {
+    return list.map(function (t) {
+      var w = t.where || {}, c = comments(t), p = pictures(t), fresh = news.indexOf(t) >= 0;
+      return '<button type="button" class="tk-row' + (t.id === selected ? ' on' : '') + (fresh ? ' tk-unseen' : '') + ' tk-r-' + esc(t.state) + '" data-id="' + esc(t.id) + '" role="option" aria-selected="' + (t.id === selected) + '">' +
         '<span class="tk-n">#' + esc(t.n) + '</span>' +
-        '<span class="tk-row-main"><span class="tk-row-title">' + esc(t.title) + '</span>' +
+        '<span class="tk-row-main"><span class="tk-row-title">' + (fresh ? '<span class="tk-new-mark" title="Someone changed or commented on your ticket since you last opened it">Updated</span>' : '') + esc(t.title) + '</span>' +
         '<span class="tk-row-meta">' + esc(toolName(w.tool)) + (w.unit ? ' · ' + esc(w.unit) : '') + ' · by @' + esc(t.reporter) + ' · ' + esc(relTime(t.updated || t.created)) + '</span></span>' +
         '<span class="tk-row-right">' + (p ? '<span class="cmt-count" title="' + p + ' picture' + (p === 1 ? '' : 's') + '">' + ICON.image + p + '</span>' : '') +
         (c ? '<span class="cmt-count" title="' + c + ' comment' + (c === 1 ? '' : 's') + '">' + ICON.bubble + c + '</span>' : '') +
@@ -714,6 +824,7 @@
     var t = tickets.filter(function (x) { return x.id === selected; })[0];
     wrap.classList.toggle('tk-has-detail', !!t);
     if (!t) { el.hidden = true; el.innerHTML = ''; return; }
+    markSeen(t);
     var keep = $('.tk-comment', el); if (keep && keep.dataset.id) draftComment[keep.dataset.id] = keep.value;
     var w = t.where || {}, e = t.env || {}, who = me();
     var askReporter = t.state === 'fixed' && t.reporter === who;
@@ -848,6 +959,7 @@
     var m = document.createElement('div');
     m.className = 'menu'; m.id = 'tk-menu'; m.setAttribute('role', 'menu');
     m.innerHTML = '<button type="button" data-tk="new" role="menuitem">Open ticket…</button><button type="button" data-tk="list" role="menuitem">Tickets</button>';
+    countItem($('[data-tk="list"]', m));
     document.body.appendChild(m);
     var r = anchor.getBoundingClientRect();
     m.style.left = Math.max(8, Math.min(innerWidth - m.offsetWidth - 8, r.right - m.offsetWidth)) + 'px';
@@ -861,7 +973,7 @@
   function closeMenu() { var m = $('#tk-menu'); if (m) m.remove(); }
   document.addEventListener('mousedown', function (e) { var m = $('#tk-menu'); if (m && !m.contains(e.target) && !e.target.closest('#tk-more')) closeMenu(); });
 
-  function refresh() { placeMore(); }
+  function refresh() { placeMore(); drawUnseen(); check(5 * 60000); }
 
   // The People link shows and hides as a tool learns who you are; follow it.
   function watch() {
@@ -871,7 +983,21 @@
     window.addEventListener('storage', function (e) { if (!e.key || /^signoff\.(token|login|auth|v1\.settings|v1\.dataAccess)/.test(e.key)) refresh(); });
     // Who's signed in can change without the People link moving (a pill with no People link).
     setInterval(refresh, 5000);
-    var m = location.search.match(/[?&]page=tickets\b/);
+    // Back to the tab after a while: look for news (at most once a minute).
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) check(60000); });
+    // Another tab opened a ticket: its seen marks are ours too.
+    window.addEventListener('storage', function (e) { if (e.key === SEEN_KEY) drawUnseen(); });
+    // The tools draw their own ⋯ menu (#menu); give its Tickets item the count.
+    if (window.MutationObserver) {
+      new MutationObserver(function () {
+        var item = document.querySelector('#menu [data-menu="tickets"]');
+        if (item && unseenCount && !item.querySelector('.tk-menu-count')) countItem(item);
+      }).observe(document.body, { childList: true });
+      // A redrawn ⋯ button gets its label back.
+      var bar = document.getElementById('toolbar');
+      if (bar) new MutationObserver(function () { if (unseenCount) labelMore(bar); }).observe(bar, { childList: true, subtree: true });
+    }
+    var m =location.search.match(/[?&]page=tickets\b/);
     if (m) { var n = (location.search.match(/[?&]ticket=(\d+)/) || [])[1]; setTimeout(function () { open(n); }, 300); }
   }
 
@@ -925,9 +1051,11 @@
     isOpen: function () { return !!wrap || !!newPanel; },
     where: function (fn) { whereHook = fn; },
     refresh: refresh,
+    unseenCount: function () { return unseenCount; },
     states: STATES,
     // For tests: the pure parts, and the store (tools/tickets_live_test.js runs it against GitHub).
     _test: { pathOf: pathOf, ticketPaths: ticketPaths, pad: pad, b64ToBytes: b64ToBytes, bytesToB64: bytesToB64,
-      load: load, create: create, setState: setState, setAssignee: setAssignee, comment: comment, list: function () { return tickets; } }
+      load: load, create: create, setState: setState, setAssignee: setAssignee, comment: comment, list: function () { return tickets; },
+      lastNews: lastNews, unseenOf: unseenOf, unseen: unseen, check: check }
   };
 })();
