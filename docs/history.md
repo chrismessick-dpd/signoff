@@ -16,8 +16,10 @@ This doc has three parts:
 3. The prototype panel, `signoff/lab/history.html`. Its script is `history-lab.js`, beside it. It
    runs on made-up Smart Thermostat data only.
 
-Status: the History sheet is built in EE, ME, and FW (see *Order of work*), and so is one-step
-Resolve. No data format change.
+Status: the History sheet is built in EE, ME, FW, PL, and Loom (see *Order of work*), and so is one-step
+Resolve. Since 2026-11-14 it's one engine, `ee_design_review/assets/history.js`, vendored to PL and Loom, with
+version tags (records in a `tags` map on the document) and the Version comparison bar (see
+`ee_design_review/CLAUDE.md`).
 
 ## Survey
 
