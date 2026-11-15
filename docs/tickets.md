@@ -31,6 +31,10 @@ script tag after `people.js`. It needs nothing from the tool except these hooks:
   `data-tickets-own`) offer *Open ticket…* and *Tickets* at the bottom of it, and always draw the
   ⋯, even with no board, part, or project open. Every other tool (the hub, Fabcheck, Loom,
   Partcheck, and Flasher) gets a ⋯ from `tickets.js` at the end of `#toolbar`.
+  A tool can put its own entries at the top of that ⋯ with `SignoffTickets.items(fn)` (`fn()` returns
+  `[{ label, run }]`; Loom's *History…* for the open harness or system, Chris, 2026-11-14: History in every
+  tool's ⋯ menu, not a button). The ⋯ then shows whenever there are entries, FTE or not and in `?demo` too;
+  *Open ticket…* and *Tickets* follow under a rule for FTEs.
 - **Where you were.** A new ticket records the tool, the toolbar's title and tab, the address, the
   tool version, the window size, the theme, and the browser. The engine adds the board or part, the
   open check, and a deep link to it (`SignoffTickets.where` in `app.js`).

@@ -22,7 +22,10 @@
        menu offers Open ticket… and Tickets (SignoffTickets.can(), .newTicket(), .open()).
      - Any element with data-tickets-open opens the sheet; ?page=tickets (&ticket=<n>) opens it on load.
      - SignoffTickets.where(fn): fn() returns { unit, view, item, itemLabel } for the page you're on,
-       added to a new ticket's place (the toolbar's title and tab are read without it). */
+       added to a new ticket's place (the toolbar's title and tab are read without it).
+     - SignoffTickets.items(fn): fn() returns the tool's own entries for that ⋯ menu, [{ label, run }], drawn
+       above the ticket entries (Loom's History…; Chris, 2026-11-14: History in every tool's ⋯ menu). The button
+       shows whenever there are entries, signed in as an FTE or not. */
 (function () {
   'use strict';
   if (window.SignoffTickets) return;
@@ -942,6 +945,8 @@
   }
 
   // ── the ⋯ button, for tools without their own ──
+  var itemsHook = null;
+  function ownItems() { try { return (itemsHook && itemsHook()) || []; } catch (e) { return []; } }
   function placeMore() {
     var bar = document.getElementById('toolbar');
     if (!bar || bar.hasAttribute('data-tickets-own')) return;
@@ -956,14 +961,15 @@
       bar.appendChild(b);
       b.addEventListener('click', function (e) { e.stopPropagation(); if ($('#tk-menu')) { closeMenu(); return; } menu(b); });
     }
-    b.hidden = !can();
+    b.hidden = !can() && !ownItems().length;
   }
   function menu(anchor) {
     closeMenu();
-    var m = document.createElement('div');
+    var m = document.createElement('div'), own = ownItems();
     m.className = 'menu'; m.id = 'tk-menu'; m.setAttribute('role', 'menu');
-    m.innerHTML = '<button type="button" data-tk="new" role="menuitem">Open ticket…</button><button type="button" data-tk="list" role="menuitem">Tickets</button>';
-    countItem($('[data-tk="list"]', m));
+    m.innerHTML = own.map(function (it, i) { return '<button type="button" data-tk="own" data-i="' + i + '" role="menuitem">' + esc(it.label) + '</button>'; }).join('') +
+      (can() ? (own.length ? '<hr>' : '') + '<button type="button" data-tk="new" role="menuitem">Open ticket…</button><button type="button" data-tk="list" role="menuitem">Tickets</button>' : '');
+    if (can()) countItem($('[data-tk="list"]', m));
     document.body.appendChild(m);
     var r = anchor.getBoundingClientRect();
     m.style.left = Math.max(8, Math.min(innerWidth - m.offsetWidth - 8, r.right - m.offsetWidth)) + 'px';
@@ -971,7 +977,8 @@
     m.addEventListener('click', function (e) {
       var b = e.target.closest('[data-tk]'); if (!b) return;
       closeMenu();
-      if (b.dataset.tk === 'new') newTicket(); else open();
+      if (b.dataset.tk === 'own') { var it = own[+b.dataset.i]; if (it && it.run) it.run(); }
+      else if (b.dataset.tk === 'new') newTicket(); else open();
     });
   }
   function closeMenu() { var m = $('#tk-menu'); if (m) m.remove(); }
@@ -1054,6 +1061,7 @@
     close: close,
     isOpen: function () { return !!wrap || !!newPanel; },
     where: function (fn) { whereHook = fn; },
+    items: function (fn) { itemsHook = fn; placeMore(); },
     refresh: refresh,
     unseenCount: function () { return unseenCount; },
     states: STATES,
