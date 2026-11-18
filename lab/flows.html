@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>Suite flows lab · Dovetail Signoff</title>
+<link rel="stylesheet" href="../assets/suite.css">
+<link rel="stylesheet" href="../../signoff_pl/assets/structure.css">
+<style>
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); }
+  main { max-width: 88rem; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font: 700 1.4rem/1.2 var(--display); margin: 0 0 4px; }
+  .lede { margin: 0 0 16px; color: var(--text-2); max-width: 56rem; line-height: 1.45; }
+</style>
+</head>
+<body>
+<main>
+  <h1>How the suite fits together</h1>
+  <p class="lede">A lab for showing how the Signoff tools pass data to each other and keep track of a whole project. Five
+    ways to draw the same picture, all over the made-up Smart Thermostat demo (Acme Climate). Click a tool, a part, or a
+    line to see what moves along it. The code is Signoff PL's Tool Structure page
+    (signoff_pl/assets/structure.js), which offers every view but the Project tree. Reads and writes nothing; the review numbers come from Signoff PL's demo snapshot.</p>
+
+  <div id="lab"></div>
+</main>
+<script src="../../signoff_pl/assets/demo-designs.js"></script>
+<script src="../../signoff_pl/assets/structure.js"></script>
+<script src="flows-lab.js"></script>
+</body>
+</html>
