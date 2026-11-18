@@ -150,6 +150,25 @@
       else if (e.key === '[' && !e.ctrlKey && !e.metaKey && !e.altKey && !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) { e.preventDefault(); toggleSidebar(); }
     });
 
+    // Tool Structure (#structure, the sidebar link above People & access): shown in place of the picker,
+    // mounted the first time it shows (it fits the drawing to the page's width then).
+    var structureView = null;
+    function route() {
+      var on = location.hash === '#structure', home = document.getElementById('home-page'), page = document.getElementById('structure-page');
+      if (!home || !page) return;
+      home.hidden = on; page.hidden = !on;
+      var homeLink = document.querySelector('.side-nav a[href="index.html"]'), link = document.getElementById('structure-link');
+      if (homeLink) { homeLink.classList.toggle('active', !on); if (on) homeLink.removeAttribute('aria-current'); else homeLink.setAttribute('aria-current', 'page'); }
+      if (link) { link.classList.toggle('active', on); if (on) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); }
+      document.getElementById('toolbar-title').textContent = on ? 'Tool Structure' : 'Signoff Hub';
+      if (on && !structureView && window.SignoffStructure) {
+        structureView = window.SignoffStructure.mount(page.querySelector('.structure-root'), { views: ['graph', 'life', 'store', 'matrix'], storeKey: 'signoff.hub.structure.view' });
+      } else if (on && structureView) structureView.render();
+      document.getElementById('main').scrollTop = 0;
+    }
+    window.addEventListener('hashchange', route);
+    route();
+
     // The tool picker. A plain click on a tile selects it and shows it on the stage; a click on the
     // tile already selected opens it, so a double-click opens too, and so does Enter on a focused,
     // selected tile. Modifier and middle clicks are left to the browser. The choice is remembered.

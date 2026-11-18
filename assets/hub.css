@@ -193,3 +193,7 @@ body.has-banner .app { height: auto; flex: 1; min-height: 0; }
   .shared { grid-template-columns: minmax(0, 1fr); }
   .about-sheet td:first-child { white-space: normal; }
 }
+
+/* Tool Structure (index.html#structure) fills the window's width (Chris). */
+.page-structure { max-width: none; }
+.page-structure .page-sub { margin-bottom: 18px; }
