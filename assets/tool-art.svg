@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- The Signoff tools' art, made up (never a real board). Shared: the hub's picker and Signoff EE's home
+       page use it by <use href="…/tool-art.svg#art-…">. Theme colors come from CSS variables the page sets
+       on :root (the accent and art-iso colors), which reach the <use> copies by inheritance. -->
+  <style>
+    .a-line { fill: none; stroke: var(--hair-2); stroke-width: 1.6; stroke-linecap: round; }
+    .a-hero { fill: var(--accent); }
+    .a-cards rect { fill: var(--bg-elev); stroke: var(--hair-2); }
+    .a-ring-bg circle { fill: none; stroke: var(--accent-soft); stroke-width: 3; }
+    .a-ring circle { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+    .a-bar rect { fill: var(--text-2); opacity: 0.55; }
+    .a-bar.soft rect { opacity: 0.25; }
+    .a-thumb rect { fill: var(--accent-soft); stroke: var(--accent); stroke-opacity: 0.4; }
+    .a-shadow { fill: #000; opacity: var(--art-shadow); }
+    .a-badge { fill: var(--accent); }
+    .a-iso-t { fill: var(--art-iso-t); }
+    .a-iso-l { fill: var(--art-iso-l); }
+    .a-iso-r { fill: var(--art-iso-r); }
+    .a-edge { fill: none; stroke: var(--art-edge); stroke-opacity: 0.35; stroke-width: 1.2; stroke-linejoin: round; stroke-linecap: round; }
+    .a-edge.strong { stroke-opacity: 0.55; }
+    .a-glow { fill: none; stroke: #3fc1cf; stroke-width: 2.5; stroke-linecap: round; }
+    .a-dim { fill: none; stroke: var(--accent); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+    .a-dim.arrow { stroke-width: 2.2; }
+    .a-pulse { fill: none; stroke: #ff453a; stroke-width: 2; opacity: 0; }
+  </style>
+  <defs>
+          <linearGradient id="g-pcb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d8a50"/><stop offset="1" stop-color="#17502f"/></linearGradient>
+          <linearGradient id="g-fab" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14261d"/><stop offset="1" stop-color="#0b1510"/></linearGradient>
+          <linearGradient id="g-hot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff453a"/><stop offset="1" stop-color="#ff9f0a"/></linearGradient>
+          <linearGradient id="g-ok" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9be15d"/><stop offset="1" stop-color="#30c158"/></linearGradient>
+          <linearGradient id="g-mid" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffd60a"/><stop offset="1" stop-color="#ff9f0a"/></linearGradient>
+          <linearGradient id="g-scale" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#30c158"/><stop offset="0.5" stop-color="#ffd60a"/><stop offset="1" stop-color="#ff453a"/></linearGradient>
+
+          <!-- Signoff PL: the product as a tree of assemblies and Parts, with progress rings -->
+          <symbol id="art-pl" viewBox="0 0 240 150">
+            <path class="a-line" d="M120 44v10M48 54h144M48 54v8M120 54v8M192 54v8M48 92v8M28 100h40M28 100v8M68 100v8M192 92v8M172 100h40M172 100v8M212 100v8"/>
+            <rect class="a-hero" x="86" y="14" width="68" height="30" rx="8"/>
+            <circle cx="101" cy="29" r="7" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3"/>
+            <circle cx="101" cy="29" r="7" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="31 44" stroke-linecap="round" transform="rotate(-90 101 29)"/>
+            <rect x="113" y="23" width="32" height="4" rx="2" fill="#fff"/><rect x="113" y="31" width="20" height="3" rx="1.5" fill="#fff" fill-opacity=".6"/>
+            <g class="a-cards"><rect x="18" y="62" width="60" height="30" rx="7"/><rect x="90" y="62" width="60" height="30" rx="7"/><rect x="162" y="62" width="60" height="30" rx="7"/>
+              <rect x="12" y="108" width="32" height="24" rx="6"/><rect x="52" y="108" width="32" height="24" rx="6"/><rect x="156" y="108" width="32" height="24" rx="6"/><rect x="196" y="108" width="32" height="24" rx="6"/></g>
+            <g class="a-ring-bg"><circle cx="32" cy="77" r="6"/><circle cx="104" cy="77" r="6"/><circle cx="176" cy="77" r="6"/></g>
+            <g class="a-ring"><circle cx="32" cy="77" r="6" stroke-dasharray="25 38" transform="rotate(-90 32 77)"/><circle cx="104" cy="77" r="6" stroke-dasharray="14 38" transform="rotate(-90 104 77)"/><circle cx="176" cy="77" r="6" stroke-dasharray="34 38" transform="rotate(-90 176 77)"/></g>
+            <g class="a-bar"><rect x="44" y="71" width="26" height="4" rx="2"/><rect x="116" y="71" width="26" height="4" rx="2"/><rect x="188" y="71" width="26" height="4" rx="2"/>
+              <rect x="31" y="116" width="9" height="3" rx="1.5"/><rect x="71" y="116" width="9" height="3" rx="1.5"/><rect x="175" y="116" width="9" height="3" rx="1.5"/><rect x="215" y="116" width="9" height="3" rx="1.5"/></g>
+            <g class="a-bar soft"><rect x="44" y="79" width="18" height="3" rx="1.5"/><rect x="116" y="79" width="18" height="3" rx="1.5"/><rect x="188" y="79" width="18" height="3" rx="1.5"/>
+              <rect x="31" y="122" width="6" height="3" rx="1.5"/><rect x="71" y="122" width="6" height="3" rx="1.5"/><rect x="175" y="122" width="6" height="3" rx="1.5"/><rect x="215" y="122" width="6" height="3" rx="1.5"/></g>
+            <g class="a-thumb"><rect x="18" y="114" width="10" height="12" rx="2"/><rect x="58" y="114" width="10" height="12" rx="2"/><rect x="162" y="114" width="10" height="12" rx="2"/><rect x="202" y="114" width="10" height="12" rx="2"/></g>
+          </symbol>
+
+          <!-- Signoff EE: the made-up board assembled. Same layout as Fabcheck's art (USB-C, regulator, MCU, crystal, terminal block) -->
+          <symbol id="art-ee" viewBox="0 0 240 150">
+            <rect class="a-shadow" x="36" y="26" width="176" height="114" rx="8"/>
+            <rect x="30" y="18" width="176" height="114" rx="8" fill="url(#g-pcb)"/>
+            <g fill="#d9b45c"><circle cx="42" cy="30" r="6"/><circle cx="194" cy="30" r="6"/><circle cx="42" cy="120" r="6"/><circle cx="194" cy="120" r="6"/></g><g fill="#0d2a19"><circle cx="42" cy="30" r="3"/><circle cx="194" cy="30" r="3"/><circle cx="42" cy="120" r="3"/><circle cx="194" cy="120" r="3"/></g>
+            <path d="M54 65h2V41 M56 48h9v-3 M56 33v-6 M77 46v2h23v6 M86 48v-7 M86 33v-6 M71 46v6 M54 71H92 M54 77H92 M54 83h7 M125 50v4 M125 40v-5 M100 94v3 M100 107v5 M115 94v6 M120 94v3h6v3 M114 108v3 M126 108v3 M114 121v3h12v-3 M120 124v2 M132 61h12l11-11h30 M132 66h8l2-2h4 M156 64h29 M132 76h8l2 2h4 M156 78h29 M132 86h12l6 6h35 M92 86h-10l-10 10 M72 104v5 M72 118v4" fill="none" stroke="#5cc282" stroke-opacity=".6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <g fill="#4fb377"><circle cx="56" cy="26" r="2.4"/><circle cx="86" cy="26" r="2.4"/><circle cx="71" cy="53" r="2.4"/><circle cx="125" cy="34" r="2.4"/><circle cx="100" cy="113" r="2.4"/><circle cx="120" cy="127" r="2.4"/><circle cx="61" cy="83" r="2.4"/><circle cx="72" cy="123" r="2.4"/></g><g fill="#1f5c39"><circle cx="56" cy="26" r="1"/><circle cx="86" cy="26" r="1"/><circle cx="71" cy="53" r="1"/><circle cx="125" cy="34" r="1"/><circle cx="100" cy="113" r="1"/><circle cx="120" cy="127" r="1"/><circle cx="61" cy="83" r="1"/><circle cx="72" cy="123" r="1"/></g>
+            <g fill="#d9b45c"><rect x="54" y="32" width="4" height="3"/><rect x="54" y="39" width="4" height="3"/><rect x="84" y="32" width="4" height="3"/><rect x="84" y="39" width="4" height="3"/><rect x="123" y="40" width="4" height="3"/><rect x="123" y="47" width="4" height="3"/><rect x="98" y="97" width="4" height="3"/><rect x="98" y="104" width="4" height="3"/><rect x="112" y="111" width="4" height="3"/><rect x="112" y="118" width="4" height="3"/><rect x="124" y="111" width="4" height="3"/><rect x="124" y="118" width="4" height="3"/><rect x="146" y="62" width="3" height="4"/><rect x="153" y="62" width="3" height="4"/><rect x="146" y="76" width="3" height="4"/><rect x="153" y="76" width="3" height="4"/><rect x="70" y="95" width="4" height="3"/><rect x="70" y="102" width="4" height="3"/><rect x="70" y="108" width="4" height="3"/><rect x="70" y="115" width="4" height="3"/><rect x="110.5" y="99" width="6" height="9"/><rect x="123.5" y="99" width="6" height="9"/><rect x="48" y="63.5" width="6" height="3"/><rect x="48" y="69.5" width="6" height="3"/><rect x="48" y="75.5" width="6" height="3"/><rect x="48" y="81.5" width="6" height="3"/><rect x="63.5" y="41" width="3" height="5"/><rect x="69.5" y="41" width="3" height="5"/><rect x="75.5" y="41" width="3" height="5"/><circle cx="38" cy="56" r="3.5"/><circle cx="38" cy="92" r="3.5"/></g>
+            <g fill="#c9ccd1"><rect x="54.4" y="32.5" width="3.2" height="9"/><rect x="84.4" y="32.5" width="3.2" height="9"/><rect x="123.4" y="40.5" width="3.2" height="9"/><rect x="98.4" y="97.5" width="3.2" height="9"/><rect x="112.4" y="111.5" width="3.2" height="9"/><rect x="124.4" y="111.5" width="3.2" height="9"/><rect x="146.5" y="62.4" width="9" height="3.2"/><rect x="146.5" y="76.4" width="9" height="3.2"/><rect x="70.4" y="95.5" width="3.2" height="9"/><rect x="70.4" y="108.5" width="3.2" height="9"/></g>
+            <g fill="#c8ab80"><rect x="54.4" y="34.4" width="3.2" height="5.2"/><rect x="84.4" y="34.4" width="3.2" height="5.2"/><rect x="123.4" y="42.4" width="3.2" height="5.2"/><rect x="98.4" y="99.4" width="3.2" height="5.2"/><rect x="112.4" y="113.4" width="3.2" height="5.2"/><rect x="124.4" y="113.4" width="3.2" height="5.2"/></g>
+            <g fill="#1d1f22"><rect x="148.4" y="62.4" width="5.2" height="3.2"/><rect x="148.4" y="76.4" width="5.2" height="3.2"/><rect x="70.4" y="97.4" width="3.2" height="5.2"/></g>
+            <g fill="#eef4e6"><rect x="70.4" y="110.4" width="3.2" height="5.2"/></g>
+            <circle cx="72" cy="113" r="1.6" fill="#9be15d"/>
+            <g fill="#c9ccd1"><rect x="64" y="25" width="14" height="6"/><rect x="64" y="39" width="2" height="6"/><rect x="70" y="39" width="2" height="6"/><rect x="76" y="39" width="2" height="6"/></g>
+            <rect x="62" y="30" width="18" height="11" rx="1.5" fill="#14181b"/>
+            <path d="M99 56h28 M99 92h28 M94 60v28 M130 60v28" stroke="#c9ccd1" stroke-width="4" stroke-dasharray="2 3"/>
+            <rect x="96" y="58" width="32" height="32" rx="2" fill="#14181b"/>
+            <circle cx="101" cy="63" r="1.6" fill="#4a4f55"/>
+            <rect x="112" y="100" width="16" height="7" rx="1.5" fill="#c9ccd1"/><rect x="114" y="101.5" width="12" height="4" rx="1" fill="#a7adb5"/>
+            <rect x="24" y="58" width="23" height="32" rx="3" fill="#b4bac2" stroke="#6d747c"/>
+            <rect x="24" y="64" width="4" height="20" rx="1.5" fill="#2d3237"/><path d="M32 62h12" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="178" y="42" width="24" height="58" rx="3" fill="#2f6fd6"/>
+            <g fill="#a9c4ef" stroke="#1d4fa0" stroke-width="1.5"><circle cx="190" cy="50" r="4.5"/><circle cx="190" cy="64" r="4.5"/><circle cx="190" cy="78" r="4.5"/><circle cx="190" cy="92" r="4.5"/></g>
+            <path d="M187 53l6-6 M187 67l6-6 M187 81l6-6 M187 95l6-6" stroke="#1d4fa0" stroke-width="1.5"/>
+            <g fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1"><path d="M90 52h4M90 52v4"/><rect x="108.5" y="97.5" width="23" height="12"/></g>
+            <rect x="146" y="118" width="32" height="3" rx="1.5" fill="#fff" fill-opacity=".75"/><rect x="146" y="124" width="18" height="2.5" rx="1.25" fill="#fff" fill-opacity=".45"/>
+            <circle class="a-badge" cx="206" cy="18" r="14"/>
+            <path d="M199.5 18l4.5 4.5 8.5-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </symbol>
+
+          <!-- Signoff ME: an enclosure, with its parting line and a dimension -->
+          <symbol id="art-me" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="122" cy="134" rx="74" ry="9"/>
+            <path class="a-iso-t" d="M120 22l68 34-68 34-68-34z"/>
+            <path class="a-iso-l" d="M52 56l68 34v40l-68-34z"/>
+            <path class="a-iso-r" d="M120 90l68-34v40l-68 34z"/>
+            <path class="a-edge" d="M52 66l68 34 68-34"/>
+            <path d="M116 40l36 18-24 12-36-18z" fill="#0f2226"/>
+            <path class="a-glow" d="M112 50l16 8M106 53l8 4"/>
+            <path class="a-edge" d="M140 102l14-7M140 109l14-7M140 116l14-7M162 91l14-7M162 98l14-7"/>
+            <path class="a-dim" d="M36 58v38M32 58h8M32 96h8"/>
+          </symbol>
+
+          <!-- Signoff FW: a microcontroller in front of its code -->
+          <symbol id="art-fw" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="126" cy="136" rx="86" ry="8"/>
+            <rect x="84" y="16" width="134" height="104" rx="10" fill="#0f2226"/>
+            <g fill="#4a6468"><circle cx="97" cy="28" r="3"/><circle cx="107" cy="28" r="3"/><circle cx="117" cy="28" r="3"/></g>
+            <g fill="#7fd8e2"><rect x="128" y="44" width="34" height="5" rx="2.5"/><rect x="140" y="68" width="22" height="5" rx="2.5"/></g>
+            <g fill="#5cc282"><rect x="168" y="44" width="30" height="5" rx="2.5"/><rect x="152" y="80" width="40" height="5" rx="2.5"/></g>
+            <g fill="#c9ccd1" fill-opacity=".55"><rect x="128" y="56" width="58" height="5" rx="2.5"/><rect x="140" y="92" width="30" height="5" rx="2.5"/><rect x="128" y="104" width="12" height="5" rx="2.5"/></g>
+            <rect x="168" y="68" width="26" height="5" rx="2.5" fill="#ff9f0a"/>
+            <rect x="122" y="77" width="88" height="11" rx="3" fill="#ff453a" fill-opacity=".18"/>
+            <rect x="30" y="60" width="64" height="64" rx="6" fill="#14181b"/>
+            <path d="M38 56h48M38 128h48M26 68v48M98 68v48" stroke="#c9ccd1" stroke-width="5" stroke-dasharray="2.5 4.5"/>
+            <circle cx="40" cy="70" r="2.4" fill="#4a4f55"/>
+            <path d="M54 84l-8 8 8 8M70 84l8 8-8 8" fill="none" stroke="#7fd8e2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle class="a-badge" cx="214" cy="20" r="14"/>
+            <path d="M207.5 20l4.5 4.5 8.5-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </symbol>
+
+          <!-- Fabcheck: the same board as CAD, copper, drills, and silkscreen, with findings marked where they are -->
+          <symbol id="art-fabcheck" viewBox="0 0 240 150">
+            <rect class="a-shadow" x="36" y="26" width="176" height="114" rx="8"/>
+            <rect x="30" y="18" width="176" height="114" rx="8" fill="url(#g-fab)" stroke="#2c4a3a"/>
+            <g fill="none" stroke="#dfe7e2" stroke-opacity=".4" stroke-width="1"><rect x="96" y="58" width="32" height="32"/><rect x="62" y="30" width="18" height="11"/><rect x="108.5" y="97.5" width="23" height="12"/><rect x="178" y="42" width="24" height="58"/><rect x="24" y="58" width="23" height="32"/><rect x="52.5" y="30.5" width="7" height="13"/><rect x="82.5" y="30.5" width="7" height="13"/><rect x="121.5" y="38.5" width="7" height="13"/><rect x="96.5" y="95.5" width="7" height="13"/><rect x="110.5" y="109.5" width="7" height="13"/><rect x="122.5" y="109.5" width="7" height="13"/><rect x="144.5" y="60.5" width="13" height="7"/><rect x="144.5" y="74.5" width="13" height="7"/><rect x="68.5" y="93.5" width="7" height="13"/><rect x="68.5" y="106.5" width="7" height="13"/></g>
+            <g fill="#dfe7e2" fill-opacity=".5" font-size="7" font-family="ui-monospace,monospace" text-anchor="middle"><text x="112" y="77">U1</text><text x="190" y="112">J2</text><text x="36" y="102">J1</text></g>
+            <circle cx="89" cy="53" r="1.4" fill="#dfe7e2" fill-opacity=".6"/>
+            <path d="M54 65h2V41 M56 48h9v-3 M56 33v-6 M77 46v2h23v6 M86 48v-7 M86 33v-6 M71 46v6 M54 71H92 M54 77H92 M54 83h7 M125 50v4 M125 40v-5 M100 94v3 M100 107v5 M115 94v6 M120 94v3h6v3 M114 108v3 M126 108v3 M114 121v3h12v-3 M120 124v2 M132 61h12l11-11h30 M132 66h8l2-2h4 M156 64h29 M132 76h8l2 2h4 M156 78h29 M132 86h12l6 6h35 M92 86h-10l-10 10 M72 104v5 M72 118v4" fill="none" stroke="#c4843c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <g fill="#d99a52"><rect x="54" y="32" width="4" height="3"/><rect x="54" y="39" width="4" height="3"/><rect x="84" y="32" width="4" height="3"/><rect x="84" y="39" width="4" height="3"/><rect x="123" y="40" width="4" height="3"/><rect x="123" y="47" width="4" height="3"/><rect x="98" y="97" width="4" height="3"/><rect x="98" y="104" width="4" height="3"/><rect x="112" y="111" width="4" height="3"/><rect x="112" y="118" width="4" height="3"/><rect x="124" y="111" width="4" height="3"/><rect x="124" y="118" width="4" height="3"/><rect x="146" y="62" width="3" height="4"/><rect x="153" y="62" width="3" height="4"/><rect x="146" y="76" width="3" height="4"/><rect x="153" y="76" width="3" height="4"/><rect x="70" y="95" width="4" height="3"/><rect x="70" y="102" width="4" height="3"/><rect x="70" y="108" width="4" height="3"/><rect x="70" y="115" width="4" height="3"/><rect x="110.5" y="99" width="6" height="9"/><rect x="123.5" y="99" width="6" height="9"/><rect x="64" y="24" width="14" height="6"/><rect x="48" y="63.5" width="6" height="3"/><rect x="48" y="69.5" width="6" height="3"/><rect x="48" y="75.5" width="6" height="3"/><rect x="48" y="81.5" width="6" height="3"/><rect x="63.5" y="41" width="3" height="5"/><rect x="69.5" y="41" width="3" height="5"/><rect x="75.5" y="41" width="3" height="5"/><circle cx="190" cy="50" r="5"/><circle cx="190" cy="64" r="5"/><circle cx="190" cy="78" r="5"/><circle cx="190" cy="92" r="5"/><circle cx="38" cy="56" r="5"/><circle cx="38" cy="92" r="5"/></g>
+            <path d="M99 56h28 M99 92h28 M94 60v28 M130 60v28" stroke="#d99a52" stroke-width="5" stroke-dasharray="2 3"/>
+            <g fill="#c4843c"><circle cx="56" cy="26" r="3"/><circle cx="86" cy="26" r="3"/><circle cx="71" cy="53" r="3"/><circle cx="125" cy="34" r="3"/><circle cx="100" cy="113" r="3"/><circle cx="120" cy="127" r="3"/><circle cx="61" cy="83" r="3"/><circle cx="72" cy="123" r="3"/></g>
+            <g fill="#0b1510"><circle cx="56" cy="26" r="1.3"/><circle cx="86" cy="26" r="1.3"/><circle cx="71" cy="53" r="1.3"/><circle cx="125" cy="34" r="1.3"/><circle cx="100" cy="113" r="1.3"/><circle cx="120" cy="127" r="1.3"/><circle cx="61" cy="83" r="1.3"/><circle cx="72" cy="123" r="1.3"/><circle cx="190" cy="50" r="2.2"/><circle cx="190" cy="64" r="2.2"/><circle cx="190" cy="78" r="2.2"/><circle cx="190" cy="92" r="2.2"/><circle cx="38" cy="56" r="1.8"/><circle cx="38" cy="92" r="1.8"/></g>
+            <g fill="#0b1510" stroke="#7d8a84" stroke-width="1.2"><circle cx="42" cy="30" r="4"/><circle cx="194" cy="30" r="4"/><circle cx="42" cy="120" r="4"/><circle cx="194" cy="120" r="4"/></g>
+            <circle class="a-pulse" cx="147" cy="60" r="9"/>
+            <circle cx="147" cy="60" r="9" fill="#ff453a" fill-opacity=".18" stroke="#ff453a" stroke-width="2"/>
+            <path d="M147 45v-5M147 75v5M132 60h-5M162 60h5" stroke="#ff453a" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="126" cy="104" r="9" fill="#ffd60a" fill-opacity=".16" stroke="#ffd60a" stroke-width="2" stroke-dasharray="3 2.5"/>
+          </symbol>
+
+          <!-- Pincheck: a schematic sheet, an IC with its pins wired out, one pin's net flagged and a warning on another (made up) -->
+          <symbol id="art-pincheck" viewBox="0 0 240 150">
+            <rect class="a-shadow" x="30" y="24" width="186" height="116" rx="6"/>
+            <rect x="24" y="16" width="186" height="116" rx="6" fill="#f7f4ea" stroke="#c9c2ad"/>
+            <path d="M24 120h186M170 120v12" stroke="#c9c2ad"/>
+            <rect x="176" y="124" width="26" height="3" rx="1.5" fill="#8a8370" fill-opacity=".6"/>
+            <g fill="none" stroke="#7a1c14" stroke-width="2"><rect x="92" y="34" width="50" height="72" rx="2"/></g>
+            <rect x="92" y="34" width="50" height="72" rx="2" fill="#fff6d6" fill-opacity=".7"/>
+            <g stroke="#7a1c14" stroke-width="2" stroke-linecap="round"><path d="M80 46h12M80 60h12M80 74h12M80 88h12M142 46h12M142 60h12M142 74h12M142 88h12"/></g>
+            <g fill="none" stroke="#1f6f3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M80 46H50v-12M80 60H58M80 88H44v16M154 46h36M154 74h20v22M154 88h14"/><path d="M42 104h4M40 108h8M38 112h12"/></g>
+            <g fill="#1f6f3a"><circle cx="58" cy="60" r="2.4"/><circle cx="168" cy="88" r="2.4"/></g>
+            <path d="M44 34h12" stroke="#1f6f3a" stroke-width="2" stroke-linecap="round"/>
+            <g fill="#8a8370" fill-opacity=".7"><rect x="100" y="42" width="16" height="3" rx="1.5"/><rect x="100" y="56" width="12" height="3" rx="1.5"/><rect x="100" y="70" width="14" height="3" rx="1.5"/><rect x="100" y="84" width="10" height="3" rx="1.5"/><rect x="120" y="96" width="14" height="3" rx="1.5"/></g>
+            <rect x="170" y="96" width="8" height="12" rx="1" fill="none" stroke="#1f6f3a" stroke-width="2"/>
+            <circle class="a-pulse" cx="154" cy="60" r="9"/>
+            <circle cx="154" cy="60" r="9" fill="#ff453a" fill-opacity=".18" stroke="#ff453a" stroke-width="2"/>
+            <circle cx="80" cy="74" r="8" fill="#ffd60a" fill-opacity=".16" stroke="#c9a400" stroke-width="2" stroke-dasharray="3 2.5"/>
+          </symbol>
+
+          <!-- Partcheck: a bracket shaded for draft, with the pull direction -->
+          <symbol id="art-partcheck" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="114" cy="122" rx="66" ry="9"/>
+            <path d="M72 82.4L132 112.4V118L72 88z" fill="url(#g-mid)"/>
+            <path d="M168 94.4L132 112.4V118L168 100z" fill="#ff9f0a"/>
+            <path d="M116 68.4L168 94.4L132 112.4L80 86.4z" fill="url(#g-ok)"/>
+            <path d="M72 48.8L80 52.8V86.4L72 82.4z" fill="url(#g-mid)"/>
+            <path d="M116 34.8L80 52.8V86.4L116 68.4z" fill="url(#g-hot)"/>
+            <path d="M108 30.8L116 34.8L80 52.8L72 48.8z" fill="#9be15d"/>
+            <path class="a-edge strong" d="M72 48.8L108 30.8l8 4v33.6l52 26V100l-36 18-60-30zM80 52.8v33.6l52 26M80 86.4l-8-4"/>
+            <ellipse cx="124" cy="90.5" rx="8" ry="4" fill="#0f2226" fill-opacity=".75"/>
+            <ellipse cx="98" cy="58" rx="4" ry="7" fill="#7a1c14" fill-opacity=".65" transform="rotate(-28 98 58)"/>
+            <path class="a-dim arrow" d="M186 70V22M180 30l6-8 6 8"/>
+            <rect x="160" y="132" width="56" height="5" rx="2.5" fill="url(#g-scale)"/>
+          </symbol>
+
+          <!-- Loom: two connector tables and a cable box, wires running through it (made up) -->
+          <symbol id="art-loom" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="120" cy="128" rx="96" ry="7"/>
+            <g fill="none" stroke-linecap="round" stroke-width="5" stroke="var(--art-edge)" stroke-opacity=".5">
+              <path d="M66 52C90 52 90 62 104 62h32c14 0 14-20 38-20"/><path d="M66 66C90 66 90 76 104 76h32c14 0 14-20 38-20"/>
+              <path d="M66 80C90 80 90 90 104 90h32c14 0 14-20 38-20"/><path d="M66 94C90 94 90 104 104 104h32c14 0 14-20 38-20"/>
+            </g>
+            <g fill="none" stroke-linecap="round" stroke-width="3">
+              <path stroke="#ff453a" d="M66 52C90 52 90 62 104 62h32c14 0 14-20 38-20"/><path stroke="#8e8e93" d="M66 66C90 66 90 76 104 76h32c14 0 14-20 38-20"/>
+              <path stroke="#0a84ff" d="M66 80C90 80 90 90 104 90h32c14 0 14-20 38-20"/><path stroke="#ffd60a" d="M66 94C90 94 90 104 104 104h32c14 0 14-20 38-20"/>
+            </g>
+            <rect x="24" y="30" width="42" height="74" rx="3" fill="var(--art-iso-t)" stroke="var(--art-edge)" stroke-opacity=".55"/>
+            <rect x="24" y="30" width="42" height="12" rx="3" fill="#00727f" fill-opacity=".85"/>
+            <path class="a-edge strong" d="M24 59h42M24 73h42M24 87h42M52 45v59"/>
+            <rect x="174" y="20" width="42" height="74" rx="3" fill="var(--art-iso-t)" stroke="var(--art-edge)" stroke-opacity=".55"/>
+            <rect x="174" y="20" width="42" height="12" rx="3" fill="#00727f" fill-opacity=".85"/>
+            <path class="a-edge strong" d="M174 49h42M174 63h42M174 77h42M188 35v59"/>
+            <rect x="104" y="46" width="32" height="66" rx="2" fill="var(--art-iso-t)" fill-opacity=".35" stroke="var(--art-edge)" stroke-opacity=".6" stroke-dasharray="4 3"/>
+            <rect x="104" y="46" width="32" height="10" fill="#00727f" fill-opacity=".85"/>
+          </symbol>
+
+          <!-- Flasher: a board on a USB cable, its chip lit, and a progress bar filling (made up) -->
+          <symbol id="art-flasher" viewBox="0 0 240 150">
+            <ellipse class="a-shadow" cx="120" cy="128" rx="96" ry="7"/>
+            <path d="M24 100c22 0 30-14 52-14h22" fill="none" stroke="var(--art-edge)" stroke-opacity=".55" stroke-width="7" stroke-linecap="round"/>
+            <path d="M24 100c22 0 30-14 52-14h22" fill="none" stroke="#8e8e93" stroke-width="4" stroke-linecap="round"/>
+            <rect x="96" y="80" width="12" height="12" rx="2" fill="var(--art-iso-t)" stroke="var(--art-edge)" stroke-opacity=".6"/>
+            <rect x="106" y="54" width="112" height="64" rx="5" fill="#0f5c3a" fill-opacity=".85" stroke="var(--art-edge)" stroke-opacity=".55"/>
+            <path d="M118 66h18M118 106h30M200 66v40" stroke="#ffd60a" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/>
+            <rect x="148" y="68" width="34" height="34" rx="3" fill="#1d1d1f" stroke="var(--art-edge)" stroke-opacity=".6"/>
+            <path d="M144 74h4M144 82h4M144 90h4M144 98h4M182 74h4M182 82h4M182 90h4M182 98h4" stroke="var(--art-edge)" stroke-opacity=".7" stroke-width="2"/>
+            <path d="M167.5 75l-6 9.5h7l-4.5 9.5" fill="none" stroke="#3fc1cf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="106" y="28" width="112" height="8" rx="4" fill="var(--art-iso-t)" stroke="var(--art-edge)" stroke-opacity=".5"/>
+            <rect x="106" y="28" width="74" height="8" rx="4" fill="#00727f" fill-opacity=".9"/>
+          </symbol>
+        </defs>
+</svg>

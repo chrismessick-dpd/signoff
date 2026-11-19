@@ -14,7 +14,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 PAGES = [ROOT / "index.html", ROOT / "auth.html"]
-ASSET_URL = re.compile(r'((?:src|href)="assets/[^"?]+)(\?v=[0-9a-f]*)?(")')
+ASSET_URL = re.compile(r'((?:src|href)="assets/[^"?#]+)(\?v=[0-9a-f]*)?((?:#[^"]*)?")')   # a #fragment (tool-art.svg#art-…) stays after ?v=
 
 
 def read(page):

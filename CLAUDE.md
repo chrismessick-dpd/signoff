@@ -53,6 +53,9 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
     starts on the panel doesn't scroll the page.
   - `lab/fourier.html` shows two panels under the tools' CSP. Fabcheck, Partcheck, and Loom allow inline
     styles too, so the injected stylesheet works in every tool.
+- **Tool art** (2026-11-19): the picker's SVG symbols live in `assets/tool-art.svg` (with their `.a-*` styles),
+  used by `<use href="assets/tool-art.svg#art-…">` here and by Signoff EE's home page. `stamp_version.py` keeps a
+  `#fragment` after `?v=`. The theme variables (`--art-iso-t`, …) stay on `:root` in each page's CSS.
 - **Demo mode.** `?demo` appends `?demo` to every `[data-tool]` link. Each tile, Open button and
   sidebar link needs `data-tool`; the panels' "Try the demo" links must not have it (they're
   `data-internal`, hidden in demo mode).
