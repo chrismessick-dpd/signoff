@@ -6,6 +6,7 @@
 
    SignoffStructure.mount(root, opts) fills root (styles: structure.css, all under .ss). Options:
      img       folder of PL's demo pictures (default '../signoff_pl/assets/demo-previews/', from the hub)
+     meImg     folder of Signoff ME's demo pictures (default: img with me_design_review in place of signoff_pl)
      views     the view ids to offer, in order (default all: graph, project, life, store, matrix)
      theme     true to draw an Auto / Light / Dark switch (the hub's lab; PL has its own)
      storeKey  localStorage key for the last view
@@ -29,6 +30,8 @@
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
     var SVGNS = 'http://www.w3.org/2000/svg';
     var IMG = opts.img || '../signoff_pl/assets/demo-previews/';
+    // The ME demo parts' pictures are Signoff ME's (Partcheck's Send of the demo packages), beside PL's folder.
+    var ME_IMG = opts.meImg || IMG.replace(/signoff_pl\/assets\/demo-previews\/$/, 'me_design_review/assets/demo-previews/');
     var REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ---- Demo numbers (PL's snapshot, else these) ---------------------------------------------------
@@ -68,7 +71,7 @@
       hub: '<svg viewBox="0 0 59.21 98.68"><path d="M0 0h18.19v41.88H0zM0 56.79h18.19v41.88H0zM18.2 41.89h1.59v14.91H18.2zM19.79 0v41.89l24.96-6.63v28.16L19.79 56.79v41.89l39.42-10.47V10.47z" fill="#fff"/></svg>'
     };
     function mark(id) { return '<span class="mark">' + MARKS[id] + '</span>'; }
-    function img(file, alt) { return '<img src="' + IMG + file + '" alt="' + esc(alt || '') + '" loading="lazy">'; }
+    function img(file, alt) { return '<img src="' + (/^mdemo/.test(file) ? ME_IMG : IMG) + file + '" alt="' + esc(alt || '') + '" loading="lazy">'; }
 
     var ART = {
       fw: '<svg viewBox="0 0 120 60"><text class="pa-fw" x="60" y="40" text-anchor="middle">{ }</text></svg>',
@@ -88,7 +91,7 @@
       fw: { name: 'Signoff FW', role: 'Firmware reviews and releases', art: '<div class="art">' + ART.fw + '</div>', repo: 'fw_design_review_data', note: 'Prototype; engine copied from EE.' },
       fabcheck: { name: 'Fabcheck', role: 'Fab package DFM', art: '<div class="art">' + img('pdemo11-top.webp', 'Display board render') + '</div>', repo: '(the board’s EE repo)', note: 'Writes only to project repos.' },
       pincheck: { name: 'Pincheck', role: 'Schematic against a part library', art: '<div class="art">' + ART.pincheck + '</div>', repo: 'pincheck_data', note: 'Prototype.' },
-      partcheck: { name: 'Partcheck', role: 'Mechanical package check', art: '<div class="art">' + img('mdemo13-iso.webp', 'Wall Bracket') + '</div>', repo: '(the part’s ME repo)', note: 'Prototype; its send is on branch me-send.', badge: 'branch' },
+      partcheck: { name: 'Partcheck', role: 'Mechanical package check', art: '<div class="art">' + img('mdemo13-iso.webp', 'Wall Bracket') + '</div>', repo: '(the part’s ME repo)', note: 'Prototype.' },
       loom: { name: 'Loom', role: 'Harness drawings and systems', art: '<div class="art">' + ART.loom + '</div>', repo: 'loom_data', note: 'Prototype.' },
       flasher: { name: 'Flasher', role: 'Firmware onto boards from the browser', art: '<div class="art">' + ART.flasher + '</div>', repo: 'flasher_data', note: 'Prototype.' },
       hub: { name: 'Hub', role: 'Sign in, People & access, and Tickets', art: '<div class="art">' + ART.hub + '</div>', repo: 'signoff_tickets', note: 'Shared by every tool.' }
@@ -128,9 +131,9 @@
         where: 'The board’s review repo, one commit.', how: 'Send to Signoff EE in Fabcheck. EE’s Revisions tab then tags a run as a revision (B.1 in the demo).' },
       { id: 'ee-fab', from: 'ee', to: 'fabcheck', kind: 'open', label: 'Open in Fabcheck',
         what: ['A stored run, its parts joined', 'Lands on the CAM viewer at the finding'], where: 'IndexedDB dovetail-handoff.', how: 'Open in Fabcheck from a finding or from Revisions.' },
-      { id: 'part-me', from: 'partcheck', to: 'me', kind: 'send', label: 'Part views and mesh', branch: true,
+      { id: 'part-me', from: 'partcheck', to: 'me', kind: 'send', label: 'Part views and mesh',
         what: ['Four views of each part (front, right, top, and iso)', 'A PLM1 mesh for PL’s Exploded and 3D views'],
-        where: 'partcheck/<review>/preview/ in the part’s ME repo.', how: 'Send to Signoff ME in Partcheck. Not merged yet: branch me-send.' },
+        where: 'partcheck/<review>/preview/ in the part’s ME repo.', how: 'Send to Signoff ME in Partcheck.' },
       { id: 'ee-pl', from: 'ee', to: 'pl', kind: 'summary', label: 'Board summary',
         what: ['Progress (' + M7.pct + '% on the Main PCBA) and open issues by severity', 'Requirements (reqList), revisions (' + (M7.revs.join(', ') || 'none') + '), and rework counts', 'Recent discussion (the six latest comments) and Scribe gists'],
         where: 'project.summary in each review file. PL reads only meta and summary.', how: 'Written at every sync where someone edited the review; never merged, always derived.' },
@@ -187,7 +190,7 @@
       { t: 'Check the fab package', x: 'Fabcheck runs the package; Send stores the run, the zip, and pictures in the board’s repo. EE tags it as revision B.1, and Open in Fabcheck takes any finding back to the CAM viewer.', flows: ['fab-ee', 'ee-fab'], arts: ['fab', 'revb'], nodes: ['m7', 'm11'] },
       { t: 'Pictures for the whole product', x: 'The run’s renders and board size reach PL through the EE review, for the Part’s tile and the 3D Exploded view.', flows: ['fab-pl'], arts: ['fab', 'whole'], nodes: ['m7', 'm11', 'prod'] },
       { t: 'Wire it', x: 'Loom’s From a board reads revision B.1’s connectors. The thermostat harness starts at Main PCBA J1 (AC_N, AC_L) and becomes a Part in PL.', flows: ['ee-loom', 'loom-pl'], arts: ['revb', 'har', 'whole'], nodes: ['har', 'm7'] },
-      { t: 'Mechanical parts', x: 'Partcheck sends the enclosure’s views and mesh into its ME review (still on a branch). ME’s summary carries the mass evidence PL totals to 205.2 g.', flows: ['part-me', 'me-pl'], arts: ['pcv', 'enc', 'whole'], nodes: ['enc', 'brk', 'prod'] },
+      { t: 'Mechanical parts', x: 'Partcheck sends the enclosure’s views and mesh into its ME review. ME’s summary carries the mass evidence PL totals to 205.2 g.', flows: ['part-me', 'me-pl'], arts: ['pcv', 'enc', 'whole'], nodes: ['enc', 'brk', 'prod'] },
       { t: 'Release firmware', x: 'Signoff FW publishes release 0.9.0. Flasher lists it and writes it to a Main PCBA over USB; PL shows it under Firmware releases.', flows: ['fw-flash', 'fw-pl'], arts: ['fwrev', 'fwr', 'fl', 'whole'], nodes: ['fw', 'm7'] },
       { t: 'Bring-up', x: 'EE’s Rework list tracks the board changes on the bench. Its counts ride in the summary.', flows: ['ee-pl'], arts: ['revb', 'rw', 'whole'], nodes: ['m7'] },
       { t: 'One place to see it all', x: 'PL rolls every design up: progress, open issues, requirements, discussion, revisions, and releases, with the tools still the home of their own data.', flows: ['ee-pl', 'me-pl', 'fw-pl', 'loom-pl', 'fab-pl'], arts: ['whole'], nodes: ['prod', 'm7', 'm11', 'enc', 'brk', 'fw', 'har'] }
@@ -550,7 +553,7 @@
       ['ee', 'r-ee', 'write', 'Reviews'], ['ee', 'r-pl', 'read', 'Placeholders'], ['me', 'r-me', 'write', 'Reviews'], ['me', 'r-pl', 'read', 'Placeholders'],
       ['fw', 'r-fw', 'write', 'Reviews and releases'], ['fw', 'r-pl', 'read', 'Placeholders'],
       ['fabcheck', 'r-ee', 'write', 'Runs and packages'], ['pincheck', 'r-ee', 'write', 'Runs'], ['pincheck', 'r-pin', 'write', 'Library and scans'],
-      ['partcheck', 'r-me', 'write', 'Views and mesh (branch)', true],
+      ['partcheck', 'r-me', 'write', 'Views and mesh'],
       ['loom', 'r-loom', 'write', 'Harnesses and systems'], ['loom', 'r-ee', 'read', 'Fab packages'], ['loom', 'r-pl', 'read', 'Placeholders'],
       ['flasher', 'r-flash', 'read', 'Firmware list'], ['flasher', 'r-fw', 'read', 'Releases'],
       ['hub', 'r-tk', 'write', 'Tickets'],
@@ -630,7 +633,7 @@
       var h = '<h3>Lines</h3><div class="legend">';
       var K = st.view === 'project' ? PROJ_KINDS : st.view === 'store' ? STORE_KINDS : KINDS;
       Object.keys(K).forEach(function (k) { h += kindSample(k, K) + '<span>' + esc(K[k].label) + '</span>'; });
-      return h + '</div><p class="note" style="margin-top:8px">Lines differ by dash and arrowhead, not color. A faded line is work on a branch. The lit line is teal and heavier, with beads moving the way the data goes.</p>';
+      return h + '</div><p class="note" style="margin-top:8px">Lines differ by dash and arrowhead, not color. A faded line would be work still on a branch. The lit line is teal and heavier, with beads moving the way the data goes.</p>';
     }
     function renderSide() {
       var s = st.sel, h = '';
