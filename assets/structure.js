@@ -71,7 +71,9 @@
       hub: '<svg viewBox="0 0 59.21 98.68"><path d="M0 0h18.19v41.88H0zM0 56.79h18.19v41.88H0zM18.2 41.89h1.59v14.91H18.2zM19.79 0v41.89l24.96-6.63v28.16L19.79 56.79v41.89l39.42-10.47V10.47z" fill="#fff"/></svg>'
     };
     function mark(id) { return '<span class="mark">' + MARKS[id] + '</span>'; }
-    function img(file, alt) { return '<img src="' + (/^mdemo/.test(file) ? ME_IMG : IMG) + file + '" alt="' + esc(alt || '') + '" loading="lazy">'; }
+    // Signoff ME's demo keeps each review's whole stored folder (assets/demo-previews/<id>/); the hero parts' iso views.
+    var ME_FILES = { 'mdemo5-iso.webp': 'mdemo5/2100410-011-iso.webp', 'mdemo13-iso.webp': 'mdemo13/2100410-020-iso.webp' };
+    function img(file, alt) { return '<img src="' + (ME_FILES[file] ? ME_IMG + ME_FILES[file] : IMG + file) + '" alt="' + esc(alt || '') + '" loading="lazy">'; }
 
     var ART = {
       fw: '<svg viewBox="0 0 120 60"><text class="pa-fw" x="60" y="40" text-anchor="middle">{ }</text></svg>',
@@ -133,7 +135,10 @@
         what: ['A stored run, its parts joined', 'Lands on the CAM viewer at the finding'], where: 'IndexedDB dovetail-handoff.', how: 'Open in Fabcheck from a finding or from Revisions.' },
       { id: 'part-me', from: 'partcheck', to: 'me', kind: 'send', label: 'Part views and mesh',
         what: ['Four views of each part (front, right, top, and iso)', 'A PLM1 mesh for PL’s Exploded and 3D views'],
-        where: 'partcheck/<review>/preview/ in the part’s ME repo.', how: 'Send to Signoff ME in Partcheck.' },
+        where: 'partcheck/<review>/preview/ in the part’s ME repo, the one folder of part models that Signoff PL and Signoff ME write too.', how: 'Send to Signoff ME in Partcheck. The latest write of a part number wins.' },
+      { id: 'pl-me-model', from: 'pl', to: 'me', kind: 'send', label: 'Part models',
+        what: ['A STEP attached to an ME Part in PL: its mesh, four views, and the STEP if kept', 'Kept with the review, so Signoff ME shows it (and turns it in 3D) and Partcheck keeps it; Attach a model in ME writes the same folder, which PL reads back'],
+        where: 'partcheck/<review>/preview/ in the part’s ME repo (signoff_pl/docs/part-models.md).', how: 'Attach STEP on a Part linked to an ME review, or Attach a model on ME’s overview.' },
       { id: 'ee-pl', from: 'ee', to: 'pl', kind: 'summary', label: 'Board summary',
         what: ['Progress (' + M7.pct + '% on the Main PCBA) and open issues by severity', 'Requirements (reqList), revisions (' + (M7.revs.join(', ') || 'none') + '), and rework counts', 'Recent discussion (the six latest comments) and Scribe gists'],
         where: 'project.summary in each review file. PL reads only meta and summary.', how: 'Written at every sync where someone edited the review; never merged, always derived.' },
@@ -548,9 +553,9 @@
       { id: 'b-copies', name: 'Each tool’s working copy', text: 'Edits live here until Sync; a reload never loses them.' }
     ];
     var RW = [
-      ['pl', 'r-pl', 'write', 'Projects and models'], ['pl', 'r-ee', 'read', 'Summaries'], ['pl', 'r-me', 'read', 'Summaries'], ['pl', 'r-fw', 'read', 'Summaries'], ['pl', 'r-loom', 'read', 'Harnesses'],
-      ['pl', 'r-ee', 'write', 'Requirements'], ['pl', 'r-me', 'write', 'Requirements'], ['pl', 'r-fw', 'write', 'Requirements'],
-      ['ee', 'r-ee', 'write', 'Reviews'], ['ee', 'r-pl', 'read', 'Placeholders'], ['me', 'r-me', 'write', 'Reviews'], ['me', 'r-pl', 'read', 'Placeholders'],
+      ['pl', 'r-pl', 'write', 'Projects and models'], ['pl', 'r-ee', 'read', 'Summaries'], ['pl', 'r-me', 'read', 'Summaries and part models'], ['pl', 'r-fw', 'read', 'Summaries'], ['pl', 'r-loom', 'read', 'Harnesses'],
+      ['pl', 'r-ee', 'write', 'Requirements'], ['pl', 'r-me', 'write', 'Requirements and part models'], ['pl', 'r-fw', 'write', 'Requirements'],
+      ['ee', 'r-ee', 'write', 'Reviews'], ['ee', 'r-pl', 'read', 'Placeholders'], ['me', 'r-me', 'write', 'Reviews and part models'], ['me', 'r-pl', 'read', 'Placeholders'],
       ['fw', 'r-fw', 'write', 'Reviews and releases'], ['fw', 'r-pl', 'read', 'Placeholders'],
       ['fabcheck', 'r-ee', 'write', 'Runs and packages'], ['pincheck', 'r-ee', 'write', 'Runs'], ['pincheck', 'r-pin', 'write', 'Library and scans'],
       ['partcheck', 'r-me', 'write', 'Views and mesh'],
