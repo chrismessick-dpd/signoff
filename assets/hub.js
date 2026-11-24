@@ -88,7 +88,14 @@
     var navBtn = document.getElementById('nav-btn');
     applyTheme(currentTheme());
     // People & access lives in Signoff EE, whose list decides who's an FTE; the link is for FTEs.
-    function showPeople() { document.getElementById('people-link').hidden = !isFte(); }
+    // Tool Maintenance (the onboarding guide) is for FTEs too.
+    var routed = false; // route() runs once the pages below are set up
+    function showPeople() {
+      var fte = isFte();
+      document.getElementById('people-link').hidden = !fte;
+      var ml = document.getElementById('maint-link');
+      if (ml && ml.hidden === fte) { ml.hidden = !fte; if (routed && location.hash === '#maintenance') route(); }
+    }
     showPeople();
     window.addEventListener('storage', showPeople);
     // The sidebar foot shared with the tools (assets/sidefoot.js): the sign-in pill and Settings.
@@ -150,24 +157,36 @@
       else if (e.key === '[' && !e.ctrlKey && !e.metaKey && !e.altKey && !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) { e.preventDefault(); toggleSidebar(); }
     });
 
-    // Tool Structure (#structure, the sidebar link above People & access): shown in place of the picker,
-    // mounted the first time it shows (it fits the drawing to the page's width then).
-    var structureView = null;
+    // Tool Structure (#structure, the sidebar link above People & access) and Tool Maintenance (#maintenance,
+    // above it, FTEs only): each shown in place of the picker. Structure mounts the first time it shows (it fits
+    // the drawing to the page's width then); Maintenance fetches the guide each time it opens.
+    var structureView = null, PAGES = { structure: 'Tool Structure', maintenance: 'Tool Maintenance' };
     function route() {
-      var on = location.hash === '#structure', home = document.getElementById('home-page'), page = document.getElementById('structure-page');
-      if (!home || !page) return;
-      home.hidden = on; page.hidden = !on;
-      var homeLink = document.querySelector('.side-nav a[href="index.html"]'), link = document.getElementById('structure-link');
-      if (homeLink) { homeLink.classList.toggle('active', !on); if (on) homeLink.removeAttribute('aria-current'); else homeLink.setAttribute('aria-current', 'page'); }
-      if (link) { link.classList.toggle('active', on); if (on) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); }
-      document.getElementById('toolbar-title').textContent = on ? 'Tool Structure' : 'Signoff Hub';
-      if (on && !structureView && window.SignoffStructure) {
-        structureView = window.SignoffStructure.mount(page.querySelector('.structure-root'), { views: ['graph', 'life', 'store', 'matrix'], storeKey: 'signoff.hub.structure.view' });
-      } else if (on && structureView) structureView.render();
+      var want = location.hash.slice(1), home = document.getElementById('home-page');
+      if (want === 'maintenance' && !isFte()) want = '';
+      if (!PAGES[want]) want = '';
+      if (!home) return;
+      home.hidden = !!want;
+      var pageOf = { structure: 'structure-page', maintenance: 'maint-page' }, linkOf = { structure: 'structure-link', maintenance: 'maint-link' };
+      Object.keys(PAGES).forEach(function (k) {
+        var page = document.getElementById(pageOf[k]), link = document.getElementById(linkOf[k]), on = want === k;
+        var was = page && !page.hidden;
+        if (page) page.hidden = !on;
+        if (link) { link.classList.toggle('active', on); if (on) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); }
+        if (on && k === 'structure') {
+          if (!structureView && window.SignoffStructure) structureView = window.SignoffStructure.mount(page.querySelector('.structure-root'), { views: ['graph', 'life', 'store', 'matrix'], storeKey: 'signoff.hub.structure.view' });
+          else if (structureView) structureView.render();
+        }
+        if (on && k === 'maintenance' && !was && window.SignoffMaint) window.SignoffMaint.show(page.querySelector('.maint-root'));
+      });
+      var homeLink = document.querySelector('.side-nav a[href="index.html"]');
+      if (homeLink) { homeLink.classList.toggle('active', !want); if (want) homeLink.removeAttribute('aria-current'); else homeLink.setAttribute('aria-current', 'page'); }
+      document.getElementById('toolbar-title').textContent = PAGES[want] || 'Signoff Hub';
       document.getElementById('main').scrollTop = 0;
     }
     window.addEventListener('hashchange', route);
     route();
+    routed = true;
 
     // The tool picker. A plain click on a tile selects it and shows it on the stage; a click on the
     // tile already selected opens it, so a double-click opens too, and so does Enter on a focused,

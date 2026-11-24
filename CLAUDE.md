@@ -26,6 +26,11 @@ and `assets/hub.css`. It links by relative path to the sibling tool folders: `ee
 - **No top bar** (Chris, 2026-11-13): `#toolbar` is zero height in `hub.css`; it holds only floating round
   buttons, the ⋯ menu (`tickets.js`) at the top right and the show-sidebar button at the top left when the
   sidebar is hidden (the page then gets 56 px of top padding).
+- **Tool Maintenance** (FTEs only, 2026-11-24, Chris): a sidebar link above Tool Structure (`#maintenance`, routed
+  with `#structure` by `route()` in `hub.js`) that shows the onboarding guide, `ONBOARDING.md` in the private
+  `signoff_suite` repo, fetched with the visitor's sign-in each time the page opens (`assets/maintenance.js`, a small
+  Markdown renderer with Copy on each block quote and code block). Never copy the guide into this public repo; edit it
+  in `signoff_suite`. FTEs get `signoff_suite` through `repos.suite` in EE, ME, and FW.
 - **Tickets** (FTEs only, 2026-11-12): `assets/tickets.js` and `tickets.css`, loaded by every tool, keep
   tickets for the developer in the private `signoff_tickets` repo. See `docs/tickets.md`.
 - **Tool picker.** The page opens with a gallery of the nine tools (`.pk-tile`) in two rows, design tracking and review, then tools under it (Chris, 2026-11-13), over a stage

@@ -197,3 +197,31 @@ body.has-banner .app { height: auto; flex: 1; min-height: 0; }
 /* Tool Structure (index.html#structure) fills the window's width (Chris). */
 .page-structure { max-width: none; }
 .page-structure .page-sub { margin-bottom: 18px; }
+
+/* Tool Maintenance (#maintenance, FTEs only): the onboarding guide from signoff_suite (assets/maintenance.js). */
+.page-maint .page-sub { margin-bottom: 18px; }
+.mt-loading { color: var(--text-3); padding: 24px 0; }
+.mt-note { background: var(--bg-elev); border: 1px solid var(--hair); border-radius: var(--radius); padding: 18px 20px; max-width: 72ch; }
+.mt-note p { margin: 6px 0 0; color: var(--text-2); }
+.mt-guide { max-width: 80ch; font-size: 14.5px; line-height: 1.6; color: var(--text); }
+.mt-guide h2 { font-family: var(--display); font-size: 24px; letter-spacing: -0.02em; margin: 8px 0 12px; }
+.mt-guide h3 { font-family: var(--display); font-size: 19px; letter-spacing: -0.015em; margin: 30px 0 10px; }
+.mt-guide h4 { font-size: 15.5px; margin: 22px 0 8px; }
+.mt-guide p { margin: 0 0 12px; color: var(--text-2); }
+.mt-guide li { margin: 4px 0; color: var(--text-2); }
+.mt-guide li > p { margin: 0 0 6px; }
+.mt-guide ul, .mt-guide ol { margin: 0 0 12px; padding-left: 22px; }
+.mt-guide b { color: var(--text); }
+.mt-guide hr { border: 0; border-top: 1px solid var(--hair); margin: 28px 0; }
+.mt-guide code { font-family: var(--mono); font-size: 0.9em; background: var(--bg-sunk); border-radius: 4px; padding: 1px 4px; }
+.mt-guide pre { background: var(--bg-sunk); border: 1px solid var(--hair); border-radius: var(--radius-sm); padding: 12px 14px; margin: 0; overflow-x: auto; }
+.mt-guide pre code { background: none; padding: 0; font-size: 13px; }
+.mt-guide blockquote { margin: 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: var(--radius-sm); }
+.mt-guide blockquote p, .mt-guide blockquote li { color: var(--text); }
+.mt-guide blockquote > :last-child { margin-bottom: 0; }
+.mt-guide a { color: var(--accent); }
+.mt-copyable { position: relative; margin: 0 0 14px; }
+.mt-copy { position: absolute; top: 8px; right: 8px; padding: 3px 10px; font-size: 12px; opacity: 0.85; }
+.mt-copyable:hover .mt-copy { opacity: 1; }
+.mt-copyable pre, .mt-copyable blockquote { padding-right: 76px; }
+.mt-source { margin-top: 28px; color: var(--text-3); font-size: 13px; }
